@@ -3,7 +3,14 @@ module.exports = {
   purge: ["./src/**/*.tsx", "./src/**/*.ts"],
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      skew: {
+        '51': '-51deg'
+      },
+      blur: {
+        '2': '2px'
+      }
+    },
   },
   variants: {
     extend: {},
