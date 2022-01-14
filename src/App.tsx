@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Counter from "./features/counter/Counter";
-import MyPlayer from "./features/player/MyPlayer";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 

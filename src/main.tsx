@@ -5,8 +5,8 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./components/Home/Home";
-import Player from "./components/Player/Player";
+import Home from "./routes/Home/Home";
+import Player from "./routes/Player/Player";
 
 ReactDOM.render(
   <React.StrictMode>
