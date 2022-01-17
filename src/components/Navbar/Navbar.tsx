@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <nav className="w-full h-14 flex gap-x-10 items-center px-14 bg-black/50">
       <Link to="/" className="text-xl text-red-500">
-        QuickFlix
+        <img src="../../../assets/quickflix-logo-02.svg" width={70} />
       </Link>
       <div className="flex justify-around gap-x-3">
         <Link to="/movies" className="text-white">
