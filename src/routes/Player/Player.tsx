@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const url = "http://localhost:3050/api/Rick.and.Morty.S05E01.720p.AMZN.WEBRip.x264-GalaxyTV.mkv";
+const baseUrl = "http://localhost:3050/api/";
 
 const Player = () => {
-  return <div>Je suis un player</div>;
+  const { id } = useParams();
+
+  console.log(id);
+  return (
+    <div>
+      <video width="100%" height="100%" controls>
+        <source src={`${baseUrl}${id}`} type="video/webm" />
+        <source src={`${baseUrl}${id}`} type="video/mp4" />
+        <source src={`${baseUrl}${id}`} type='video/mp4; codecs="avc1"' />
+      </video>
+    </div>
+  );
 };
 
 export default Player;

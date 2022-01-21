@@ -15,7 +15,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/browse" element={<Home />} />
-          <Route path="/player" element={<Player />} />
+          <Route path="/player/:id" element={<Player />} />
         </Routes>
       </BrowserRouter>
     </Provider>

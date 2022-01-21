@@ -1,10 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const Card = ({ details }: { details: any }): React.ReactElement => {
+const Card = ({
+  name,
+  location,
+  id,
+}: {
+  name: string;
+  location: string;
+  id: string;
+}): React.ReactElement => {
+  const navigate = useNavigate();
+
   return (
-    <div className="w-52 h-32 border-2 rounded-md bg-red-300">
+    <div
+      onClick={() => {
+        navigate(`/player/${id}`);
+      }}
+      className="w-52 h-32 border-2 rounded-md bg-red-300"
+    >
       <img src="#" />
-      <h1 className="text-xl">{details}</h1>
+      <h1 className="text-xl">{name}</h1>
     </div>
   );
 };
