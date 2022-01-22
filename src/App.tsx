@@ -13,6 +13,7 @@ import f from "../assets/individual-letters/Frame 23.svg";
 import l from "../assets/individual-letters/Frame 24.svg";
 import i2 from "../assets/individual-letters/Frame 25.svg";
 import x from "../assets/individual-letters/Frame 26.svg";
+import avatar from "../assets/avatar-original.png";
 import Navbar from "./components/Navbar/Navbar";
 
 function App(): JSX.Element {
@@ -140,9 +141,13 @@ function App(): JSX.Element {
           onClick={() => {
             navigate("/browse");
           }}
-          className="card absolute w-40 h-40 grid place-items-center bg-blue-300 rounded-lg cursor-pointer shadow-md shadow-white hover:border-4 hover:border-white opacity-0"
+          className="card absolute w-40 h-40 opacity-0 "
         >
-          Pierrot
+          <div className="w-40 h-40 absolute hover:border-4 hover:border-white rounded-lg" />
+          <div className="w-40 h-40 grid place-items-center bg-blue-300 rounded-lg cursor-pointer shadow-md shadow-white ">
+            <img src={avatar} className="rounded-lg" />
+          </div>
+          <div className="text-white text-center text-lg">Pierrot</div>
         </div>
       </div>
     </div>
