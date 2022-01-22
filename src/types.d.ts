@@ -19,6 +19,7 @@ export type Season = {
   episodes: Episode[],
 }
 export type TvShow = {
+  _id: string;
   idMovieDb?: string;
   name: string;
   numberSeason?: number;
@@ -37,3 +38,5 @@ export type ActionReducer = {
   type: string;
   value?: any;
 };
+
+export type ReducerVideo = (arg: Pagination<Video | TvShow>, arg1: ActionReducer) => Pagination<Video | TvShow>
