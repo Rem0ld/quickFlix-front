@@ -1,53 +1,150 @@
-import React, { useEffect, useState } from "react";
+import React, { createRef, useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { gsap } from "gsap";
+import logo from "../assets/logo-no-bg.svg";
+import logoLetter from "../assets/logo-letter-no-bg.svg";
+import q from "../assets/individual-letters/Frame 18.svg";
+import u from "../assets/individual-letters/Frame 19.svg";
+import i from "../assets/individual-letters/Frame 20.svg";
+import c from "../assets/individual-letters/Frame 21.svg";
+import k from "../assets/individual-letters/Frame 22.svg";
+import f from "../assets/individual-letters/Frame 23.svg";
+import l from "../assets/individual-letters/Frame 24.svg";
+import i2 from "../assets/individual-letters/Frame 25.svg";
+import x from "../assets/individual-letters/Frame 26.svg";
+import Navbar from "./components/Navbar/Navbar";
 
 function App(): JSX.Element {
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const t1 = gsap.timeline();
+  const t2 = gsap.timeline();
+  const qRef = useRef(null);
+  const ref = useRef<any>([]);
 
   useEffect(() => {
-    // const timeout = setTimeout(() => {
-    //   setVisible(true);
-    // }, 2000);
-    // () => clearTimeout(timeout);
+    t1.fromTo(
+      qRef.current,
+      {
+        position: "absolute",
+        right: 0,
+        y: -500,
+      },
+      {
+        y: 0,
+        duration: 1,
+      }
+    );
+    t1.to(qRef.current, {
+      delay: 0.5,
+      left: "0%",
+      translateX: "-10%",
+      opacity: 0,
+      duration: 0.243 * 9,
+    });
+
+    t2.from(ref.current, {
+      opacity: 0,
+      delay: 1.5,
+      stagger: 0.2,
+    });
+    t2.to(ref.current, {
+      opacity: 0,
+      stagger: 0.1,
+      reversed: true,
+    });
+    t2.to(".card", {
+      duration: 0.5,
+      opacity: 1,
+    });
   }, []);
 
   return (
-    <div className="grid place-items-center bg-gray-900 h-screen w-screen">
-      <AnimatePresence>
-        {/* {!visible ? (
-          <motion.div
-            initial={{
-              filter: "blur(6px)",
-              y: -500,
+    <div className=" bg-gray-900 h-screen w-screen">
+      <Navbar />
+      <div className="grid place-items-center h-[calc(100%-3.5rem)]">
+        <div
+          className="relative"
+          style={{
+            maxHeight: 200,
+            maxWidth: "100vw",
+          }}
+        >
+          <img src={logoLetter} ref={qRef} className="h-40 absolute" />
+          <img
+            src={logoLetter}
+            ref={(element) => {
+              ref.current[8] = element;
             }}
-            animate={{
-              filter: "blur(0px)",
-              y: 0,
+            className="h-40 inline"
+          />
+          <img
+            src={u}
+            ref={(element) => {
+              ref.current[7] = element;
             }}
-            exit={{
-              opacity: 0,
+            className="h-40 inline"
+          />
+          <img
+            src={i}
+            ref={(element) => {
+              ref.current[6] = element;
             }}
-            transition={{
-              duration: 1.5,
+            className="h-40 inline"
+          />
+          <img
+            src={c}
+            ref={(element) => {
+              ref.current[5] = element;
             }}
-          >
-            <h1 className="text-7xl text-white before:content-['QuickFlix'] before:absolute before:skew-x-51 before:translate-x-10 before:opacity-50 before:blur-2 ">
-              QuickFlix
-            </h1>
-          </motion.div>
-        ) : (
-        )} */}
+            className="h-40 inline"
+          />
+          <img
+            src={k}
+            ref={(element) => {
+              ref.current[4] = element;
+            }}
+            className="h-40 inline"
+          />
+          <img
+            src={f}
+            ref={(element) => {
+              ref.current[3] = element;
+            }}
+            className="h-40 inline"
+          />
+          <img
+            src={l}
+            ref={(element) => {
+              ref.current[2] = element;
+            }}
+            className="h-40 inline"
+          />
+          <img
+            src={i2}
+            ref={(element) => {
+              ref.current[1] = element;
+            }}
+            className="h-40 inline"
+          />
+          <img
+            src={x}
+            ref={(element) => {
+              ref.current[0] = element;
+            }}
+            className="h-40 inline"
+          />
+        </div>
+
         <div
           onClick={() => {
             navigate("/browse");
           }}
-          className="w-40 h-40 grid place-items-center bg-blue-300 rounded-lg cursor-pointer shadow-md shadow-white hover:border-4 hover:border-white"
+          className="card absolute w-40 h-40 grid place-items-center bg-blue-300 rounded-lg cursor-pointer shadow-md shadow-white hover:border-4 hover:border-white opacity-0"
         >
           Pierrot
         </div>
-      </AnimatePresence>
+      </div>
     </div>
   );
 }
