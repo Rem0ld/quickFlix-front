@@ -1,36 +1,60 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../../components/Card/Card";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
-
-type Video = {
-  _id: string;
-  name: string;
-  location: string;
-  ext: string;
-};
+import UseFetchMovie from "../../hooks/UseFetchMovie";
+import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 
 const Home = () => {
-  const [videos, setVideos] = useState<Video[]>([]);
+  const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovie();
+  const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
 
   useEffect(() => {
-    if (videos.length === 0) {
-      (async function getVideos() {
-        const response = await fetch("http://localhost:3050/video");
-        const result = await response.json();
-        setVideos(result.data);
-      })();
+    if (movies.length === 0) {
+      fetchMoreMovies();
     }
-  }, []);
+    if (tvShows.length === 0) {
+      fetchMoreTvShows();
+    }
+  }, [movies.length, tvShows.length]);
+
   return (
     <div className="bg-gray-900 min-h-screen">
       <Navbar />
       <HeroBanner />
-      <div className="pl-14 flex gap-6 flex-wrap">
-        {videos.map((el, i) => (
-          <Card key={i} name={el.name} location={el.location} id={el._id} />
+      <InfiniteScroll
+        className="pl-14 flex gap-6 flex-wrap"
+        dataLength={movies.length} //This is important field to render the next data
+        next={fetchMoreMovies}
+        hasMore={hasMoreMovie}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        {movies.map((el, i) => (
+          <Card key={i} name={el.name} id={el._id} />
         ))}
-      </div>
+      </InfiniteScroll>
+      <InfiniteScroll
+        className="pl-14 flex gap-6 flex-wrap"
+        dataLength={tvShows.length} //This is important field to render the next data
+        next={fetchMoreTvShows}
+        hasMore={hasMoreTvShow}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+        {tvShows.map((el, i) => (
+          <Card key={i} name={el.name} id={el._id} />
+        ))}
+      </InfiniteScroll>
     </div>
   );
 };

@@ -1,15 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const Card = ({
-  name,
-  location,
-  id,
-}: {
-  name: string;
-  location: string;
-  id: string;
-}): React.ReactElement => {
+const Card = ({ name, id }: { name: string; id: string }): React.ReactElement => {
   const navigate = useNavigate();
 
   return (
