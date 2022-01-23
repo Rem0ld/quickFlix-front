@@ -6,7 +6,7 @@ export default function UseFetchTvShow() {
   const [{ limit, skip, data, total }, dispatch] = useReducer(reducerVideo, initialStateVideo(50))
 
   const fetchTvShows = async (): Promise<Pagination<TvShow>> => {
-    const response = await fetch(`http://localhost:3050/tv-show?limit=${limit}&skip=${skip}&populate=true`)
+    const response = await fetch(`http://${process.env.REACT_BACK_IP}:3050/tv-show?limit=${limit}&skip=${skip}&populate=true`)
     const result = await response.json();
 
     return result;
