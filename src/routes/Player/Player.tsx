@@ -9,7 +9,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { Popover, Slider } from "antd";
 import "antd/dist/antd.css";
 
-const baseUrl = process.env.REACT_BACK_IP;
+const baseUrl = `http://${import.meta.env.DEV ? "localhost" : "192.168.0.11"}:3050/api/`;
 const size = 44;
 
 const Player = () => {
