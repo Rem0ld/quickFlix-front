@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaPlay, FaForward, FaBackward, FaVolumeUp, FaCommentAlt, FaPause } from "react-icons/fa";
@@ -54,6 +55,7 @@ const Player = () => {
         Math.floor((videoRef.current.currentTime / videoRef.current.duration) * 100) + "%";
     });
 
+    // @ts-ignore
     const progress = progressRef.current.addEventListener("click", (e) => {
       const rect = progressRef.current.getBoundingClientRect();
       const pos = (e.pageX - rect.left) / progressRef.current.offsetWidth;
