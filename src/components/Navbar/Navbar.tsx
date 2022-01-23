@@ -24,7 +24,7 @@ const Navbar = () => {
       ref={ref}
       style={{
         backgroundColor: `rgba(0,0,0, ${opacity})`,
-        transition: "background-color 200ms 50ms ease-in-out",
+        // transition: "background-color 200ms 50ms ease-in-out",
       }}
       className={`w-full h-14 flex items-center justify-between fixed z-10 px-14 `}
     >
@@ -49,7 +49,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      <img className="rounded" src={avatar} width={32} height={40} />
+      {location.pathname !== "/" && <img className="rounded" src={avatar} width={32} height={40} />}
     </nav>
   );
 };
