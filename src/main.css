@@ -2,3 +2,34 @@
   margin: 5px 0px 0px 0px;
   height: 60px;
 }
+
+progress::-moz-progress-bar {
+  background: lightcolor;
+}
+
+progress::-webkit-progress-value {
+  background: #e31018;
+}
+
+progress::-webkit-progress-bar {
+  background: #6b7280;
+}
+
+.ant-popover-placement-top .ant-popover-arrow .ant-popover-arrow-content{
+  background-color: #26292e;
+}
+
+.ant-popover-content .ant-popover-inner .ant-popover-inner-content { 
+  padding: 10px 8px;
+}
+
+.progressBar:hover::after {
+  display: block;
+  content: '';
+  position: absolute;
+  z-index: 1000;
+  width: 12px;
+  height: 12px;
+  background-color: #26292e;
+
+}
