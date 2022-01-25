@@ -23,17 +23,10 @@ progress::-webkit-progress-bar {
   padding: 10px 8px;
 }
 
-
 video::-webkit-media-controls { display:none !important; }
 
-#controls { z-index:2147483648; }
+#controls { z-index:2147483647; }
 
-.progressBar::after {
-  content: '';
-  display: block;
-  position: absolute;
-  border-radius: 50%;
-  width: 10px;
-  height: 10px;
-
+.progress:hover .handle {
+  opacity: 1;
 }
