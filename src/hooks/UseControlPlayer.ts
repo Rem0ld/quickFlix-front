@@ -1,25 +1,32 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useState } from "react";
+import React, { MutableRefObject, useEffect, useState } from "react";
 
 
-export default function UseControlPlayer(videoRef: any, videoContainer: any, progressRef: any, progressBarRef: any) {
+export default function UseControlPlayer(
+  videoRef: MutableRefObject<HTMLVideoElement>,
+  videoContainer: MutableRefObject<HTMLDivElement>,
+  progressRef: MutableRefObject<HTMLDivElement>,
+  progressBarRef: MutableRefObject<HTMLDivElement>) {
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [duration, setDuration] = useState(0);
   const [leftTime, setLeftTime] = useState(0);
+  const [isMuted, setIsMuted] = useState(false)
 
-  const play = () => {
-    videoRef.current.play();
-    setIsPlaying(true);
-  };
-
-  const pause = () => {
-    videoRef.current.pause();
-    setIsPlaying(false);
+  const playPause = () => {
+    if (isPlaying) {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      videoRef.current.play();
+      setIsPlaying(true);
+    }
   };
 
   const volumeOff = () => {
     videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(!videoRef.current.muted)
   };
 
   const changeVolume = (value: number) => {
@@ -56,16 +63,14 @@ export default function UseControlPlayer(videoRef: any, videoContainer: any, pro
   */
   useEffect(() => {
     const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", () => {
-      console.log(videoRef.current.duration);
       setDuration(videoRef.current.duration);
-      progressRef.current.setAttribute("max", videoRef.current.duration);
+      progressRef.current.setAttribute("max", videoRef.current.duration.toString());
     });
 
     const timeUpdate = videoRef.current.addEventListener("timeupdate", () => {
-      // if (!progressRef.current.getAttribute("max"))
-      //   progressRef.current.setAttribute("max", videoRef.current.duration);
+      if (!progressRef.current.getAttribute("max"))
+        progressRef.current.setAttribute("max", videoRef.current.duration.toString());
 
-      // progressRef.current.value = videoRef.current.currentTime;
       // TODO: onclick UP we fire the event, when we look for another frame in the progress bar we update the UI to have this feeling of going smoothly
       // but we only fire event on mouse up
       progressBarRef.current.style.width =
@@ -74,7 +79,7 @@ export default function UseControlPlayer(videoRef: any, videoContainer: any, pro
       setLeftTime(+duration - videoRef.current.currentTime);
     });
 
-    // @ts-ignore
+
     const progress = progressRef.current.addEventListener("click", (e) => {
       const rect = progressRef.current.getBoundingClientRect();
       const pos = (e.pageX - rect.left) / progressRef.current.offsetWidth;
@@ -111,11 +116,11 @@ export default function UseControlPlayer(videoRef: any, videoContainer: any, pro
   }, []);
 
   return {
-    play,
+    playPause,
     isPlaying,
-    pause,
     volumeOff,
     changeVolume,
+    isMuted,
     duration,
     leftTime,
     handleFullScreen,
