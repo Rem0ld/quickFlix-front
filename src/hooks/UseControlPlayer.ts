@@ -58,6 +58,16 @@ export default function UseControlPlayer(
     }
   };
 
+
+  const handleForwardBackward = (type: "rewind" | "forward") => {
+    if (type === "forward") {
+      videoRef.current.currentTime += 10;
+    } else {
+      videoRef.current.currentTime -= 10;
+    }
+    videoRef.current.dispatchEvent(new Event("timeupdate"));
+  };
+
   /**
   * Setting up all events to take care of the video
   */
@@ -67,7 +77,9 @@ export default function UseControlPlayer(
       progressRef.current.setAttribute("max", videoRef.current.duration.toString());
     });
 
-    const timeUpdate = videoRef.current.addEventListener("timeupdate", () => {
+    const timeUpdate = videoRef.current.addEventListener("timeupdate", (e) => {
+      console.log(e)
+      console.log(videoRef.current.currentTime)
       if (!progressRef.current.getAttribute("max"))
         progressRef.current.setAttribute("max", videoRef.current.duration.toString());
 
@@ -76,14 +88,13 @@ export default function UseControlPlayer(
       progressBarRef.current.style.width =
         Math.floor((videoRef.current.currentTime / videoRef.current.duration) * 100) + "%";
 
-      setLeftTime(+duration - videoRef.current.currentTime);
+
     });
 
 
     const progress = progressRef.current.addEventListener("click", (e) => {
       const rect = progressRef.current.getBoundingClientRect();
       const pos = (e.pageX - rect.left) / progressRef.current.offsetWidth;
-      console.log(pos);
       videoRef.current.currentTime = pos * videoRef.current.duration;
     });
 
@@ -124,6 +135,7 @@ export default function UseControlPlayer(
     duration,
     leftTime,
     handleFullScreen,
-    isFullScreen
+    isFullScreen,
+    handleForwardBackward
   }
 }

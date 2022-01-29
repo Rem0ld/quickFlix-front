@@ -58,9 +58,9 @@ export default function PlayerControl({
     leftTime,
     handleFullScreen,
     isFullScreen,
+    handleForwardBackward,
   } = UseControlPlayer(videoRef, videoContainer, progressRef, progressBarRef);
 
-  const [controlsAreVisible, setControlsAreVisible] = useState(false);
   const [timerControlId, setTimerControlId] = useState<NodeJS.Timeout>();
   const [isHoverControl, setIsHoverControl] = useState(false);
 
@@ -70,7 +70,6 @@ export default function PlayerControl({
     if (timerControlId) clearTimeout(timerControlId);
 
     const id = setTimeout(() => {
-      setControlsAreVisible(false);
       hideControls();
     }, 1500);
 
@@ -79,7 +78,6 @@ export default function PlayerControl({
 
   const handleHoverMediaPlayer = () => {
     showControls();
-    setControlsAreVisible(true);
 
     if (isHoverControl) clearTimeout(timerControlId);
     if (!isHoverControl) {
@@ -138,9 +136,9 @@ export default function PlayerControl({
         onMouseEnter={() => {
           setIsHoverControl(true);
         }}
-        // onMouseLeave={() => {
-        //   setIsHoverControl(false);
-        // }}
+        onMouseLeave={() => {
+          setIsHoverControl(false);
+        }}
         className="h-20 w-full flex flex-col gap-y-2 justify-center absolute bottom-0 px-5 bg-black"
       >
         {/* === PROGRESS BAR === */}
@@ -159,10 +157,16 @@ export default function PlayerControl({
                 <FaPlay key={1} color="white" size={size} />,
               ]}
             />
-            <button id="rewind-10">
+            <button
+              id="rewind-10"
+              onClick={() => handleForwardBackward("rewind")}
+            >
               <FaBackward color="white" size={size} />
             </button>
-            <button id="forward-10">
+            <button
+              id="forward-10"
+              onClick={() => handleForwardBackward("forward")}
+            >
               <FaForward color="white" size={size} />
             </button>
             <VolumeBtn
