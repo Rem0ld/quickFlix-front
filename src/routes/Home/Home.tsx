@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../../components/Card/Card";
+import CardTvShow from "../../components/CardTvShow/CardTvShow";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
 import UseFetchMovies from "../../hooks/UseFetchMovie";
@@ -52,7 +53,7 @@ const Home = () => {
         }
       >
         {tvShows.map((el, i) => (
-          <Card key={i} name={el.name} id={el._id} />
+          <CardTvShow key={i} name={el.name} seasons={el.seasons} />
         ))}
       </InfiniteScroll>
     </div>
