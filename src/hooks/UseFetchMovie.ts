@@ -1,12 +1,13 @@
 import { useReducer } from 'react'
+import { baseUrl } from '../config';
 import { Pagination, Video } from '../types';
 import { initialStateVideo, reducerVideo } from './ReducerVideo';
 
-export default function UseFetchMovie() {
+export default function UseFetchMovies() {
   const [{ limit, skip, data, total }, dispatch] = useReducer(reducerVideo, initialStateVideo(50));
 
   const fetchMovies = async (): Promise<Pagination<Video>> => {
-    const response = await fetch(`http://${import.meta.env.DEV ? 'localhost' : '192.168.0.11'}:3050/video?limit=${limit}&skip=${skip}&movie=true`);
+    const response = await fetch(`${baseUrl}video?limit=${limit}&skip=${skip}&movie=true`);
     const result = await response.json();
 
     return result;

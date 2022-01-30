@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { baseUrl } from "../../config";
 import PlayerControl from "../../components/PlayerControl/PlayerControl";
@@ -17,11 +17,12 @@ const Player = () => {
       videoContainer={videoContainer}
       progressBarRef={progressBarRef}
       progressRef={progressRef}
+      idVideo={id || ""}
     >
       <video ref={videoRef} className="h-screen absolute" preload="metadata">
-        <source src={`${baseUrl}${id}`} type="video/webm" />
-        <source src={`${baseUrl}${id}`} type="video/mp4" />
-        <source src={`${baseUrl}${id}`} type='video/mp4; codecs="avc1"' />
+        <source src={`${baseUrl}api/${id}`} type="video/webm" />
+        <source src={`${baseUrl}api/${id}`} type="video/mp4" />
+        <source src={`${baseUrl}api/${id}`} type='video/mp4; codecs="avc1"' />
       </video>
     </PlayerControl>
   );

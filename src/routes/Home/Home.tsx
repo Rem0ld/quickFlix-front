@@ -3,11 +3,11 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import Card from "../../components/Card/Card";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
-import UseFetchMovie from "../../hooks/UseFetchMovie";
+import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 
 const Home = () => {
-  const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovie();
+  const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
   const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
 
   useEffect(() => {

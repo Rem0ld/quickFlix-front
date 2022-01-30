@@ -78,8 +78,6 @@ export default function UseControlPlayer(
     });
 
     const timeUpdate = videoRef.current.addEventListener("timeupdate", (e) => {
-      console.log(e)
-      console.log(videoRef.current.currentTime)
       if (!progressRef.current.getAttribute("max"))
         progressRef.current.setAttribute("max", videoRef.current.duration.toString());
 

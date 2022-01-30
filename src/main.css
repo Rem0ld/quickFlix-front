@@ -28,3 +28,16 @@ video::-webkit-media-controls { display:none !important; }
 .progress:hover .handle {
   opacity: 1;
 }
+
+.hovering-card {
+  visibility: hidden;
+  transition: all ease 400ms;
+}
+
+.visible {
+  visibility: visible;
+  height: 250px;
+  width: 300px;
+  background-color: rgb(59, 59, 59);
+  transform: translate3d(-10%, -10%, 0);
+}

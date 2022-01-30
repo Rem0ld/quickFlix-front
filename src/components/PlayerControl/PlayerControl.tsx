@@ -24,6 +24,7 @@ import { IoPlaySkipForward } from "react-icons/io5";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
+import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
 
 export default function PlayerControl({
   videoRef,
@@ -31,12 +32,14 @@ export default function PlayerControl({
   progressRef,
   progressBarRef,
   children,
+  idVideo,
 }: {
   videoRef: MutableRefObject<HTMLVideoElement>;
   videoContainer: MutableRefObject<HTMLDivElement>;
   progressRef: MutableRefObject<HTMLDivElement>;
   progressBarRef: MutableRefObject<HTMLDivElement>;
   children: ReactElement;
+  idVideo: string;
 }) {
   const navigate = useNavigate();
   const controlRef = useRef<any>(null);
@@ -47,6 +50,8 @@ export default function PlayerControl({
   const [secs, setSecs] = useState<string | number>("");
 
   // TODO: make a useEffect with timeInterval of 1sec for updating time
+
+  const { name, type } = UseFetchMovieInfo(idVideo);
 
   const {
     playPause,
@@ -177,9 +182,14 @@ export default function PlayerControl({
             />
           </div>
           {/* takes 35-40% of the place and do an excerpt if needed */}
-          <div className="video-name w-2/5"></div>
+          <div className="video-name w-2/5 text-white text-center font-semibold capitalize">
+            {name}
+          </div>
           <div className="flex gap-x-4">
-            <button id="next">
+            <button
+              id="next"
+              className={`${type === "tv" ? "visible" : "hidden"}`}
+            >
               <IoPlaySkipForward color="white" size={size} />
             </button>
             <button id="episodes">

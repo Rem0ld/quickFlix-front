@@ -11,6 +11,7 @@ export type Video = {
   location: string;
   ext: string;
   subtitles: string[];
+  type: "movie" | "tv"
 };
 
 export type Episode = { number: string, ref: Video | string }

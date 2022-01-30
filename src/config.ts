@@ -1,4 +1,4 @@
 export const baseUrl = `http://${import.meta.env.DEV ? "localhost" : "192.168.0.11"
-  }:3050/api/`;
+  }:3050/`;
 
 export const size = 30;
