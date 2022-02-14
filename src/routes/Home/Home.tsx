@@ -4,6 +4,7 @@ import Card from "../../components/Card/Card";
 import CardTvShow from "../../components/CardTvShow/CardTvShow";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
+import { TestCard } from "../../components/TestCard/TestCard";
 import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 
@@ -21,10 +22,12 @@ const Home = () => {
   }, [movies.length, tvShows.length]);
 
   return (
-    <div className="bg-gray-900 min-h-screen">
+    <div className="relative bg-gray-900 min-h-screen">
       <Navbar />
-      <HeroBanner />
-      <InfiniteScroll
+      {/* <HeroBanner /> */}
+      <div className="h-32" />
+      <TestCard />
+      {/* <InfiniteScroll
         className="pl-14 flex gap-6 flex-wrap"
         dataLength={movies.length} //This is important field to render the next data
         next={fetchMoreMovies}
@@ -36,11 +39,20 @@ const Home = () => {
           </p>
         }
       >
-        {movies.map((el, i) => (
-          <Card key={i} name={el.name} id={el._id} />
-        ))}
-      </InfiniteScroll>
-      <InfiniteScroll
+        {movies.map((el, i) => {
+          return (
+            <Card
+              key={i}
+              name={el.name}
+              id={el._id}
+              posterPath={el.posterPath ? el.posterPath[0] : ""}
+              ytKey={el.trailerYtCode}
+              genres={el.genres}
+            />
+          );
+        })}
+      </InfiniteScroll> */}
+      {/* <InfiniteScroll
         className="pl-14 flex gap-6 flex-wrap"
         dataLength={tvShows.length} //This is important field to render the next data
         next={fetchMoreTvShows}
@@ -53,9 +65,14 @@ const Home = () => {
         }
       >
         {tvShows.map((el, i) => (
-          <CardTvShow key={i} name={el.name} seasons={el.seasons} />
+          <CardTvShow
+            key={i}
+            name={el.name}
+            seasons={el.seasons}
+            posterPath={el.posterPath ? el.posterPath[0] : ""}
+          />
         ))}
-      </InfiniteScroll>
+      </InfiniteScroll> */}
     </div>
   );
 };
