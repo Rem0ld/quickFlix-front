@@ -12,6 +12,11 @@ export type Video = {
   ext: string;
   subtitles: string[];
   type: "movie" | "tv"
+  posterPath?: string[]
+  resume: string;
+  genres: string[];
+  trailerYtCode: string[];
+  score: number;
 };
 
 export type Episode = { number: string, ref: Video | string }
@@ -28,10 +33,11 @@ export type TvShow = {
   seasons: Season[],
   ongoing?: boolean;
   originCountry?: string;
-  posterPath?: string;
+  posterPath?: string[];
   resume?: string;
   score?: number;
   date?: Date;
+  genres: string[];
   trailerYtCode?: string;
 };
 
