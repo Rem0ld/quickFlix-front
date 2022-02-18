@@ -25,7 +25,7 @@ const Home = () => {
     <div className="relative bg-gray-900 min-h-screen">
       <Navbar />
       {/* <HeroBanner /> */}
-      <div className="h-32" />
+      <div className="h-14" />
       <TestCard />
       {/* <InfiniteScroll
         className="pl-14 flex gap-6 flex-wrap"

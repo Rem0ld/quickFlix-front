@@ -20,9 +20,12 @@ const Player = () => {
       idVideo={id || ""}
     >
       <video ref={videoRef} className="h-screen absolute" preload="metadata">
-        <source src={`${baseUrl}api/${id}`} type="video/webm" />
-        <source src={`${baseUrl}api/${id}`} type="video/mp4" />
-        <source src={`${baseUrl}api/${id}`} type='video/mp4; codecs="avc1"' />
+        <source src={`${baseUrl}stream/${id}`} type="video/webm" />
+        <source src={`${baseUrl}stream/${id}`} type="video/mp4" />
+        <source
+          src={`${baseUrl}stream/${id}`}
+          type='video/mp4; codecs="avc1"'
+        />
       </video>
     </PlayerControl>
   );

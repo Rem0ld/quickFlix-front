@@ -1,28 +1,30 @@
 import React, { ReactElement, useEffect } from "react";
-import { createPortal } from "react-dom";
 
 export const Modal = ({
   visible,
+  hide,
   width,
-  height,
   children,
 }: {
   visible: boolean;
-  width: number;
-  height: number;
+  hide: () => void;
+  width: string;
   children: ReactElement;
 }) => {
-  const anchor: HTMLElement = document.getElementById("modal") as HTMLElement;
-  anchor.style.position = "absolute";
-  anchor.style.inset = "0px";
-
-  useEffect(() => {
-    if (!visible) {
-      if (anchor.firstChild) anchor.removeChild(anchor.firstChild);
-    }
-  }, [visible]);
-
   if (!visible) return null;
 
-  return createPortal(<div style={{ width, height }}>{children}</div>, anchor);
+  return (
+    <div className="absolute inset-0 grid place-items-center" onClick={hide}>
+      <div className="absolute inset-0 z-50 opacity-90 bg-gray-900" />
+      <div
+        style={{ width, maxHeight: 900 }}
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+        className="absolute z-50 overflow-y-scroll rounded-md bg-gray-900 pb-16"
+      >
+        {children}
+      </div>
+    </div>
+  );
 };

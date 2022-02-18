@@ -7,8 +7,14 @@ export type Pagination<T> = {
 
 export type Video = {
   _id: string;
+  idMovieDb: string;
+  releaseDate: string;
   name: string;
+  basename: string;
+  filename: string;
   location: string;
+  episode?: string;
+  season?: string;
   ext: string;
   subtitles: string[];
   type: "movie" | "tv"
@@ -17,10 +23,13 @@ export type Video = {
   genres: string[];
   trailerYtCode: string[];
   score: number;
+  year: string;
+
 };
 
-export type Episode = { number: string, ref: Video | string }
+export type Episode = { _id: string; number: string, ref: Partial<Video> | string }
 export type Season = {
+  _id: string;
   number: string,
   episodes: Episode[],
 }
@@ -28,17 +37,18 @@ export type TvShow = {
   _id: string;
   idMovieDb?: string;
   name: string;
+  location: string;
   numberSeason?: number;
   numberEpisode?: number;
   seasons: Season[],
   ongoing?: boolean;
-  originCountry?: string;
+  originCountry?: string[];
   posterPath?: string[];
   resume?: string;
   score?: number;
   date?: Date;
   genres: string[];
-  trailerYtCode?: string;
+  trailerYtCode?: string[];
 };
 
 export type ActionReducer = {
@@ -47,3 +57,13 @@ export type ActionReducer = {
 };
 
 export type ReducerVideo = (arg: Pagination<Video | TvShow>, arg1: ActionReducer) => Pagination<Video | TvShow>
+
+export type ParsedMovieTime = {
+  h: number;
+  min: number;
+}
+
+export type ParsedWatchedTime = {
+  mins: number;
+  total: number;
+}
