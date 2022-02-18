@@ -17,7 +17,7 @@ export const Modal = ({
     <div className="absolute inset-0 grid place-items-center" onClick={hide}>
       <div className="absolute inset-0 z-50 opacity-90 bg-gray-900" />
       <div
-        style={{ width, maxHeight: 900 }}
+        style={{ width, maxHeight: 785 }}
         onClick={(event) => {
           event.stopPropagation();
         }}
