@@ -3,6 +3,7 @@ import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { VideoContext } from "../CardWrapper/CardWrapper";
 import { nanoid } from "@reduxjs/toolkit";
+import Score from "../Score/Score";
 
 export default function Details({
   randomNum,
@@ -14,9 +15,6 @@ export default function Details({
   play: () => void;
 }) {
   const {
-    id,
-    name,
-    posterPath,
     ytKeys,
     genres,
     resume,
@@ -70,7 +68,7 @@ export default function Details({
           onClick={play}
         >
           <FaPlay size={16} color={"black"} />
-          Lecture
+          {percentageSeen === 0 ? "Play" : "Resume"}
         </button>
       </div>
       <div className=" px-10 pt-3">
@@ -81,6 +79,7 @@ export default function Details({
               <span>
                 {m.h} h {m.min} min
               </span>
+              <Score score={score} />
             </div>
             <p className="text-sm">{resume}</p>
           </div>
