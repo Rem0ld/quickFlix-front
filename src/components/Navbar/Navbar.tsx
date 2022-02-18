@@ -29,7 +29,7 @@ const Navbar = () => {
       className={`w-full h-14 flex items-center justify-between fixed z-10 px-14 `}
     >
       <div className="flex gap-x-10">
-        <Link to="/" className="text-xl text-red-500">
+        <Link to="/browse" className="text-xl text-red-500">
           <img src={logo} width={70} />
         </Link>
         {location.pathname !== "/" && (
@@ -49,7 +49,9 @@ const Navbar = () => {
           </div>
         )}
       </div>
-      {location.pathname !== "/" && <img className="rounded" src={avatar} width={32} height={40} />}
+      {location.pathname !== "/" && (
+        <img className="rounded" src={avatar} width={32} height={40} />
+      )}
     </nav>
   );
 };

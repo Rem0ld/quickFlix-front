@@ -18,18 +18,11 @@ const Card = (): React.ReactElement => {
   const location = useLocation();
 
   const [visible, setVisible] = useState(false);
-  const [modalIsVisible, setModalIsVisible] = useState(false);
   const [randomNum, setRandomNum] = useState<number>(0);
 
   useEffect(() => {
     setRandomNum(makeRandomNumber(0, ytKeys?.length || 0));
   }, []);
-
-  useEffect(() => {
-    if (location.state) {
-      setModalIsVisible(true);
-    }
-  }, [location.state]);
 
   return (
     <>
@@ -91,7 +84,9 @@ const Card = (): React.ReactElement => {
                 <button
                   className={btnStyle}
                   onClick={() => {
-                    setModalIsVisible(true);
+                    navigate(`/browse?id=${id}`, {
+                      state: { backgroundLocation: location },
+                    });
                   }}
                 >
                   <MdKeyboardArrowDown size={20} color={"white"} />
@@ -113,17 +108,6 @@ const Card = (): React.ReactElement => {
           )}
         </div>
       </div>
-      <Modal
-        visible={modalIsVisible}
-        hide={() => setModalIsVisible(false)}
-        width={"60%"}
-      >
-        <Details
-          randomNum={randomNum}
-          hide={() => setModalIsVisible(false)}
-          play={(id) => navigate(`/player/${id}`, { state: id })}
-        />
-      </Modal>
     </>
   );
 };

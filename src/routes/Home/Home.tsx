@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import CardTvShow from "../../components/CardTvShow/CardTvShow";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
@@ -11,6 +12,7 @@ import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 const Home = () => {
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
   const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
+  const location = useLocation();
 
   useEffect(() => {
     if (movies.length === 0) {
@@ -22,11 +24,9 @@ const Home = () => {
   }, [movies.length, tvShows.length]);
 
   return (
-    <div className="relative bg-gray-900 min-h-screen">
-      <Navbar />
-      {/* <HeroBanner /> */}
-      <div className="h-14" />
+    <>
       <TestCard />
+
       {/* <InfiniteScroll
         className="pl-14 flex gap-6 flex-wrap"
         dataLength={movies.length} //This is important field to render the next data
@@ -73,7 +73,7 @@ const Home = () => {
           />
         ))}
       </InfiniteScroll> */}
-    </div>
+    </>
   );
 };
 

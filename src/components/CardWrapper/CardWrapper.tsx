@@ -1,11 +1,5 @@
-import React, {
-  createContext,
-  ReactElement,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { ParsedMovieTime, ParsedWatchedTime, TvShow, Video } from "../../types";
+import React, { createContext, useEffect, useMemo, useState } from "react";
+import { ParsedMovieTime, ParsedWatchedTime } from "../../types";
 import {
   makePercentage,
   secondToHours,
@@ -14,7 +8,7 @@ import {
 
 export const VideoContext = createContext<any>(null);
 
-function VideoContextProvider({ props, children }: any) {
+export function VideoContextProvider({ props, children }: any) {
   const {
     id,
     name,
