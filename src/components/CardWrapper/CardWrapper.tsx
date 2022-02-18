@@ -25,6 +25,7 @@ function VideoContextProvider({ props, children }: any) {
     resume,
     score,
     length,
+    seasons,
     watchTime,
   } = props;
 
@@ -63,6 +64,7 @@ function VideoContextProvider({ props, children }: any) {
         year,
         resume,
         score,
+        seasons,
         percentageSeen,
         parsedMovieLength,
         parsedWatchTime,

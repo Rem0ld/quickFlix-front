@@ -4,6 +4,7 @@ import { GrClose } from "react-icons/gr";
 import { VideoContext } from "../CardWrapper/CardWrapper";
 import { nanoid } from "@reduxjs/toolkit";
 import Score from "../Score/Score";
+import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 
 export default function Details({
   randomNum,
@@ -12,14 +13,16 @@ export default function Details({
 }: {
   randomNum: number;
   hide: () => void;
-  play: () => void;
+  play: (state: string) => void;
 }) {
   const {
+    id,
     ytKeys,
     genres,
     resume,
     score,
     year,
+    seasons,
     percentageSeen,
     parsedMovieLength: m,
     parsedWatchTime: w,
@@ -65,7 +68,7 @@ export default function Details({
         )}
         <button
           className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
-          onClick={play}
+          onClick={() => play(id)}
         >
           <FaPlay size={16} color={"black"} />
           {percentageSeen === 0 ? "Play" : "Resume"}
@@ -95,7 +98,8 @@ export default function Details({
           </div>
         </div>
         <div className="pt-12 text-gray-300">
-          <h3 className="text-2xl font-semibold pb-5">Trailers</h3>
+          {seasons.length && <WrapperEpisodes seasons={seasons} />}
+          <h3 className="text-2xl font-semibold py-5">Trailers</h3>
           <div className="flex gap-5 flex-wrap">
             {ytKeys
               .filter((_: string, i: number) => i !== randomNum)

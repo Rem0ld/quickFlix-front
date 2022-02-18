@@ -34,7 +34,7 @@ video::-webkit-media-controls { display:none !important; }
   transition: all ease 400ms;
 }
 
-.visible {
+.isVisible {
   visibility: visible;
   height: 250px;
   width: 300px;

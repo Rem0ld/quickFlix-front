@@ -2,11 +2,8 @@ import { nanoid } from "@reduxjs/toolkit";
 import React, { useContext, useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
-import {
-  makePercentage,
-  makeRandomNumber,
-} from "../../utils/numberManipulation";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { makeRandomNumber } from "../../utils/numberManipulation";
 import { VideoContext } from "../CardWrapper/CardWrapper";
 import Details from "../Details/Details";
 import { Modal } from "../Modal/Modal";
@@ -18,6 +15,7 @@ const Card = (): React.ReactElement => {
   const navigate = useNavigate();
   const { id, name, posterPath, ytKeys, percentageSeen }: any =
     useContext(VideoContext);
+  const location = useLocation();
 
   const [visible, setVisible] = useState(false);
   const [modalIsVisible, setModalIsVisible] = useState(false);
@@ -26,6 +24,12 @@ const Card = (): React.ReactElement => {
   useEffect(() => {
     setRandomNum(makeRandomNumber(0, ytKeys?.length || 0));
   }, []);
+
+  useEffect(() => {
+    if (location.state) {
+      setModalIsVisible(true);
+    }
+  }, [location.state]);
 
   return (
     <>
@@ -52,9 +56,9 @@ const Card = (): React.ReactElement => {
         </div>
         {/* === HOVERING CARD === */}
         {/* {`${
-          visible ? "visible" : ""
+          visible ? "isVisible" : ""
         } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`} */}
-        <div className="visible  absolute w-52 h-32 z-50 transform-gpu rounded-sm">
+        <div className="isVisible  absolute w-52 h-32 z-50 transform-gpu rounded-sm">
           {true && (
             <div className="bg-gray-900">
               {ytKeys?.length ? (
@@ -86,7 +90,9 @@ const Card = (): React.ReactElement => {
                 </button>
                 <button
                   className={btnStyle}
-                  onClick={() => setModalIsVisible(true)}
+                  onClick={() => {
+                    setModalIsVisible(true);
+                  }}
                 >
                   <MdKeyboardArrowDown size={20} color={"white"} />
                 </button>
@@ -115,7 +121,7 @@ const Card = (): React.ReactElement => {
         <Details
           randomNum={randomNum}
           hide={() => setModalIsVisible(false)}
-          play={() => navigate(`/player/${id}`)}
+          play={(id) => navigate(`/player/${id}`, { state: id })}
         />
       </Modal>
     </>

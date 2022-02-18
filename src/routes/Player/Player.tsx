@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { baseUrl } from "../../config";
 import PlayerControl from "../../components/PlayerControl/PlayerControl";
 
@@ -10,6 +10,7 @@ const Player = () => {
   const videoContainer = useRef<any>(null);
   const progressRef = useRef<any>();
   const progressBarRef = useRef<any>(null);
+  const location = useLocation();
 
   return (
     <PlayerControl

@@ -1640,18 +1640,19 @@ export function TestCard() {
     <div className="w-screen h-screen grid place-items-center bg-gray-300">
       <CardWrapper
         props={{
-          id: mockDataVideo._id,
-          name: mockDataVideo.name,
-          posterPath: mockDataVideo.posterPath?.length
-            ? mockDataVideo.posterPath[0]
+          id: mockDataTvShow._id,
+          name: mockDataTvShow.name,
+          posterPath: mockDataTvShow.posterPath?.length
+            ? mockDataTvShow.posterPath[0]
             : "",
-          ytKeys: mockDataVideo.trailerYtCode,
-          genres: mockDataVideo.genres,
-          year: mockDataVideo.year,
-          resume: mockDataVideo.resume,
-          score: mockDataVideo.score,
+          ytKeys: mockDataTvShow.trailerYtCode,
+          genres: mockDataTvShow.genres,
+          year: mockDataTvShow.firstAirDate,
+          resume: mockDataTvShow.resume,
+          score: mockDataTvShow.score,
           length: 8000,
           watchTime: 3500,
+          seasons: mockDataTvShow.seasons || [],
         }}
       >
         <Card />

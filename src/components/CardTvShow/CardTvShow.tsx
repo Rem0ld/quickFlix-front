@@ -51,7 +51,7 @@ export default function CardTvShow({
         {/* === HOVERING CARD === */}
         <div
           className={`${
-            visible ? "visible" : ""
+            visible ? "isVisible" : ""
           } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`}
         >
           {visible && (

@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { size, baseUrl } from "../../config";
 import UseControlPlayer from "../../hooks/UseControlPlayer";
 import BooleanBtn from "../BooleanBtn/BooleanBtn";
@@ -44,6 +44,7 @@ export default function PlayerControl({
   const navigate = useNavigate();
   const controlRef = useRef<any>(null);
   const goBackRef = useRef<any>(null);
+  const location = useLocation();
 
   const [hours, setHours] = useState("");
   const [mins, setMins] = useState("");
@@ -126,7 +127,7 @@ export default function PlayerControl({
       >
         <MdKeyboardBackspace
           onClick={() => {
-            navigate(-1);
+            navigate("/browse", { state: location.state });
           }}
           color="white"
           size={size + 5}

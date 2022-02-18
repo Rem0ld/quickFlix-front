@@ -24,10 +24,9 @@ export type Video = {
   trailerYtCode: string[];
   score: number;
   year: string;
-
 };
 
-export type Episode = { _id: string; number: string, ref: Partial<Video> | string }
+export type Episode = { _id: string; number: string, ref: Partial<Video> }
 export type Season = {
   _id: string;
   number: string,
@@ -49,6 +48,7 @@ export type TvShow = {
   date?: Date;
   genres: string[];
   trailerYtCode?: string[];
+  firstAirDate: string;
 };
 
 export type ActionReducer = {
