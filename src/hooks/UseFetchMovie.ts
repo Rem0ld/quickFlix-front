@@ -15,7 +15,6 @@ export default function UseFetchMovies() {
 
   const fetchMore = async () => {
     const result = await fetchMovies();
-    console.log(result)
     dispatch({ type: "setData", value: result.data });
     dispatch({ type: "addSkip" });
     dispatch({ type: "setTotal", value: result.total });

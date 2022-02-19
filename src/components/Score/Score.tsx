@@ -3,7 +3,7 @@ import { BsStar, BsStarHalf, BsStarFill } from "react-icons/bs";
 
 export default function Score({ score }: { score: number }) {
   return (
-    <div className="flex gap-1 items-center">
+    <div className="flex gap-1">
       {score < 1 ? (
         <BsStar />
       ) : score >= 1 && score < 2 ? (

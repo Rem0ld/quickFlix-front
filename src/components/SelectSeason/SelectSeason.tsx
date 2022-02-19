@@ -5,7 +5,7 @@ import { Episode } from "../../types";
 
 type PropTypes = {
   selected: number;
-  list: [[key: string | number], Episode[]][];
+  list: [string, Episode[]][];
   setSelected: (arg: number) => void;
 };
 

@@ -13,11 +13,15 @@ export default function App() {
   return (
     <div>
       <Routes location={state?.backgroundLocation || location}>
-        <Route path="/" element={<Layout />}>
-          <Route path="/browse" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/player/:id" element={<Player />} />
+        <Route path="/">
+          <Route element={<Layout />}>
+            <Route index element={<Login />} />
+            <Route path="/browse" element={<Home />} />
+          </Route>
         </Route>
+      </Routes>
+      <Routes>
+        <Route path="/player/:id" element={<Player />} />
       </Routes>
 
       {state?.backgroundLocation && (

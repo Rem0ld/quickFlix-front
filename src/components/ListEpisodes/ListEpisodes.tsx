@@ -28,13 +28,16 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
 
   useEffect(() => {
     if (parsedSeasons) {
+      // setSelectedSeason(
+      //   parsedSeasons[selected].sort((a, b) => +a.number - +b.number)
+      // );
       setSelectedSeason(parsedSeasons[selected]);
     }
   }, [parsedSeasons, selected]);
 
   return (
     <div>
-      <div className="flex items-center justify-between pb-5">
+      <div className="flex items-end justify-between pb-5">
         <h3 className="text-2xl font-semibold ">Episodes</h3>
         {parsedSeasons && (
           <SelectSeason
@@ -44,13 +47,7 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
           />
         )}
       </div>
-      <ListEpisodes
-        season={
-          selectedSeason
-            ? selectedSeason.sort((a, b) => +a.number - +b.number)
-            : []
-        }
-      />
+      <ListEpisodes season={selectedSeason ? selectedSeason : []} />
     </div>
   );
 }
@@ -60,7 +57,7 @@ function ListEpisodes({ season }: { season: Episode[] }) {
   if (!season) return null;
   return (
     <ul>
-      {season.map((episode) => {
+      {season.map((episode, i: number) => {
         return (
           <li
             key={nanoid()}
@@ -69,7 +66,10 @@ function ListEpisodes({ season }: { season: Episode[] }) {
                 state: episode.ref._id,
               });
             }}
-            className="flex items-center gap-5 h-32 w-full px-10 cursor-pointer border-b border-gray-600"
+            className={
+              `${i === 0 ? "border-t " : ""}` +
+              "flex items-center gap-5 h-32 w-full px-10 cursor-pointer rounded-md border-b border-gray-600"
+            }
           >
             <h5 className="font-semibold text-2xl">{episode.number}</h5>
             <div>

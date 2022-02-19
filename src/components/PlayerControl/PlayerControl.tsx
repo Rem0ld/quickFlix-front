@@ -67,7 +67,7 @@ export default function PlayerControl({
     handleForwardBackward,
   } = UseControlPlayer(videoRef, videoContainer, progressRef, progressBarRef);
 
-  const [timerControlId, setTimerControlId] = useState<NodeJS.Timeout>();
+  const [timerControlId, setTimerControlId] = useState<number>();
   const [isHoverControl, setIsHoverControl] = useState(false);
 
   // TODO: make api call to get info on video, if movie we hide the next btn
@@ -75,11 +75,11 @@ export default function PlayerControl({
   const setTimeOut = () => {
     if (timerControlId) clearTimeout(timerControlId);
 
-    const id = setTimeout(() => {
+    const idTimeOut = window.setTimeout(() => {
       hideControls();
     }, 1500);
 
-    setTimerControlId(id);
+    setTimerControlId(idTimeOut);
   };
 
   const handleHoverMediaPlayer = () => {
@@ -127,7 +127,13 @@ export default function PlayerControl({
       >
         <MdKeyboardBackspace
           onClick={() => {
-            navigate("/browse", { state: location.state });
+            if (location.state) {
+              navigate(`/browse?id=${idVideo}`, {
+                state: { backgroundLocation: location },
+              });
+            } else {
+              navigate("/browse");
+            }
           }}
           color="white"
           size={size + 5}

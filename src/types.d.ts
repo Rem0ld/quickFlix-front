@@ -24,6 +24,7 @@ export type Video = {
   trailerYtCode: string[];
   score: number;
   year: string;
+  length: number;
 };
 
 export type Episode = { _id: string; number: string, ref: Partial<Video> }

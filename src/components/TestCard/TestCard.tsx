@@ -1,10 +1,14 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { setVideo, VideoState } from "../../features/video/videoSlice";
 import { TvShow, Video } from "../../types";
 import Card from "../Card/Card";
 import CardWrapper from "../CardWrapper/CardWrapper";
 
 export function TestCard() {
+  const dispatch = useDispatch();
+
   const mockDataTvShow: TvShow = {
     _id: "620a595fdafc5bd29f9d8596",
     name: "game of thrones",
@@ -1636,25 +1640,24 @@ export function TestCard() {
     score: 7.5,
   };
 
+  const data: Omit<VideoState, "percentageSeen"> = {
+    id: mockDataTvShow._id,
+    name: mockDataTvShow.name,
+    posterPath: mockDataTvShow.posterPath || [],
+    ytKeys: mockDataTvShow.trailerYtCode || [],
+    genres: mockDataTvShow.genres,
+    year: mockDataTvShow.firstAirDate,
+    resume: mockDataTvShow.resume || "",
+    score: mockDataTvShow.score || 0,
+    length: 8000,
+    watchTime: 3500,
+    seasons: mockDataTvShow?.seasons || [],
+    subtitles: [],
+  };
+
   return (
     <div className="w-screen h-screen grid place-items-center bg-gray-300">
-      <CardWrapper
-        props={{
-          id: mockDataTvShow._id,
-          name: mockDataTvShow.name,
-          posterPath: mockDataTvShow.posterPath?.length
-            ? mockDataTvShow.posterPath[0]
-            : "",
-          ytKeys: mockDataTvShow.trailerYtCode,
-          genres: mockDataTvShow.genres,
-          year: mockDataTvShow.firstAirDate,
-          resume: mockDataTvShow.resume,
-          score: mockDataTvShow.score,
-          length: 8000,
-          watchTime: 3500,
-          seasons: mockDataTvShow.seasons || [],
-        }}
-      >
+      <CardWrapper data={data}>
         <Card />
       </CardWrapper>
     </div>

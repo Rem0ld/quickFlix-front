@@ -13,13 +13,17 @@ export default function ModalWrapper() {
   return (
     <Modal
       visible={modalIsVisible}
-      hide={() => setModalIsVisible(false)}
+      hide={() => {
+        navigate("/browse");
+      }}
       width={"60%"}
     >
       <Details
         randomNum={0}
-        hide={() => setModalIsVisible(false)}
-        play={(id) => navigate(`/player/${id}`, { state: id })}
+        hide={() => navigate("/browse")}
+        play={(id) =>
+          navigate(`/player/${id}`, { state: searchParams.get("id") })
+        }
       />
     </Modal>
   );
