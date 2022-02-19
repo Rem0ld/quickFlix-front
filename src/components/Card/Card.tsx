@@ -74,7 +74,7 @@ const Card = ({
         }}
       >
         <div className="absolute w-52 h-32 rounded-md cursor-pointer bg-gray-200">
-          {posterPath.length ? (
+          {posterPath?.length ? (
             <img
               className="w-full h-full aspect-square"
               src={`http://localhost:3050/images/${posterPath[0]}`}
@@ -95,7 +95,7 @@ const Card = ({
           } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`}
         >
           {visible && (
-            <div className="bg-gray-900 aspect-square">
+            <div className="bg-gray-800 aspect-square drop-shadow-md">
               {ytKeys?.length ? (
                 <iframe
                   width="300"
@@ -105,7 +105,7 @@ const Card = ({
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 ></iframe>
-              ) : posterPath.length ? (
+              ) : posterPath?.length ? (
                 <img
                   className="w-full h-full"
                   src={`http://localhost:3050/images/${posterPath[0]}`}
@@ -113,10 +113,7 @@ const Card = ({
               ) : (
                 <div />
               )}
-              <div className="action-btns flex justify-between p-2">
-                <h1 className="absolute bottom-0 pl-1 text-xl capitalize text-white">
-                  {name}
-                </h1>
+              <div className="action-btns flex justify-between p-2 pb-5">
                 <button
                   className={btnStyle}
                   onClick={() => {

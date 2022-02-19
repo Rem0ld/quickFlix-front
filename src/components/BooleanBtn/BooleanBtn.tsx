@@ -10,7 +10,7 @@ export default function BooleanBtn({
   placeholders: ReactElement[];
 }) {
   return (
-    <button onClick={action}>
+    <button className="hover:scale-125 transition-all" onClick={action}>
       {isActive ? placeholders[0] : placeholders[1]}
     </button>
   );

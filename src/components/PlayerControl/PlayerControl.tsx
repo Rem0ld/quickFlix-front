@@ -70,8 +70,6 @@ export default function PlayerControl({
   const [timerControlId, setTimerControlId] = useState<number>();
   const [isHoverControl, setIsHoverControl] = useState(false);
 
-  // TODO: make api call to get info on video, if movie we hide the next btn
-
   const setTimeOut = () => {
     if (timerControlId) clearTimeout(timerControlId);
 
@@ -171,12 +169,14 @@ export default function PlayerControl({
             />
             <button
               id="rewind-10"
+              className="hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("rewind")}
             >
               <FaBackward color="white" size={size} />
             </button>
             <button
               id="forward-10"
+              className="hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("forward")}
             >
               <FaForward color="white" size={size} />
@@ -199,13 +199,13 @@ export default function PlayerControl({
             >
               <IoPlaySkipForward color="white" size={size} />
             </button>
-            <button id="episodes">
+            <button id="episodes" className="hover:scale-125 transition-all">
               <IoIosJournal color="white" size={size} />
             </button>
-            <button id="subtitles">
+            <button id="subtitles" className="hover:scale-125 transition-all">
               <FaCommentAlt color="white" size={size} />
             </button>
-            <button id="speed">
+            <button id="speed" className="hover:scale-125 transition-all">
               <SiSpeedtest color="white" size={size} />
             </button>
             <BooleanBtn

@@ -6,20 +6,25 @@ import Score from "../Score/Score";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import { useSelector } from "react-redux";
 import { ParsedMovieTime, ParsedWatchedTime } from "../../types";
-import { secondToHours, secondToMinutes } from "../../utils/numberManipulation";
+import {
+  makeRandomNumber,
+  secondToHours,
+  secondToMinutes,
+} from "../../utils/numberManipulation";
+import IframeWrapper from "../IframeWrapper/IframeWrapper";
+import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
+import { useSearchParams } from "react-router-dom";
 
 export default function Details({
-  randomNum,
   hide,
   play,
 }: {
-  randomNum: number;
   hide: () => void;
   play: (state: string) => void;
 }) {
   const {
     id,
-    ytKeys,
+    ytKeys = [],
     genres,
     resume,
     score,
@@ -29,6 +34,7 @@ export default function Details({
     length,
     percentageSeen,
   } = useSelector((state) => state.details);
+  const [searchParams] = useSearchParams();
 
   const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
   const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
@@ -56,18 +62,7 @@ export default function Details({
         >
           <GrClose color="#fff" size={22} />
         </button>
-        {ytKeys[randomNum] ? (
-          <iframe
-            className="w-full aspect-video rounded-t-md"
-            style={{ aspectRatio: "16/9" }}
-            // ?autoplay=1
-            src={`https://www.youtube.com/embed/${ytKeys[randomNum]}?autoplay=1`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        ) : (
-          <div className="w-full h-96" />
-        )}
+        <IframeWrapper ytKey={ytKeys[0]} />
         <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
           {percentageSeen ? (
             <>
@@ -129,26 +124,25 @@ export default function Details({
           </div>
         </div>
         <div className="pt-12 text-gray-300">
-          {seasons.length ? <WrapperEpisodes seasons={seasons} /> : ""}
-          {ytKeys.length > 1 ? (
+          {seasons?.length ? <WrapperEpisodes seasons={seasons} /> : ""}
+          {ytKeys?.length > 1 ? (
             <>
               <h3 className="text-2xl font-semibold py-5">Trailers</h3>
               <div className="flex gap-5 flex-wrap">
-                {ytKeys
-                  .filter((_: string, i: number) => i !== randomNum)
-                  .map((ytKey: string) => {
-                    return (
-                      <iframe
-                        key={nanoid()}
-                        width="200"
-                        height="156"
-                        src={`https://www.youtube.com/embed/${ytKey}`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      ></iframe>
-                    );
-                  })}
+                {ytKeys.map((ytKey: string, i: number) => {
+                  if (i === 0) return "";
+                  return (
+                    <iframe
+                      key={nanoid()}
+                      width="200"
+                      height="156"
+                      src={`https://www.youtube.com/embed/${ytKey}`}
+                      title="YouTube video player"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    ></iframe>
+                  );
+                })}
               </div>
             </>
           ) : (

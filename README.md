@@ -2,13 +2,15 @@
 
 # Quickflix - Front
 
-- [ ] start page black bg with choice of profile
-- [ ] when we choose profile we arrive on video page hero banner with video playing
-- [ ] list of videos scrolling down
-- [ ] navbar with home, movies, tv-show and discover route
-- [ ] make card with image, on hover scale up, list icons play and details with type of video
-- [ ] on click detail opens a modal with more info, if tv-show shows episode
-- [ ] make player
+- [x] start page black bg with choice of profile
+- [x] when we choose profile we arrive on video page hero banner with video playing
+- [x] list of videos scrolling down
+- [x] navbar with home, movies, tv-show and discover route
+- [x] make card with image, on hover scale up, list icons play and details with type of video
+- [x] on click detail opens a modal with more info, if tv-show shows episode
+- [x] make player
+
+TODO: When going back to details if store is empty, we navigate back to browse
 
 ## Getting started
 

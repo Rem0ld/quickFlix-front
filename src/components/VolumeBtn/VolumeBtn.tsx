@@ -29,7 +29,11 @@ export default function VolumeBtn({
 
   return (
     <div className="popover-slider relative pt-0.5">
-      <button id="volume" className="pt-1" onClick={volumeOff}>
+      <button
+        id="volume"
+        className="pt-1 hover:scale-125 transition-all"
+        onClick={volumeOff}
+      >
         {!muted && volume > 0.6 && <FaVolumeUp color="white" size={size} />}
         {!muted && volume > 0.3 && volume < 0.6 && (
           <FaVolumeDown color="white" size={size} />

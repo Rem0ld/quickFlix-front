@@ -15,13 +15,13 @@ export const Modal = ({
 
   return (
     <div className="absolute inset-0 grid place-items-center" onClick={hide}>
-      <div className="absolute inset-0 z-50 opacity-90 bg-gray-900" />
+      <div className="absolute inset-0 z-50 opacity-90 bg-gray-800" />
       <div
         style={{ width, maxHeight: 785 }}
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className="absolute z-50 overflow-y-scroll rounded-md bg-gray-900 pb-16"
+        className="absolute z-50 overflow-y-scroll rounded-md bg-gray-900 pb-16 drop-shadow-md"
       >
         {children}
       </div>
