@@ -73,10 +73,10 @@ const Card = ({
           setVisible(false);
         }}
       >
-        <div className="absolute w-52 h-32 rounded-md cursor-pointer bg-gray-200">
+        <div className="absolute w-52 h-32 cursor-pointer bg-gray-200">
           {posterPath?.length ? (
             <img
-              className="w-full h-full aspect-square"
+              className="w-full h-full aspect-square rounded-sm"
               src={`http://localhost:3050/images/${posterPath[0]}`}
             />
           ) : (
@@ -86,20 +86,18 @@ const Card = ({
           )}
         </div>
         {/* === HOVERING CARD === */}
-        {/* {`${
-          visible ? "isVisible" : ""
-        } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`} */}
         <div
           className={`${
             visible ? "isVisible" : ""
           } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`}
         >
           {visible && (
-            <div className="bg-gray-800 aspect-square drop-shadow-md">
+            <div className="bg-gray-800 aspect-square drop-shadow-md rounded-sm">
               {ytKeys?.length ? (
                 <iframe
                   width="300"
                   height="250"
+                  className="rounded-t-sm"
                   src={`https://www.youtube.com/embed/${ytKeys[randomNum]}`}
                   title="YouTube video player"
                   frameBorder="0"
@@ -107,13 +105,13 @@ const Card = ({
                 ></iframe>
               ) : posterPath?.length ? (
                 <img
-                  className="w-full h-full"
+                  className="w-full h-full rounded-sm"
                   src={`http://localhost:3050/images/${posterPath[0]}`}
                 />
               ) : (
                 <div />
               )}
-              <div className="action-btns flex justify-between p-2 pb-5">
+              <div className="action-btns flex justify-between p-2 pb-5 rounded-b-sm">
                 <button
                   className={btnStyle}
                   onClick={() => {

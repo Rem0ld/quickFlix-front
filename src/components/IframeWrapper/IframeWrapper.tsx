@@ -1,7 +1,7 @@
 import React from "react";
 
 export default function IframeWrapper({ ytKey }: { ytKey: string }) {
-  if (!ytKey) return <div className="h-32" />;
+  if (!ytKey.length) return <div className="h-32" />;
   return (
     <iframe
       className="w-full aspect-video rounded-t-md"

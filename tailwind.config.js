@@ -18,7 +18,30 @@ module.exports = {
       pink: colors.fuchsia,
       red: colors.red
     },
+    borderRadius: {
+      'none': '0',
+      'sm': '0.250rem',
+      'md': '0.375rem',
+      'lg': '0.5rem',
+      'full': '9999px',
+      'large': '12px',
+    },
     extend: {
+      animation: {
+        "fade-in": "fadein 500ms ease-in-out",
+        "fade-out": "fadeout 500ms ease-in-out"
+      },
+      keyframes: {
+        fadein: {
+          "0%": {opacity: 0},
+          "100%": {opacity: 1}
+        },
+        fadeout: {
+          "0%": {opacity: 1},
+          "100%": {opacity: 0}
+
+        }
+      },
       skew: {
         '51': '-51deg'
       },

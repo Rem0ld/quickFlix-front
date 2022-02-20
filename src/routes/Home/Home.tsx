@@ -1,17 +1,28 @@
 import React, { useEffect, useReducer, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Card from "../../components/Card/Card";
 import CardTvShow from "../../components/CardTvShow/CardTvShow";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
 import { TestCard } from "../../components/TestCard/TestCard";
+import {
+  initialStateDetailsVideo,
+  setVideo,
+} from "../../features/video/videoSlice";
+import { initialStateVideo } from "../../hooks/ReducerVideo";
 import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 
 const Home = () => {
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
   const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setVideo(initialStateDetailsVideo));
+  }, []);
 
   useEffect(() => {
     if (movies.length === 0) {

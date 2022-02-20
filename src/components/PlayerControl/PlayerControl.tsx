@@ -25,6 +25,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
+import { useSelector } from "react-redux";
 
 export default function PlayerControl({
   videoRef,
@@ -42,17 +43,13 @@ export default function PlayerControl({
   idVideo: string;
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { name, type } = useSelector((state) => state.details);
+
   const controlRef = useRef<any>(null);
   const goBackRef = useRef<any>(null);
-  const location = useLocation();
-
-  const [hours, setHours] = useState("");
-  const [mins, setMins] = useState("");
-  const [secs, setSecs] = useState<string | number>("");
 
   // TODO: make a useEffect with timeInterval of 1sec for updating time
-
-  const { name, type } = UseFetchMovieInfo(idVideo);
 
   const {
     playPause,

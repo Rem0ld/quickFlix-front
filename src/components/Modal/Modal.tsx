@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 
 export const Modal = ({
   visible,
@@ -21,7 +21,7 @@ export const Modal = ({
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className="absolute z-50 overflow-y-scroll rounded-md bg-gray-900 pb-16 drop-shadow-md"
+        className="absolute z-50 overflow-y-scroll rounded-md bg-gray-900 pb-16 drop-shadow-md transform-gpu animate-fade-in"
       >
         {children}
       </div>

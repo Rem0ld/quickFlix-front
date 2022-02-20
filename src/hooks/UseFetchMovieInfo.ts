@@ -9,13 +9,19 @@ export default function UseFetchMovieInfo(id: string | null) {
   const dispatch = useDispatch()
   const [infoMovie, setInfoMovie] = useState<Video>({} as Video);
 
-  const fetchMovie = async (): Promise<Video> => {
-    const response = await fetch(`${baseUrl}video/${id}`);
-    const result = await response.json();
-    setInfoMovie(result);
+  const fetchMovie = async (): Promise<Video | undefined> => {
+    try {
+      const response = await fetch(`${baseUrl}video/${id}`);
+      const result = await response.json();
+      setInfoMovie(result);
 
-    dispatch(setVideo(result))
-    return result;
+      dispatch(setVideo(result))
+      return result;
+
+    } catch (error) {
+      console.error(error)
+      return;
+    }
   };
 
   useEffect(() => {

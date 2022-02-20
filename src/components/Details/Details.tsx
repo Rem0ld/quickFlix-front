@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  Suspense,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { nanoid } from "@reduxjs/toolkit";
@@ -6,14 +12,9 @@ import Score from "../Score/Score";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import { useSelector } from "react-redux";
 import { ParsedMovieTime, ParsedWatchedTime } from "../../types";
-import {
-  makeRandomNumber,
-  secondToHours,
-  secondToMinutes,
-} from "../../utils/numberManipulation";
+import { secondToHours, secondToMinutes } from "../../utils/numberManipulation";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
-import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Details({
   hide,
@@ -22,9 +23,19 @@ export default function Details({
   hide: () => void;
   play: (state: string) => void;
 }) {
+  const navigate = useNavigate();
+  const detailsVideo = useSelector((state) => state.details);
+
+  useEffect(() => {
+    if (!detailsVideo.id && !detailsVideo.name) {
+      navigate("/browse");
+    }
+  }, [detailsVideo]);
+
   const {
     id,
-    ytKeys = [],
+    name,
+    ytKeys,
     genres,
     resume,
     score,
@@ -33,8 +44,7 @@ export default function Details({
     watchTime,
     length,
     percentageSeen,
-  } = useSelector((state) => state.details);
-  const [searchParams] = useSearchParams();
+  } = detailsVideo;
 
   const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
   const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
@@ -62,7 +72,9 @@ export default function Details({
         >
           <GrClose color="#fff" size={22} />
         </button>
-        <IframeWrapper ytKey={ytKeys[0]} />
+        <Suspense fallback="Loading...">
+          <IframeWrapper ytKey={ytKeys.length ? ytKeys[0] : ""} />
+        </Suspense>
         <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
           {percentageSeen ? (
             <>
@@ -98,7 +110,8 @@ export default function Details({
         <div className="flex">
           <div className="flex flex-col gap-4 w-9/12 text-gray-300 font-light">
             <div className="flex gap-x-2 items-baseline">
-              <span>{new Date(year).getFullYear()}</span>
+              <h6>{name}</h6>
+              {year ? <span>{new Date(year).getFullYear()}</span> : ""}
               {parsedMovieLength?.h ? (
                 <span>
                   {parsedMovieLength?.h} h {parsedMovieLength?.min} min

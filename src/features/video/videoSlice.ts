@@ -17,7 +17,7 @@ export interface VideoState {
   percentageSeen: number;
 }
 
-const initialState: VideoState = {
+export const initialStateDetailsVideo: VideoState = {
   id: '',
   name: '',
   posterPath: [],
@@ -36,7 +36,7 @@ const initialState: VideoState = {
 
 export const videoSlice = createSlice({
   name: 'details',
-  initialState,
+  initialState: initialStateDetailsVideo,
   reducers: {
     setVideo: (state, action: PayloadAction<VideoState>) => {
       return action.payload
