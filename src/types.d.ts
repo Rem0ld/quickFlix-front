@@ -1,3 +1,5 @@
+import { MutableRefObject } from "react";
+
 export type Pagination<T> = {
   total: number;
   skip: number;

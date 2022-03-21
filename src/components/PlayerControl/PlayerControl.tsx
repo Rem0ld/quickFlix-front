@@ -26,6 +26,7 @@ import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
 import { useSelector } from "react-redux";
+import { createWatched } from "../../api/watched";
 
 export default function PlayerControl({
   videoRef,
@@ -44,12 +45,20 @@ export default function PlayerControl({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { name, type } = useSelector((state) => state.details);
+  const { name, type, watchTime } = useSelector((state) => state.details);
 
   const controlRef = useRef<any>(null);
   const goBackRef = useRef<any>(null);
 
   // TODO: make a useEffect with timeInterval of 1sec for updating time
+
+  useEffect(() => {
+    if (!watchTime) {
+      console.log("creating watched");
+      createWatched(idVideo);
+      console.log("created watched");
+    }
+  }, []);
 
   const {
     playPause,
@@ -63,6 +72,10 @@ export default function PlayerControl({
     isFullScreen,
     handleForwardBackward,
   } = UseControlPlayer(videoRef, videoContainer, progressRef, progressBarRef);
+
+  // TODO: get duration check if length exists, update if not
+  // check if already watched, update or create
+  // put in place a 5 sec interval to update watched
 
   const [timerControlId, setTimerControlId] = useState<number>();
   const [isHoverControl, setIsHoverControl] = useState(false);

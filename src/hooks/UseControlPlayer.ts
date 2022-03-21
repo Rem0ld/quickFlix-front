@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { MutableRefObject, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { updateVideo } from "../api/video";
+import { updateWatched } from "../api/watched";
+import { setLength } from "../features/video/videoSlice";
 
 
 export default function UseControlPlayer(
@@ -8,11 +13,17 @@ export default function UseControlPlayer(
   progressRef: MutableRefObject<HTMLDivElement>,
   progressBarRef: MutableRefObject<HTMLDivElement>) {
 
+  const { id } = useParams()
+
+  const video = useSelector(state => state.details)
+  const dispatch = useDispatch()
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [duration, setDuration] = useState(0);
   const [leftTime, setLeftTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false)
+  const [idTimeOutUpdateTime, setIdTimeOutUpdateTime] = useState<any>(null)
 
   const playPause = () => {
     if (isPlaying) {
@@ -66,13 +77,20 @@ export default function UseControlPlayer(
       videoRef.current.currentTime -= 10;
     }
     videoRef.current.dispatchEvent(new Event("timeupdate"));
+    updateWatched(id as string, videoRef.current.currentTime)
   };
 
   /**
   * Setting up all events to take care of the video
   */
   useEffect(() => {
-    const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", () => {
+    const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", async () => {
+      if (!video.length) {
+        const response = await updateVideo(id, { length: videoRef.current.duration })
+        const result = await response.json()
+        dispatch(setLength(videoRef.current.duration))
+      }
+
       setDuration(videoRef.current.duration);
       progressRef.current.setAttribute("max", videoRef.current.duration.toString());
     });
@@ -85,10 +103,7 @@ export default function UseControlPlayer(
       // but we only fire event on mouse up
       progressBarRef.current.style.width =
         Math.floor((videoRef.current.currentTime / videoRef.current.duration) * 100) + "%";
-
-
     });
-
 
     const progress = progressRef.current.addEventListener("click", (e) => {
       const rect = progressRef.current.getBoundingClientRect();
@@ -123,6 +138,24 @@ export default function UseControlPlayer(
       document.removeEventListener("msfullscreenchange", msFsChange);
     };
   }, []);
+
+  useEffect(() => {
+    updateWatched(id as string, videoRef.current.currentTime)
+    if (isPlaying) {
+      const idTimeOut = setTimeout(() => {
+        updateWatched(id as string, videoRef.current.currentTime)
+      }, 10000)
+
+      setIdTimeOutUpdateTime(idTimeOut)
+    } else {
+      clearTimeout(idTimeOutUpdateTime)
+      setIdTimeOutUpdateTime(null)
+    }
+
+    return () => {
+      clearTimeout(idTimeOutUpdateTime)
+    }
+  }, [isPlaying])
 
   return {
     playPause,

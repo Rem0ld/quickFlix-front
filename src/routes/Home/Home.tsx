@@ -1,4 +1,5 @@
-import React, { useEffect, useReducer, useState } from "react";
+import { Carousel } from "antd";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -16,9 +17,11 @@ import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
   const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
-  const dispatch = useDispatch();
+  const [offset, setOffset] = useState(0);
+  const [max, setMax] = useState(5);
 
   useEffect(() => {
     dispatch(setVideo(initialStateDetailsVideo));

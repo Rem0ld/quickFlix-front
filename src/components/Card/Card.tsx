@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { createElement, useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -50,6 +50,7 @@ const Card = ({
     };
     dispatch(setVideo(data));
   };
+
   // useEffect(() => {
   //   if (watchTime > 0 && length > 0) {
   //     setPercentageSeen(makePercentage(watchTime, length));
@@ -65,7 +66,7 @@ const Card = ({
   return (
     <>
       <div
-        className="card relative w-52 h-32"
+        className="card relative w-52 h-96"
         onMouseEnter={() => {
           setVisible(true);
         }}
@@ -73,7 +74,15 @@ const Card = ({
           setVisible(false);
         }}
       >
-        <div className="absolute w-52 h-32 cursor-pointer bg-gray-200">
+        <div
+          className="absolute w-52 h-96 cursor-pointer bg-gray-200"
+          onClick={() => {
+            dispatchDetails();
+            navigate(`/browse?id=${id}`, {
+              state: { backgroundLocation: location },
+            });
+          }}
+        >
           {posterPath?.length ? (
             <img
               className="w-full h-full aspect-square rounded-sm"
@@ -86,17 +95,17 @@ const Card = ({
           )}
         </div>
         {/* === HOVERING CARD === */}
-        <div
+        {/* <div
           className={`${
             visible ? "isVisible" : ""
-          } hovering-card absolute w-52 h-32 z-50 transform-gpu rounded-sm`}
+          } hovering-card absolute  z-50 transform-gpu rounded-sm`}
         >
           {visible && (
             <div className="bg-gray-800 aspect-square drop-shadow-md rounded-sm">
               {ytKeys?.length ? (
                 <iframe
-                  width="300"
-                  height="250"
+                  width="500"
+                  height="400"
                   className="rounded-t-sm"
                   src={`https://www.youtube.com/embed/${ytKeys[randomNum]}`}
                   title="YouTube video player"
@@ -146,7 +155,7 @@ const Card = ({
               )}
             </div>
           )}
-        </div>
+        </div> */}
       </div>
     </>
   );

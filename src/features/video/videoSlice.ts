@@ -40,10 +40,13 @@ export const videoSlice = createSlice({
   reducers: {
     setVideo: (state, action: PayloadAction<VideoState>) => {
       return action.payload
+    },
+    setLength: (state, action: PayloadAction<number>) => {
+      state.length = action.payload
     }
   }
 })
 
-export const { setVideo } = videoSlice.actions;
+export const { setVideo, setLength } = videoSlice.actions;
 
 export default videoSlice.reducer;
