@@ -1,34 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Season } from "../../types";
+import { Season, Video } from "../../types";
 
-export interface VideoState {
-  id: string;
-  name: string;
-  posterPath: string[];
-  ytKeys: string[];
-  genres: string[];
-  year: string;
-  resume: string;
-  score: number;
-  length: number;
-  watchTime: number;
-  seasons: Season[] | [];
-  subtitles: string[];
-  percentageSeen: number;
-}
+export type VideoState = Partial<Video> & { percentageSeen: number }
 
 export const initialStateDetailsVideo: VideoState = {
-  id: '',
+  _id: '',
   name: '',
   posterPath: [],
-  ytKeys: [],
+  trailerYtCode: [],
   genres: [],
   year: '',
   resume: '',
   score: 0,
   length: 0,
-  watchTime: 0,
-  seasons: [],
+  watched: {
+    _id: '',
+    timeWatched: 0,
+    length: 0,
+    finished: false,
+    video: '',
+    user: ''
+  },
+  season: '',
   subtitles: [],
   percentageSeen: 0
 }
@@ -43,10 +36,13 @@ export const videoSlice = createSlice({
     },
     setLength: (state, action: PayloadAction<number>) => {
       state.length = action.payload
+    },
+    setPercentage: (state, action: PayloadAction<number>) => {
+      state.percentageSeen = action.payload
     }
   }
 })
 
-export const { setVideo, setLength } = videoSlice.actions;
+export const { setVideo, setLength, setPercentage } = videoSlice.actions;
 
 export default videoSlice.reducer;

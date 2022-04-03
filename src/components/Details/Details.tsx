@@ -33,15 +33,14 @@ export default function Details({
   }, [detailsVideo]);
 
   const {
-    id,
+    _id,
     name,
-    ytKeys,
+    trailerYtCode,
     genres,
     resume,
     score,
     year,
     seasons,
-    watchTime,
     length,
     percentageSeen,
   } = detailsVideo;
@@ -49,19 +48,20 @@ export default function Details({
   const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
   const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
 
-  const hours = useMemo(() => secondToHours(length), [length]);
-  const mins = useMemo(() => secondToMinutes(length), [length]);
+  // const hours = useMemo(() => secondToHours(length), [length]);
+  // const mins = useMemo(() => secondToMinutes(length), [length]);
 
   useEffect(() => {
-    setParsedMovieLength({
-      h: hours,
-      min: mins,
-    });
-    setParsedWatchTime({
-      mins: Math.floor(+watchTime / 60),
-      total: Math.floor(+length / 60),
-    });
-  }, [length, hours, mins]);
+    // setParsedMovieLength({
+    //   h: hours,
+    //   min: mins,
+    // });
+    // setParsedWatchTime({
+    //   mins: Math.floor(+watchTime / 60),
+    //   total: Math.floor(+length / 60),
+    // });
+    console.log(length);
+  }, [length]);
 
   return (
     <>
@@ -73,7 +73,7 @@ export default function Details({
           <GrClose color="#fff" size={22} />
         </button>
         <Suspense fallback="Loading...">
-          <IframeWrapper ytKey={ytKeys.length ? ytKeys[0] : ""} />
+          <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
         </Suspense>
         <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
           {percentageSeen ? (
@@ -100,7 +100,7 @@ export default function Details({
         </div>
         <button
           className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
-          onClick={() => play(id)}
+          onClick={() => play(_id)}
         >
           <FaPlay size={16} color={"black"} />
           {percentageSeen === 0 ? "Play" : "Resume"}
@@ -138,11 +138,11 @@ export default function Details({
         </div>
         <div className="pt-12 text-gray-300">
           {seasons?.length ? <WrapperEpisodes seasons={seasons} /> : ""}
-          {ytKeys?.length > 1 ? (
+          {trailerYtCode?.length > 1 ? (
             <>
               <h3 className="text-2xl font-semibold py-5">Trailers</h3>
               <div className="flex gap-5 flex-wrap">
-                {ytKeys.map((ytKey: string, i: number) => {
+                {trailerYtCode.map((ytKey: string, i: number) => {
                   if (i === 0) return "";
                   return (
                     <iframe

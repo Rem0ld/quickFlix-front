@@ -3,7 +3,7 @@ import { FaPlay } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { setVideo } from "../../features/video/videoSlice";
+import { setPercentage, setVideo } from "../../features/video/videoSlice";
 import { Video } from "../../types";
 import {
   makePercentage,
@@ -14,19 +14,21 @@ const btnStyle =
   "grid place-items-center h-10 w-10 border-2 rounded-full border border-white border-gray-500 bg-gray-800";
 
 const Card = ({
-  trailerYtCode: ytKeys,
+  trailerYtCode,
   posterPath,
   name,
-  _id: id,
   year,
   resume,
   genres,
   score,
   length,
+  watched,
+  _id,
 }: Partial<Video>): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
+  console.log("🚀 ~ file: Card.tsx ~ line 27 ~ watched", watched);
 
   const [visible, setVisible] = useState(false);
   const [randomNum, setRandomNum] = useState<number>(0);
@@ -34,33 +36,34 @@ const Card = ({
 
   const dispatchDetails = () => {
     const data = {
-      ytKeys,
+      trailerYtCode,
       posterPath,
       name,
-      id,
+      _id,
       year,
       resume,
       genres,
       score,
       length,
       percentageSeen,
-      watchTime: 0,
-      seasons: [],
+      season: "",
       subtitles: [],
     };
     dispatch(setVideo(data));
   };
 
-  // useEffect(() => {
-  //   if (watchTime > 0 && length > 0) {
-  //     setPercentageSeen(makePercentage(watchTime, length));
-  //   }
-
-  //   dispatch(setVideo(Object.assign({ percentageSeen })));
-  // }, [watchTime, length]);
+  useEffect(() => {
+    const time = watched?.timeWatched || 0;
+    const leng = length || 0;
+    if (time > 0 && leng > 0) {
+      const percentage = makePercentage(time, leng);
+      setPercentageSeen(percentage);
+      //dispatch(setPercentage(percentage));
+    }
+  }, [watched, length]);
 
   useEffect(() => {
-    setRandomNum(makeRandomNumber(0, ytKeys?.length || 0));
+    setRandomNum(makeRandomNumber(0, trailerYtCode?.length || 0));
   }, []);
 
   return (
@@ -78,7 +81,7 @@ const Card = ({
           className="absolute w-52 h-96 cursor-pointer bg-gray-200"
           onClick={() => {
             dispatchDetails();
-            navigate(`/browse?id=${id}`, {
+            navigate(`/browse?id=${_id}`, {
               state: { backgroundLocation: location },
             });
           }}
@@ -94,6 +97,13 @@ const Card = ({
             </h1>
           )}
         </div>
+        {percentageSeen ? (
+          <div className="progress w-full absolute h-1 bottom-0">
+            <div className={`filling h-1 bg-red-600 w-[${percentageSeen}]`} />
+          </div>
+        ) : (
+          ""
+        )}
         {/* === HOVERING CARD === */}
         {/* <div
           className={`${

@@ -27,14 +27,26 @@ export type Video = {
   score: number;
   year: string;
   length: number;
+  watched?: Watched;
 };
 
 export type Episode = { _id: string; number: string, ref: Partial<Video> }
+
 export type Season = {
   _id: string;
   number: string,
   episodes: Episode[],
 }
+
+export type Watched = {
+  _id: string;
+  timeWatched: number;
+  length: number;
+  finished: boolean;
+  video: string;
+  user: string;
+}
+
 export type TvShow = {
   _id: string;
   idMovieDb?: string;
@@ -70,3 +82,19 @@ export type ParsedWatchedTime = {
   mins: number;
   total: number;
 }
+
+// export interface VideoState {
+  //   id: string;
+  //   name: string;
+  //   posterPath: string[];
+  //   ytKeys: string[];
+  //   genres: string[];
+  //   year: string;
+  //   resume: string;
+  //   score: number;
+  //   length: number;
+  //   watchTime: number;
+  //   seasons: Season[] | [];
+  //   subtitles: string[];
+  //   percentageSeen: number;
+  // }

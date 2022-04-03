@@ -41,7 +41,7 @@ const Home = () => {
       {/* <TestCard /> */}
       <div className="h-32" />
       <InfiniteScroll
-        className="pl-14 flex gap-6 flex-wrap"
+        className="px-5 flex gap-6 flex-wrap"
         dataLength={movies.length} //This is important field to render the next data
         next={fetchMoreMovies}
         hasMore={hasMoreMovie}
