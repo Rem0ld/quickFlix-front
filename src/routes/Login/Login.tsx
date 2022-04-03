@@ -59,7 +59,7 @@ export default function Login(): JSX.Element {
 
   return (
     <>
-      <div className="grid place-items-center h-[calc(100%-3.5rem)]">
+      <div className="grid place-items-center h-[calc(100vh-3.5rem)]">
         <div
           className="relative"
           style={{
