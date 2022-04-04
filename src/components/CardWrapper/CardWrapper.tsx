@@ -8,18 +8,18 @@ export default function CardWrapper({
   children,
 }: {
   children: ReactElement;
-  data: Omit<VideoState, "percentageSeen">;
+  data: VideoState;
 }) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const [percentageSeen, setPercentageSeen] = useState(0);
+  // const [percentageSeen, setPercentageSeen] = useState(0);
 
-  useEffect(() => {
-    if (data.watchTime > 0 && data.length > 0) {
-      setPercentageSeen(makePercentage(data.watchTime, length));
-    }
-    dispatch(setVideo(Object.assign({ percentageSeen }, data)));
-  }, [data.watchTime, data.length]);
+  // useEffect(() => {
+  //   if (data.watchTime > 0 && data.length > 0) {
+  //     setPercentageSeen(makePercentage(data.watchTime, length));
+  //   }
+  //   dispatch(setVideo(Object.assign({ percentageSeen }, data)));
+  // }, [data.watchTime, data.length]);
 
   return <>{children}</>;
 }

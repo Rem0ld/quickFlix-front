@@ -2,7 +2,6 @@ import { baseUrl, headers } from "../config";
 
 export async function createWatched(id: string) {
   if (!id) return null;
-  console.log('createwatched', id)
   try {
     return fetch(`${baseUrl}watched`, {
       method: "POST",
@@ -18,7 +17,6 @@ export async function createWatched(id: string) {
 }
 
 export async function updateWatched(id: string, time: number) {
-  console.log("🚀 ~ file: watched.ts ~ line 21 ~ updateWatched ~ time", time)
 
   try {
     const response = await fetch(`${baseUrl}watched/${id}`, {
@@ -29,7 +27,6 @@ export async function updateWatched(id: string, time: number) {
       })
     })
     const result = await response.json();
-    console.log("🚀 ~ file: watched.ts ~ line 32 ~ updateWatched ~ result", result)
     return result
   } catch (error) {
     console.error("in api update watched", error)

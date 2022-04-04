@@ -45,7 +45,8 @@ export default function PlayerControl({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { name, type, watchTime } = useSelector((state) => state.details);
+  // @ts-expect-error - false error defaultRootState
+  const { name, type, watched } = useSelector((state) => state.details);
 
   const controlRef = useRef<any>(null);
   const goBackRef = useRef<any>(null);
@@ -53,10 +54,8 @@ export default function PlayerControl({
   // TODO: make a useEffect with timeInterval of 1sec for updating time
 
   useEffect(() => {
-    if (!watchTime) {
-      console.log("creating watched");
+    if (!watched) {
       createWatched(idVideo);
-      console.log("created watched");
     }
   }, []);
 

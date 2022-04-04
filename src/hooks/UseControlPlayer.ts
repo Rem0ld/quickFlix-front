@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { updateVideo } from "../api/video";
 import { updateWatched } from "../api/watched";
-import { setLength } from "../features/video/videoSlice";
+import { setLength, setUpdateTimeWatched } from "../features/video/videoSlice";
 
 
 export default function UseControlPlayer(
@@ -14,7 +14,7 @@ export default function UseControlPlayer(
   progressBarRef: MutableRefObject<HTMLDivElement>) {
 
   const { id } = useParams()
-
+  // @ts-expect-error
   const video = useSelector(state => state.details)
   const dispatch = useDispatch()
 
@@ -45,30 +45,44 @@ export default function UseControlPlayer(
   };
 
   const setFullscreenData = function (state: any) {
+    // @ts-expect-error
     videoContainer.current.setAttribute("data-fullscreen", !!state);
   };
 
   const handleFullScreen = () => {
     if (isFullScreen) {
       if (document.exitFullscreen) document.exitFullscreen();
+      // @ts-expect-error
       else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+      // @ts-expect-error
       else if (document.webkitCancelFullScreen) document.webkitCancelFullScreen();
+      // @ts-expect-error
       else if (document.msExitFullscreen) document.msExitFullscreen();
       setFullscreenData(false);
       setIsFullScreen(false);
     } else {
       if (videoContainer.current.requestFullscreen) videoContainer.current.requestFullscreen();
+      // @ts-expect-error
       else if (videoContainer.current.mozRequestFullScreen)
+        // @ts-expect-error
         videoContainer.current.mozRequestFullScreen();
+      // @ts-expect-error
       else if (videoContainer.current.webkitRequestFullScreen)
+        // @ts-expect-error
         videoContainer.current.webkitRequestFullScreen();
+      // @ts-expect-error
       else if (videoContainer.current.msRequestFullscreen)
+        // @ts-expect-error
         videoContainer.current.msRequestFullscreen();
       setFullscreenData(true);
       setIsFullScreen(true);
     }
   };
 
+  const handleUpdateTimeWatched = () => {
+    dispatch(setUpdateTimeWatched(videoRef.current.currentTime))
+    updateWatched(id as string, videoRef.current.currentTime)
+  }
 
   const handleForwardBackward = (type: "rewind" | "forward") => {
     if (type === "forward") {
@@ -77,7 +91,7 @@ export default function UseControlPlayer(
       videoRef.current.currentTime -= 10;
     }
     videoRef.current.dispatchEvent(new Event("timeupdate"));
-    updateWatched(id as string, videoRef.current.currentTime)
+    handleUpdateTimeWatched()
   };
 
   /**
@@ -87,7 +101,6 @@ export default function UseControlPlayer(
     const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", async () => {
       if (!video.length) {
         const response = await updateVideo(id, { length: videoRef.current.duration })
-        const result = await response.json()
         dispatch(setLength(videoRef.current.duration))
       }
 
@@ -109,24 +122,32 @@ export default function UseControlPlayer(
       const rect = progressRef.current.getBoundingClientRect();
       const pos = (e.pageX - rect.left) / progressRef.current.offsetWidth;
       videoRef.current.currentTime = pos * videoRef.current.duration;
+
+      handleUpdateTimeWatched()
     });
 
     const fsChange = document.addEventListener("fullscreenchange", function () {
       setFullscreenData(!!(document.fullscreen || document.fullscreenElement));
     });
     const webkitFsChange = document.addEventListener("webkitfullscreenchange", function () {
+      // @ts-expect-error
       setFullscreenData(!!document.webkitIsFullScreen);
     });
     const mozFsChange = document.addEventListener("mozfullscreenchange", function () {
+      // @ts-expect-error
       setFullscreenData(!!document.mozFullScreen);
     });
     const msFsChange = document.addEventListener("msfullscreenchange", function () {
+      // @ts-expect-error
       setFullscreenData(!!document.msFullscreenElement);
     });
 
     () => {
+      // @ts-expect-error
       videoRef.current.removeEventListener("loadedmetadata", loadedMetadata);
+      // @ts-expect-error
       videoRef.current.removeEventListener("timeupdate", timeUpdate);
+      // @ts-expect-error
       progressRef.current.removeEventListener("click", progress);
       // @ts-expect-error
       document.removeEventListener("fullscreenchange", fsChange);
@@ -140,10 +161,18 @@ export default function UseControlPlayer(
   }, []);
 
   useEffect(() => {
-    updateWatched(id as string, videoRef.current.currentTime)
+    if (video?.watched?.timeWatched > 0) {
+      videoRef.current.currentTime = video.watched.timeWatched;
+      progressBarRef.current.style.width =
+        Math.floor((video.watched.timeWatched / videoRef.current.duration) * 100) + "%";
+
+    }
+  }, [video.watched])
+
+  useEffect(() => {
     if (isPlaying) {
       const idTimeOut = setTimeout(() => {
-        updateWatched(id as string, videoRef.current.currentTime)
+        handleUpdateTimeWatched()
       }, 10000)
 
       setIdTimeOutUpdateTime(idTimeOut)

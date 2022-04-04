@@ -28,7 +28,6 @@ const Card = ({
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  console.log("🚀 ~ file: Card.tsx ~ line 27 ~ watched", watched);
 
   const [visible, setVisible] = useState(false);
   const [randomNum, setRandomNum] = useState<number>(0);
@@ -46,6 +45,7 @@ const Card = ({
       score,
       length,
       percentageSeen,
+      watched,
       season: "",
       subtitles: [],
     };
@@ -58,7 +58,6 @@ const Card = ({
     if (time > 0 && leng > 0) {
       const percentage = makePercentage(time, leng);
       setPercentageSeen(percentage);
-      //dispatch(setPercentage(percentage));
     }
   }, [watched, length]);
 
@@ -99,7 +98,12 @@ const Card = ({
         </div>
         {percentageSeen ? (
           <div className="progress w-full absolute h-1 bottom-0">
-            <div className={`filling h-1 bg-red-600 w-[${percentageSeen}]`} />
+            <div
+              className={`filling h-1 bg-red-600`}
+              style={{
+                width: percentageSeen + "%",
+              }}
+            />
           </div>
         ) : (
           ""
