@@ -41,3 +41,7 @@ video::-webkit-media-controls { display:none !important; }
   background-color: rgb(59, 59, 59);
   transform: translate3d(-10%, -10%, 0);
 }
+
+body.modal-opened {
+  overflow: hidden;
+}

@@ -60,14 +60,14 @@ export default function Details({
       h: secondToHours(length),
       min: secondToMinutes(length),
     });
-    setParsedWatchTime({
-      mins: Math.floor(+watched.timeWatched / 60),
-      total: Math.floor(+length / 60),
-    });
   }, [length]);
 
   useEffect(() => {
     if (length && watched) {
+      setParsedWatchTime({
+        mins: Math.floor(+watched.timeWatched / 60),
+        total: Math.floor(+length / 60),
+      });
       setPercentage(makePercentage(watched.timeWatched, length));
     }
   }, [length, watched]);
@@ -115,7 +115,7 @@ export default function Details({
           {percentage === 0 ? "Play" : "Resume"}
         </button>
       </div>
-      <div className=" px-10 pt-3">
+      <div className=" px-6 pt-3">
         <div className="flex">
           <div className="flex flex-col gap-4 w-9/12 text-gray-300 font-light">
             <div className="flex gap-x-2 items-baseline">
