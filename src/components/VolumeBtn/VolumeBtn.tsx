@@ -16,9 +16,11 @@ export default function VolumeBtn({
 }) {
   const [curVolume, setVolume] = useState(1);
 
-  const handleChangeVolume = (event) => {
-    setVolume(+event.target.value);
-    changeVolume(+event.target.value);
+  const handleChangeVolume = (event: any) => {
+    if (event?.target?.value) {
+      setVolume(+event.target.value);
+      changeVolume(+event.target.value);
+    }
   };
 
   useEffect(() => {
