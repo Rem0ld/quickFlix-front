@@ -15,6 +15,8 @@ video::-webkit-media-controls { display:none !important; }
 
 #controls { z-index:2147483647; }
 
+/* 
+not in use apparently 
 .progress::before {
   content: '';
   position: absolute;
@@ -23,7 +25,7 @@ video::-webkit-media-controls { display:none !important; }
   background-color: transparent;
   top: 19%;
   transform: translateY(-50%);
-}
+} */
 
 .progress:hover .handle {
   opacity: 1;

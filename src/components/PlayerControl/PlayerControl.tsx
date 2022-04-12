@@ -103,6 +103,7 @@ export default function PlayerControl({
       opacity: 1,
     });
     gsap.to(controlRef.current, {
+      display: "flex",
       bottom: "0px",
     });
   };
@@ -111,16 +112,22 @@ export default function PlayerControl({
     gsap.to(goBackRef.current, {
       opacity: 0,
     });
-    gsap.to(controlRef.current, {
-      bottom: "-80px",
-    });
+    gsap
+      .to(controlRef.current, {
+        bottom: "-80px",
+      })
+      .then((result) => {
+        gsap.to(controlRef.current, {
+          display: "none",
+        });
+      });
   };
 
   return (
     <div
       onMouseMove={handleHoverMediaPlayer}
       ref={videoContainer}
-      className="h-screen w-screen relative bg-black"
+      className="h-screen w-screen max-h-full relative bg-black"
     >
       <span
         ref={goBackRef}
@@ -167,7 +174,7 @@ export default function PlayerControl({
         />
         {/* === MAIN CONTROLS === */}
         <div className="flex items-center justify-between">
-          <div className="flex gap-x-4">
+          <div className="flex gap-x-4 items-center">
             <BooleanBtn
               isActive={isPlaying}
               action={playPause}
@@ -178,14 +185,14 @@ export default function PlayerControl({
             />
             <button
               id="rewind-10"
-              className="hover:scale-125 transition-all"
+              className="w-8 h-8 hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("rewind")}
             >
               <FaBackward color="white" size={size} />
             </button>
             <button
               id="forward-10"
-              className="hover:scale-125 transition-all"
+              className="w-8 h-8 hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("forward")}
             >
               <FaForward color="white" size={size} />
@@ -204,17 +211,26 @@ export default function PlayerControl({
           <div className="flex gap-x-4">
             <button
               id="next"
-              className={`${type === "tv" ? "visible" : "hidden"}`}
+              className={`${type === "tv" ? "visible" : "hidden"} w-8 h-8 `}
             >
               <IoPlaySkipForward color="white" size={size} />
             </button>
-            <button id="episodes" className="hover:scale-125 transition-all">
+            <button
+              id="episodes"
+              className="w-8 h-8 hover:scale-125 transition-all"
+            >
               <IoIosJournal color="white" size={size} />
             </button>
-            <button id="subtitles" className="hover:scale-125 transition-all">
+            <button
+              id="subtitles"
+              className="w-8 h-8 hover:scale-125 transition-all"
+            >
               <FaCommentAlt color="white" size={size} />
             </button>
-            <button id="speed" className="hover:scale-125 transition-all">
+            <button
+              id="speed"
+              className="w-8 h-8 hover:scale-125 transition-all"
+            >
               <SiSpeedtest color="white" size={size} />
             </button>
             <BooleanBtn

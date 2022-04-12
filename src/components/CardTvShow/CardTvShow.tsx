@@ -12,10 +12,6 @@ import {
 } from "../../utils/numberManipulation";
 
 export default function CardTvShow(props: TvShow) {
-  console.log(
-    "🚀 ~ file: CardTvShow.tsx ~ line 15 ~ CardTvShow ~ props",
-    props
-  );
   const { trailerYtCode, posterPath, name, watched, seasons } = props;
   const navigate = useNavigate();
   const location = useLocation();
