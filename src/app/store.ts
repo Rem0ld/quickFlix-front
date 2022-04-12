@@ -1,9 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import videoReducer from '../features/video/videoSlice'
+import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import videoReducer from "../features/video/videoSlice";
+import tvShowReducer from "../features/tvShow/tvShowSlice";
 
 export const store = configureStore({
   reducer: {
-    details: videoReducer
+    details: videoReducer,
+    detailsTvShow: tvShowReducer
   },
 });
 

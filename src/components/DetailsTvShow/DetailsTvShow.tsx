@@ -1,60 +1,33 @@
-import React, {
-  Suspense,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { nanoid } from "@reduxjs/toolkit";
+import React, { Suspense, useEffect } from "react";
 import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
-import { nanoid } from "@reduxjs/toolkit";
-import Score from "../Score/Score";
-import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import { useSelector } from "react-redux";
-import { ParsedMovieTime, ParsedWatchedTime } from "../../types";
-import {
-  makePercentage,
-  secondToHours,
-  secondToMinutes,
-} from "../../utils/numberManipulation";
-import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import { useNavigate } from "react-router-dom";
+import IframeWrapper from "../IframeWrapper/IframeWrapper";
+import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
+import Score from "../Score/Score";
 
-export default function Details() {
-  //   {
-  //   hide,
-  //   play,
-  // }: {
-  //   hide: () => void;
-  //   play: (state: string) => void;
-  // }
+export default function DetailsTvShow() {
   const navigate = useNavigate();
   // @ts-expect-error - false error with defaultRootState
-  const detailsVideo = useSelector((state) => state.details);
-
-  useEffect(() => {
-    if (!detailsVideo.id && !detailsVideo.name) {
-      navigate("/browse");
-    }
-  }, [detailsVideo]);
-
+  const detailsTvShow = useSelector((state) => state.detailsTvShow);
   const {
     _id,
+    idMovieDb,
     name,
+    location,
+    firstAirDate,
+    posterPath,
+    originCountry,
+    ongoing,
+    date,
     trailerYtCode,
     genres,
     resume,
     score,
-    year,
     seasons,
-    length,
-    watched,
-    percentageSeen,
-  } = detailsVideo;
-
-  const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
-  const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
-  const [percentage, setPercentage] = useState(0);
+  } = detailsTvShow;
 
   const play = (id: any) => {
     navigate(`/player/${id}`, { state: id });
@@ -62,21 +35,10 @@ export default function Details() {
   };
 
   useEffect(() => {
-    setParsedMovieLength({
-      h: secondToHours(length),
-      min: secondToMinutes(length),
-    });
-  }, [length]);
-
-  useEffect(() => {
-    if (length && watched) {
-      setParsedWatchTime({
-        mins: Math.floor(+watched.timeWatched / 60),
-        total: Math.floor(+length / 60),
-      });
-      setPercentage(makePercentage(watched.timeWatched, length));
+    if (!detailsTvShow._id && !detailsTvShow.name) {
+      navigate("/browse");
     }
-  }, [length, watched]);
+  }, [detailsTvShow]);
 
   return (
     <>
@@ -90,35 +52,35 @@ export default function Details() {
         <Suspense fallback="Loading...">
           <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
         </Suspense>
-        <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
-          {percentage ? (
-            <>
-              <div className="w-9/12">
-                <div className="flex items-center justify-center p-1">
-                  <div className="progress w-11/12 h-px bg-gray-500 cursor-pointer">
-                    <div
-                      style={{
-                        width: `${percentage}%`,
-                      }}
-                      className="progressBar h-px relative bg-red-500 cursor-pointer"
-                    ></div>
-                  </div>
+        {/* <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
+        {percentage ? (
+          <>
+            <div className="w-9/12">
+              <div className="flex items-center justify-center p-1">
+                <div className="progress w-11/12 h-px bg-gray-500 cursor-pointer">
+                  <div
+                    style={{
+                      width: `${percentage}%`,
+                    }}
+                    className="progressBar h-px relative bg-red-500 cursor-pointer"
+                  ></div>
                 </div>
               </div>
-              <span className="text-gray-700 text-xs whitespace-nowrap">
-                {parsedWatchTime?.mins} on {parsedWatchTime?.total} mins
-              </span>
-            </>
-          ) : (
-            ""
-          )}
-        </div>
+            </div>
+            <span className="text-gray-700 text-xs whitespace-nowrap">
+              {parsedWatchTime?.mins} on {parsedWatchTime?.total} mins
+            </span>
+          </>
+        ) : (
+          ""
+        )}
+      </div> */}
         <button
           className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
           onClick={() => play(_id)}
         >
           <FaPlay size={16} color={"black"} />
-          {percentage === 0 ? "Play" : "Resume"}
+          Play
         </button>
       </div>
       <div className=" px-6 pt-3">
@@ -126,14 +88,14 @@ export default function Details() {
           <div className="flex flex-col gap-4 w-9/12 text-gray-300 font-light">
             <div className="flex gap-x-2 items-baseline">
               <h6 className="capitalize">{name}</h6>
-              {year ? <span>{new Date(year).getFullYear()}</span> : ""}
-              {parsedMovieLength?.h ? (
-                <span>
-                  {parsedMovieLength?.h} h {parsedMovieLength?.min} min
-                </span>
-              ) : (
-                ""
-              )}
+              {/* {year ? <span>{new Date(year).getFullYear()}</span> : ""}
+            {parsedMovieLength?.h ? (
+              <span>
+                {parsedMovieLength?.h} h {parsedMovieLength?.min} min
+              </span>
+            ) : (
+              ""
+            )} */}
               {score ? <Score score={score} /> : ""}
             </div>
             <p className="text-sm">{resume}</p>
@@ -152,6 +114,7 @@ export default function Details() {
           </div>
         </div>
         <div className="pt-12 text-gray-300">
+          {seasons?.length ? <WrapperEpisodes seasons={seasons} /> : ""}
           {trailerYtCode?.length > 1 ? (
             <>
               <h3 className="text-2xl font-semibold py-5">Trailers</h3>

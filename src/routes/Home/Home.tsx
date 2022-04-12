@@ -15,6 +15,10 @@ import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import Navbar from "../../components/Navbar/Navbar";
 import { TestCard } from "../../components/TestCard/TestCard";
 import {
+  initialStateDetailsTvShow,
+  setTvShow,
+} from "../../features/tvShow/tvShowSlice";
+import {
   initialStateDetailsVideo,
   setVideo,
 } from "../../features/video/videoSlice";
@@ -31,6 +35,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(setVideo(initialStateDetailsVideo));
+    dispatch(setTvShow(initialStateDetailsTvShow));
   }, []);
 
   useEffect(() => {
@@ -47,7 +52,7 @@ const Home = () => {
       {/* <TestCard /> */}
       <div className="h-32" />
       <InfiniteScroll
-        className="px-5 flex gap-6 flex-wrap"
+        className="px-5 flex gap-6 flex-wrap mb-6"
         dataLength={movies.length} //This is important field to render the next data
         next={fetchMoreMovies}
         hasMore={hasMoreMovie}
@@ -58,7 +63,7 @@ const Home = () => {
         })}
       </InfiniteScroll>
       <InfiniteScroll
-        className="pl-14 flex gap-6 flex-wrap"
+        className="px-5 flex gap-6 flex-wrap"
         dataLength={tvShows.length} //This is important field to render the next data
         next={fetchMoreTvShows}
         hasMore={hasMoreTvShow}

@@ -28,9 +28,9 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
 
   useEffect(() => {
     if (parsedSeasons) {
-      // setSelectedSeason(
-      //   parsedSeasons[selected].sort((a, b) => +a.number - +b.number)
-      // );
+      setSelectedSeason(
+        parsedSeasons[selected].sort((a, b) => +a.number - +b.number)
+      );
       setSelectedSeason(parsedSeasons[selected]);
     }
   }, [parsedSeasons, selected]);

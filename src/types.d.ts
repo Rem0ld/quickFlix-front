@@ -49,7 +49,7 @@ export type Watched = {
 
 export type TvShow = {
   _id: string;
-  idMovieDb?: string;
+  idMovieDb: string;
   name: string;
   location: string;
   numberSeason?: number;
@@ -62,7 +62,7 @@ export type TvShow = {
   score?: number;
   date?: Date;
   genres: string[];
-  trailerYtCode?: string[];
+  trailerYtCode: string[];
   firstAirDate: string;
   watched?: Watched;
 };

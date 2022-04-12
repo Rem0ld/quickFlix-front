@@ -2,25 +2,30 @@ import { Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { setTvShow } from "../../features/tvShow/tvShowSlice";
 import { TvShow, Video } from "../../types";
+import {
+  makePercentage,
+  makeRandomNumber,
+} from "../../utils/numberManipulation";
 
-export default function CardTvShow({
-  _id,
-  trailerYtCode,
-  posterPath,
-  name,
-  date,
-  resume,
-  genres,
-  score,
-  watched,
-  seasons,
-}: Partial<TvShow>) {
+export default function CardTvShow(props: TvShow) {
+  console.log(
+    "🚀 ~ file: CardTvShow.tsx ~ line 15 ~ CardTvShow ~ props",
+    props
+  );
+  const { trailerYtCode, posterPath, name, watched, seasons } = props;
   const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useDispatch();
+
   const [visible, setVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState("");
+  const [randomNum, setRandomNum] = useState<number>(0);
+  const [percentageSeen, setPercentageSeen] = useState(0);
 
   useEffect(() => {
     if (seasons?.length) {
@@ -29,6 +34,19 @@ export default function CardTvShow({
       if (_id) setId(_id);
     }
   }, [seasons]);
+
+  useEffect(() => {
+    const time = watched?.timeWatched || 0;
+    const leng = length || 0;
+    if (time > 0 && leng > 0) {
+      const percentage = makePercentage(time, leng);
+      setPercentageSeen(percentage);
+    }
+  }, [watched, length]);
+
+  useEffect(() => {
+    setRandomNum(makeRandomNumber(0, trailerYtCode?.length || 0));
+  }, []);
 
   return (
     <>
@@ -41,7 +59,15 @@ export default function CardTvShow({
         //   setVisible(false);
         // }}
       >
-        <div className="absolute w-52 h-96 rounded-md cursor-pointer bg-gray-200">
+        <div
+          className="absolute w-52 h-96 rounded-md cursor-pointer bg-gray-200"
+          onClick={() => {
+            dispatch(setTvShow(props));
+            navigate(`/browse/tv-show?id=${props._id}`, {
+              state: { backgroundLocation: location },
+            });
+          }}
+        >
           <img
             className="w-full h-full aspect-square rounded-sm"
             src={`http://localhost:3050/images/${posterPath}`}
@@ -50,6 +76,18 @@ export default function CardTvShow({
             {name}
           </h1>
         </div>
+        {percentageSeen ? (
+          <div className="progress w-full absolute h-1 bottom-0">
+            <div
+              className={`filling h-1 bg-red-600`}
+              style={{
+                width: percentageSeen + "%",
+              }}
+            />
+          </div>
+        ) : (
+          ""
+        )}
         {/* === HOVERING CARD === */}
         {/* <div
           className={`${

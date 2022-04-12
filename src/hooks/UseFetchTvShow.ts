@@ -21,7 +21,7 @@ export default function UseFetchTvShow() {
   };
 
   return {
-    tvShows: data, hasMoreTvShow: skip + limit < total,
+    tvShows: data as TvShow[], hasMoreTvShow: skip + limit < total,
     fetchMoreTvShows: fetchMore
   }
 }

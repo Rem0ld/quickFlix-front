@@ -1,9 +1,9 @@
 import { Modal } from "../Modal/Modal";
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Details from "../Details/Details";
 
-export default function ModalWrapper() {
+export default function ModalWrapper({ children }: { children: ReactElement }) {
   const navigate = useNavigate();
   const [modalIsVisible] = useState(true);
   const [searchParams] = useSearchParams();
@@ -24,12 +24,7 @@ export default function ModalWrapper() {
       }}
       width={"60%"}
     >
-      <Details
-        hide={() => navigate("/browse")}
-        play={(id) =>
-          navigate(`/player/${id}`, { state: searchParams.get("id") })
-        }
-      />
+      {children}
     </Modal>
   );
 }

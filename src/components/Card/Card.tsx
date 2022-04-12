@@ -78,8 +78,7 @@ const Card = ({
       >
         <div
           className="absolute w-52 h-96 cursor-pointer bg-gray-200"
-          onClick={(e) => {
-            console.log("🚀 ~ file: Card.tsx ~ line 87 ~ e", e);
+          onClick={() => {
             dispatchDetails();
             navigate(`/browse?id=${_id}`, {
               state: { backgroundLocation: location },
