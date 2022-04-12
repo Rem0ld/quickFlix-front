@@ -9,6 +9,8 @@ import {
   makePercentage,
   makeRandomNumber,
 } from "../../utils/numberManipulation";
+import.meta.env.REACT_APP_BACK_IP;
+import.meta.env.BASE_URL;
 
 const btnStyle =
   "grid place-items-center h-10 w-10 border-2 rounded-full border border-white border-gray-500 bg-gray-800";
@@ -88,7 +90,9 @@ const Card = ({
           {posterPath?.length ? (
             <img
               className="w-full h-full aspect-square rounded-sm"
-              src={`http://localhost:3050/images/${posterPath[0]}`}
+              src={`http://${import.meta.env.VITE_BACK_IP}:3050/images${
+                posterPath[0]
+              }`}
             />
           ) : (
             <h1 className="absolute bottom-0 pl-1 text-xl capitalize text-white">
