@@ -69,16 +69,17 @@ const Card = ({
     <>
       <div
         className="card relative w-52 h-96"
-        onMouseEnter={() => {
-          setVisible(true);
-        }}
-        onMouseLeave={() => {
-          setVisible(false);
-        }}
+        // onMouseEnter={() => {
+        //   setVisible(true);
+        // }}
+        // onMouseLeave={() => {
+        //   setVisible(false);
+        // }}
       >
         <div
           className="absolute w-52 h-96 cursor-pointer bg-gray-200"
-          onClick={() => {
+          onClick={(e) => {
+            console.log("🚀 ~ file: Card.tsx ~ line 87 ~ e", e);
             dispatchDetails();
             navigate(`/browse?id=${_id}`, {
               state: { backgroundLocation: location },

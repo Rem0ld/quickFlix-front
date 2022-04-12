@@ -1,5 +1,11 @@
 import { Carousel } from "antd";
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, {
+  DOMElement,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -46,37 +52,22 @@ const Home = () => {
         next={fetchMoreMovies}
         hasMore={hasMoreMovie}
         loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
       >
         {movies.map((el, i) => {
           return <Card key={i} {...el} />;
         })}
       </InfiniteScroll>
-      {/* <InfiniteScroll
+      <InfiniteScroll
         className="pl-14 flex gap-6 flex-wrap"
         dataLength={tvShows.length} //This is important field to render the next data
         next={fetchMoreTvShows}
         hasMore={hasMoreTvShow}
         loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
-        }
       >
         {tvShows.map((el, i) => (
-          <CardTvShow
-            key={i}
-            name={el.name}
-            seasons={el.seasons}
-            posterPath={el.posterPath ? el.posterPath[0] : ""}
-          />
+          <CardTvShow key={i} {...el} />
         ))}
-      </InfiniteScroll> */}
+      </InfiniteScroll>
     </>
   );
 };

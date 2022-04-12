@@ -64,6 +64,7 @@ export type TvShow = {
   genres: string[];
   trailerYtCode?: string[];
   firstAirDate: string;
+  watched?: Watched;
 };
 
 export type ActionReducer = {

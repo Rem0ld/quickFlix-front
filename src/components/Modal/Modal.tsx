@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 
 export const Modal = ({
   visible,
@@ -14,7 +14,13 @@ export const Modal = ({
   if (!visible) return null;
 
   return (
-    <div className="absolute inset-0 grid place-items-center" onClick={hide}>
+    <div
+      className="absolute inset-0 grid place-items-center min-h-screen"
+      onClick={hide}
+      style={{
+        top: window.scrollY,
+      }}
+    >
       <div className="absolute inset-0 z-50 opacity-90 bg-gray-800" />
       <div
         style={{ width, maxHeight: 785 }}
