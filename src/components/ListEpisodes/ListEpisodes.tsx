@@ -61,10 +61,6 @@ function ListEpisodes({ season }: { season: Episode[] }) {
   return (
     <ul>
       {season.map((episode, i: number) => {
-        console.log(
-          "🚀 ~ file: ListEpisodes.tsx ~ line 60 ~ {season.map ~ episode",
-          episode
-        );
         return (
           <li
             key={nanoid()}

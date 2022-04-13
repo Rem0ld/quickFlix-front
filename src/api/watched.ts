@@ -16,13 +16,14 @@ export async function createWatched(id: string) {
   }
 }
 
-export async function updateWatched(id: string, time: number) {
+export async function updateWatched(id: string, time: number, tvShow: string | null) {
   try {
     const response = await fetch(`${baseUrl}watched/${id}`, {
       method: "PATCH",
       headers,
       body: JSON.stringify({
-        timeWatched: time
+        timeWatched: time,
+        tvShow
       })
     })
     const result = await response.json();

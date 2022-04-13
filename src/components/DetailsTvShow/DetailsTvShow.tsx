@@ -1,9 +1,10 @@
 import { nanoid } from "@reduxjs/toolkit";
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { baseUrl, headers } from "../../config";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import Score from "../Score/Score";
@@ -28,6 +29,23 @@ export default function DetailsTvShow() {
     score,
     seasons,
   } = detailsTvShow;
+  const [watchedTvShow, setWatchedTvShow] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(`${baseUrl}watched-tv-show/by-name`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          tvShow: name,
+        }),
+      });
+      const result = await response.json();
+      setWatchedTvShow(result);
+    };
+
+    fetchData();
+  }, []);
 
   const play = (id: any) => {
     navigate(`/player/${id}`, { state: id });

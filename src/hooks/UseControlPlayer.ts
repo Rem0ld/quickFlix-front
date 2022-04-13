@@ -16,6 +16,8 @@ export default function UseControlPlayer(
   const { id } = useParams()
   // @ts-expect-error
   const video = useSelector(state => state.details)
+  // @ts-expect-error
+  const { name } = useSelector(state => state.detailsTvShow)
   const dispatch = useDispatch()
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -81,7 +83,7 @@ export default function UseControlPlayer(
 
   const handleUpdateTimeWatched = () => {
     dispatch(setUpdateTimeWatched(videoRef.current.currentTime))
-    updateWatched(id as string, videoRef.current.currentTime)
+    updateWatched(id as string, videoRef.current.currentTime, video.type === "tv" ? name : null)
   }
 
   const handleForwardBackward = (type: "rewind" | "forward") => {
