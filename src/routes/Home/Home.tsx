@@ -39,13 +39,18 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (movies.length === 0) {
-      fetchMoreMovies();
-    }
     if (tvShows.length === 0) {
       fetchMoreTvShows();
     }
-  }, [movies.length, tvShows.length]);
+
+    console.log(tvShows);
+  }, [tvShows.length]);
+
+  useEffect(() => {
+    if (movies.length === 0) {
+      fetchMoreMovies();
+    }
+  }, [movies.length]);
 
   return (
     <>

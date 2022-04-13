@@ -1,6 +1,8 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setVideo } from "../../features/video/videoSlice";
 import { Episode, Season, TvShow } from "../../types";
 import SelectSeason from "../SelectSeason/SelectSeason";
 
@@ -53,14 +55,21 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
 
 function ListEpisodes({ season }: { season: Episode[] }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   if (!season) return null;
   return (
     <ul>
       {season.map((episode, i: number) => {
+        console.log(
+          "🚀 ~ file: ListEpisodes.tsx ~ line 60 ~ {season.map ~ episode",
+          episode
+        );
         return (
           <li
             key={nanoid()}
             onClick={() => {
+              dispatch(setVideo(episode.ref));
               navigate(`/player/${episode.ref._id}`, {
                 state: episode.ref._id,
               });

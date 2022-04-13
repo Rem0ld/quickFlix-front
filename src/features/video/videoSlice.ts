@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Season, Video } from "../../types";
 
-export type VideoState = Partial<Video> & { percentageSeen: number }
+export type VideoState = Partial<Video> & { percentageSeen?: number }
 
 export const initialStateDetailsVideo: VideoState = {
   _id: '',

@@ -17,7 +17,6 @@ export async function createWatched(id: string) {
 }
 
 export async function updateWatched(id: string, time: number) {
-
   try {
     const response = await fetch(`${baseUrl}watched/${id}`, {
       method: "PATCH",

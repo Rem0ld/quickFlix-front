@@ -77,6 +77,7 @@ export default function DetailsTvShow() {
       </div> */}
         <button
           className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
+          // TODO: should start last episode seen or start from the beginning
           onClick={() => play(_id)}
         >
           <FaPlay size={16} color={"black"} />

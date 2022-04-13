@@ -142,9 +142,12 @@ export default function PlayerControl({
         <MdKeyboardBackspace
           onClick={() => {
             if (location.state) {
-              navigate(`/browse?id=${idVideo}`, {
-                state: { backgroundLocation: location },
-              });
+              navigate(
+                `/browse${type === "tv" ? "/tv-show" : ""}?id=${idVideo}`,
+                {
+                  state: { backgroundLocation: location },
+                }
+              );
             } else {
               navigate("/browse");
             }
