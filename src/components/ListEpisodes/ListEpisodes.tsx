@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Episode, Season, TvShow } from "../../types";
 import SelectSeason from "../SelectSeason/SelectSeason";
@@ -29,9 +29,8 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
   useEffect(() => {
     if (parsedSeasons) {
       setSelectedSeason(
-        parsedSeasons[selected].sort((a, b) => +a.number - +b.number)
+        parsedSeasons[selected].slice().sort((a, b) => +a.number - +b.number)
       );
-      setSelectedSeason(parsedSeasons[selected]);
     }
   }, [parsedSeasons, selected]);
 

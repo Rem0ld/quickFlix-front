@@ -10,13 +10,14 @@ const Navbar = () => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const scroll = document.addEventListener("scroll", () => {
+    const scroll = () => {
       const { scrollY } = window;
       setOpacity(1 * (scrollY / 100));
-    });
+    };
 
-    // @ts-ignore
-    () => document.removeEventListener("scroll", scroll);
+    document.addEventListener("scroll", scroll);
+
+    return () => document.removeEventListener("scroll", scroll);
   });
 
   return (

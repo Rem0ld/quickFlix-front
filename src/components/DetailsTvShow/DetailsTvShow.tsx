@@ -1,5 +1,5 @@
 import { nanoid } from "@reduxjs/toolkit";
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
 import { useSelector } from "react-redux";
@@ -41,7 +41,7 @@ export default function DetailsTvShow() {
   }, [detailsTvShow]);
 
   return (
-    <>
+    <div>
       <div className="relative">
         <button
           className="absolute right-4 top-2 p-2 bg-white rounded-full"
@@ -140,6 +140,6 @@ export default function DetailsTvShow() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

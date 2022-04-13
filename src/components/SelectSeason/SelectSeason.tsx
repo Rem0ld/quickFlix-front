@@ -21,7 +21,9 @@ export default function SelectSeason({
     <div className="relative">
       <button
         className="flex gap-3 items-center px-2 py-3 rounded-md border bg-gray-800"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
       >
         Season {list[selected - 1][0]} ({list[selected - 1][1].length} episodes)
         <MdKeyboardArrowDown />
@@ -31,10 +33,13 @@ export default function SelectSeason({
           isOpen ? "block opacity-100" : "none opacity-0"
         } absolute top-full w-full flex flex-col justify-center delay-75 transition-opacity items-center mt-1 rounded-sm bg-gray-800`}
       >
-        {list.map((el: any) => (
+        {list.map((el: [string, Episode[]]) => (
           <li
             key={nanoid()}
-            onClick={() => setSelected(+el[0])}
+            onClick={() => {
+              setSelected(+el[0]);
+              setIsOpen(false);
+            }}
             className={`${
               +el[0] === selected ? "bg-gray-500" : ""
             } grid place-items-center w-full p-2 cursor-pointer hover:bg-gray-500`}

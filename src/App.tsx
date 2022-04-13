@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Details from "./components/Details/Details";
-import DetailsTvShow from "./components/DetailsTvShow/DetailsTvShow";
+import DetailsTvShow, {
+  EnhancedComp,
+} from "./components/DetailsTvShow/DetailsTvShow";
 import ModalWrapper from "./components/ModalWrapper/ModalWrapper";
 import Home from "./routes/Home/Home";
 import Layout from "./routes/Layout/Layout";

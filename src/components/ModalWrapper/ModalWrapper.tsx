@@ -6,7 +6,6 @@ import Details from "../Details/Details";
 export default function ModalWrapper({ children }: { children: ReactElement }) {
   const navigate = useNavigate();
   const [modalIsVisible] = useState(true);
-  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     document.body.classList.add("modal-opened");
