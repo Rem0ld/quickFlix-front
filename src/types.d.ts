@@ -41,10 +41,12 @@ export type Season = {
 export type Watched = {
   _id: string;
   timeWatched: number;
-  length: number;
-  finished: boolean;
+  length?: number;
+  finished?: boolean;
   video: string;
   user: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type TvShow = {
@@ -60,11 +62,12 @@ export type TvShow = {
   posterPath?: string[];
   resume?: string;
   score?: number;
-  date?: Date;
+  date?: Date | undefined;
   genres: string[];
   trailerYtCode: string[];
   firstAirDate: string;
-  watched?: Watched;
+  watched?: Watched[];
+  averageLength?: number;
 };
 
 export type ActionReducer = {

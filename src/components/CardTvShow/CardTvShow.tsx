@@ -12,7 +12,7 @@ import {
 } from "../../utils/numberManipulation";
 
 export default function CardTvShow(props: TvShow) {
-  const { trailerYtCode, posterPath, name, watched, seasons } = props;
+  const { trailerYtCode, posterPath, name, seasons } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -21,7 +21,6 @@ export default function CardTvShow(props: TvShow) {
   const [modalVisible, setModalVisible] = useState(false);
   const [id, setId] = useState("");
   const [randomNum, setRandomNum] = useState<number>(0);
-  const [percentageSeen, setPercentageSeen] = useState(0);
 
   useEffect(() => {
     if (seasons?.length) {
@@ -30,15 +29,6 @@ export default function CardTvShow(props: TvShow) {
       if (_id) setId(_id);
     }
   }, [seasons]);
-
-  useEffect(() => {
-    const time = watched?.timeWatched || 0;
-    const leng = length || 0;
-    if (time > 0 && leng > 0) {
-      const percentage = makePercentage(time, leng);
-      setPercentageSeen(percentage);
-    }
-  }, [watched, length]);
 
   useEffect(() => {
     setRandomNum(makeRandomNumber(0, trailerYtCode?.length || 0));
@@ -74,18 +64,6 @@ export default function CardTvShow(props: TvShow) {
             {name}
           </h1>
         </div>
-        {percentageSeen ? (
-          <div className="progress w-full absolute h-1 bottom-0">
-            <div
-              className={`filling h-1 bg-red-600`}
-              style={{
-                width: percentageSeen + "%",
-              }}
-            />
-          </div>
-        ) : (
-          ""
-        )}
         {/* === HOVERING CARD === */}
         {/* <div
           className={`${

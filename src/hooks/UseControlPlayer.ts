@@ -2,6 +2,7 @@
 import React, { MutableRefObject, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { updateTvShow } from "../api/tvshow";
 import { updateVideo } from "../api/video";
 import { updateWatched } from "../api/watched";
 import { setLength, setUpdateTimeWatched } from "../features/video/videoSlice";
@@ -17,7 +18,7 @@ export default function UseControlPlayer(
   // @ts-expect-error
   const video = useSelector(state => state.details)
   // @ts-expect-error
-  const { name } = useSelector(state => state.detailsTvShow)
+  const { _id: idTvShow, name, averageLength } = useSelector(state => state.detailsTvShow)
   const dispatch = useDispatch()
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -102,8 +103,11 @@ export default function UseControlPlayer(
   useEffect(() => {
     const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", async () => {
       if (!video.length) {
-        const response = await updateVideo(id, { length: videoRef.current.duration })
+        await updateVideo(id, { length: videoRef.current.duration })
         dispatch(setLength(videoRef.current.duration))
+      }
+      if (!averageLength) {
+        await updateTvShow(idTvShow, { averageLength: videoRef.current.duration })
       }
 
       setDuration(videoRef.current.duration);

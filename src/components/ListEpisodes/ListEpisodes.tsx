@@ -1,9 +1,10 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setVideo } from "../../features/video/videoSlice";
 import { Episode, Season, TvShow } from "../../types";
+import { makePercentage } from "../../utils/numberManipulation";
 import SelectSeason from "../SelectSeason/SelectSeason";
 
 export type ParsedSeason = { [key: number | string]: Episode[] };
@@ -48,7 +49,7 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
           />
         )}
       </div>
-      <ListEpisodes season={selectedSeason ? selectedSeason : []} />
+      <ListEpisodes season={selectedSeason || []} />
     </div>
   );
 }
@@ -56,11 +57,27 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
 function ListEpisodes({ season }: { season: Episode[] }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { averageLength, watched } = useSelector(
+    // @ts-expect-error - false error with defaultRootState
+    (state) => state.detailsTvShow
+  );
 
   if (!season) return null;
   return (
     <ul>
       {season.map((episode, i: number) => {
+        const filtered = watched?.filter((el: any) => {
+          return el.videoId === episode.ref._id;
+        });
+        let percentage = 0;
+
+        if (filtered?.length && (episode.ref.length || averageLength)) {
+          percentage = makePercentage(
+            filtered[0].watchedId.timeWatched,
+            episode.ref.length || averageLength
+          );
+        }
+
         return (
           <li
             key={nanoid()}
@@ -72,7 +89,7 @@ function ListEpisodes({ season }: { season: Episode[] }) {
             }}
             className={
               `${i === 0 ? "border-t " : ""}` +
-              "flex items-center gap-5 h-32 w-full px-10 cursor-pointer rounded-md border-b border-gray-600"
+              "relative flex items-center gap-5 h-32 w-full px-10 cursor-pointer rounded-md border-b border-gray-600"
             }
           >
             <h5 className="font-semibold text-2xl">{episode.number}</h5>
@@ -80,6 +97,18 @@ function ListEpisodes({ season }: { season: Episode[] }) {
               <img src="#" />
             </div>
             <p>{episode?.ref?.resume}</p>
+            {percentage ? (
+              <div className="progress w-52 absolute h-1 bottom-1 bg-gray-300">
+                <div
+                  className={`filling h-1 bg-red-600`}
+                  style={{
+                    width: percentage + "%",
+                  }}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </li>
         );
       })}

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Season, TvShow, Video } from "../../types";
+import { Season, TvShow, Video, Watched } from "../../types";
 
 export const initialStateDetailsTvShow: TvShow = {
   _id: "",
@@ -10,12 +10,13 @@ export const initialStateDetailsTvShow: TvShow = {
   posterPath: [],
   originCountry: [],
   ongoing: false,
-  date: new Date(),
+  date: undefined,
   trailerYtCode: [],
   genres: [],
   resume: "",
   score: 0,
   seasons: [],
+  watched: []
 };
 
 export const tvShowSlice = createSlice({
@@ -25,9 +26,12 @@ export const tvShowSlice = createSlice({
     setTvShow: (state, action: PayloadAction<TvShow>) => {
       return action.payload;
     },
+    setWatched: (state, action: PayloadAction<Watched[]>) => {
+      state.watched = action.payload;
+    }
   },
 });
 
-export const { setTvShow } = tvShowSlice.actions;
+export const { setTvShow, setWatched } = tvShowSlice.actions;
 
 export default tvShowSlice.reducer;

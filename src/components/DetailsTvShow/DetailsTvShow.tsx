@@ -2,14 +2,17 @@ import { nanoid } from "@reduxjs/toolkit";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { GrClose } from "react-icons/gr";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { baseUrl, headers } from "../../config";
+import { setWatched } from "../../features/tvShow/tvShowSlice";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import Score from "../Score/Score";
+import { Episode, Season, Watched } from "../../types";
 
 export default function DetailsTvShow() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   // @ts-expect-error - false error with defaultRootState
   const detailsTvShow = useSelector((state) => state.detailsTvShow);
@@ -29,7 +32,8 @@ export default function DetailsTvShow() {
     score,
     seasons,
   } = detailsTvShow;
-  const [watchedTvShow, setWatchedTvShow] = useState({});
+
+  const [lastEpisodeWatched, setLastEpisodeWatched] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,13 +45,27 @@ export default function DetailsTvShow() {
         }),
       });
       const result = await response.json();
-      setWatchedTvShow(result);
+      dispatch(setWatched(result.videos));
     };
 
     fetchData();
   }, []);
 
-  const play = (id: any) => {
+  const play = () => {
+    let id = "";
+    const firstSeason: Season[] = seasons.filter(
+      (season: Season) => season.number === "1"
+    );
+    const firstEpisode: Episode[] = firstSeason[0].episodes.filter(
+      (episode: Episode) => episode.number === "1"
+    );
+
+    if (lastEpisodeWatched) {
+      id = lastEpisodeWatched;
+    } else {
+      id = firstEpisode[0].ref._id!;
+    }
+
     navigate(`/player/${id}`, { state: id });
     return;
   };
@@ -55,6 +73,16 @@ export default function DetailsTvShow() {
   useEffect(() => {
     if (!detailsTvShow._id && !detailsTvShow.name) {
       navigate("/browse");
+    }
+
+    if (detailsTvShow?.watched?.length) {
+      const sorted = detailsTvShow.watched.slice().sort((a: any, b: any) => {
+        const aw = new Date(a.watchedId.updatedAt).getTime();
+        const bw = new Date(b.watchedId.updatedAt).getTime();
+        return bw - aw;
+      });
+
+      setLastEpisodeWatched(sorted[0].videoId);
     }
   }, [detailsTvShow]);
 
@@ -99,7 +127,7 @@ export default function DetailsTvShow() {
           onClick={() => play(_id)}
         >
           <FaPlay size={16} color={"black"} />
-          Play
+          {detailsTvShow?.watched ? <>Resume</> : <>Play</>}
         </button>
       </div>
       <div className=" px-6 pt-3">

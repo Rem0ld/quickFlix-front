@@ -42,8 +42,6 @@ const Home = () => {
     if (tvShows.length === 0) {
       fetchMoreTvShows();
     }
-
-    console.log(tvShows);
   }, [tvShows.length]);
 
   useEffect(() => {
