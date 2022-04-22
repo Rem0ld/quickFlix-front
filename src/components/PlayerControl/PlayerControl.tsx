@@ -25,8 +25,10 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createWatched } from "../../api/watched";
+import { getVideoById } from "../../api/video";
+import { setVideo } from "../../features/video/videoSlice";
 
 export default function PlayerControl({
   videoRef,
@@ -45,6 +47,7 @@ export default function PlayerControl({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   // @ts-expect-error - false error defaultRootState
   const { name, type, watched } = useSelector((state) => state.details);
 
@@ -56,6 +59,13 @@ export default function PlayerControl({
   useEffect(() => {
     if (!watched) {
       createWatched(idVideo);
+    }
+
+    if (!name) {
+      getVideoById(idVideo).then((result) => {
+        if (!result) return;
+        dispatch(setVideo(result));
+      });
     }
   }, []);
 

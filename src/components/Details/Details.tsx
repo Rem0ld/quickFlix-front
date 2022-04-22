@@ -81,12 +81,6 @@ export default function Details() {
   return (
     <>
       <div className="relative">
-        <button
-          className="absolute right-4 top-2 p-2 bg-white rounded-full"
-          onClick={() => navigate("/browse")}
-        >
-          <GrClose color="#fff" size={22} />
-        </button>
         <Suspense fallback="Loading...">
           <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
         </Suspense>

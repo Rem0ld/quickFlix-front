@@ -89,12 +89,6 @@ export default function DetailsTvShow() {
   return (
     <div>
       <div className="relative">
-        <button
-          className="absolute right-4 top-2 p-2 bg-white rounded-full"
-          onClick={() => navigate("/browse")}
-        >
-          <GrClose color="#fff" size={22} />
-        </button>
         <Suspense fallback="Loading...">
           <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
         </Suspense>
@@ -124,7 +118,7 @@ export default function DetailsTvShow() {
         <button
           className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
           // TODO: should start last episode seen or start from the beginning
-          onClick={() => play(_id)}
+          onClick={play}
         >
           <FaPlay size={16} color={"black"} />
           {detailsTvShow?.watched ? <>Resume</> : <>Play</>}
@@ -135,14 +129,7 @@ export default function DetailsTvShow() {
           <div className="flex flex-col gap-4 w-9/12 text-gray-300 font-light">
             <div className="flex gap-x-2 items-baseline">
               <h6 className="capitalize">{name}</h6>
-              {/* {year ? <span>{new Date(year).getFullYear()}</span> : ""}
-            {parsedMovieLength?.h ? (
-              <span>
-                {parsedMovieLength?.h} h {parsedMovieLength?.min} min
-              </span>
-            ) : (
-              ""
-            )} */}
+              {date ? <span>{new Date(date).getFullYear()}</span> : ""}
               {score ? <Score score={score} /> : ""}
             </div>
             <p className="text-sm">{resume}</p>

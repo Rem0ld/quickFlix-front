@@ -64,7 +64,7 @@ function ListEpisodes({ season }: { season: Episode[] }) {
 
   if (!season) return null;
   return (
-    <ul>
+    <ul className="flex flex-wrap justify-between gap-5">
       {season.map((episode, i: number) => {
         const filtered = watched?.filter((el: any) => {
           return el.videoId === episode.ref._id;
@@ -89,16 +89,14 @@ function ListEpisodes({ season }: { season: Episode[] }) {
             }}
             className={
               `${i === 0 ? "border-t " : ""}` +
-              "relative flex items-center gap-5 h-32 w-full px-10 cursor-pointer rounded-md border-b border-gray-600"
+              "relative flex flex-col justify-evenly items-center h-32 w-52 px-1 cursor-pointer rounded-md border border-gray-600"
             }
           >
             <h5 className="font-semibold text-2xl">{episode.number}</h5>
-            <div>
-              <img src="#" />
-            </div>
-            <p>{episode?.ref?.resume}</p>
+            {/* <div><img src="#" /></div> */}
+            {/* {episode?.ref?.resume && <p>{episode.ref.resume}</p>} */}
             {percentage ? (
-              <div className="progress w-52 absolute h-1 bottom-1 bg-gray-300">
+              <div className="progress w-full self-end bg-gray-300">
                 <div
                   className={`filling h-1 bg-red-600`}
                   style={{

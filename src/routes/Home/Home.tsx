@@ -73,7 +73,9 @@ const Home = () => {
         loader={<h4>Loading...</h4>}
       >
         {tvShows.map((el, i) => (
-          <CardTvShow key={i} {...el} />
+          <React.Fragment key={i}>
+            <CardTvShow {...el} />
+          </React.Fragment>
         ))}
       </InfiniteScroll>
     </>

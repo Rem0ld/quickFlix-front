@@ -31,12 +31,13 @@ export default function SelectSeason({
       <ul
         className={`${
           isOpen ? "block opacity-100" : "none opacity-0"
-        } absolute top-full w-full flex flex-col justify-center delay-75 transition-opacity items-center mt-1 rounded-sm bg-gray-800`}
+        } absolute top-full w-full flex flex-col justify-center delay-75 transition-opacity items-center mt-1 z-50 rounded-sm bg-gray-800`}
       >
         {list.map((el: [string, Episode[]]) => (
           <li
             key={nanoid()}
-            onClick={() => {
+            onClick={(e) => {
+              e.stopPropagation();
               setSelected(+el[0]);
               setIsOpen(false);
             }}
