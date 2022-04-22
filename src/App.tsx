@@ -5,6 +5,7 @@ import DetailsTvShow, {
   EnhancedComp,
 } from "./components/DetailsTvShow/DetailsTvShow";
 import ModalWrapper from "./components/ModalWrapper/ModalWrapper";
+import Dashboard from "./routes/Dashboard/Dashboard";
 import Home from "./routes/Home/Home";
 import Layout from "./routes/Layout/Layout";
 import Login from "./routes/Login/Login";
@@ -22,6 +23,7 @@ export default function App() {
           <Route element={<Layout />}>
             <Route index element={<Login />} />
             <Route path="/browse" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Route>
         </Route>
       </Routes>

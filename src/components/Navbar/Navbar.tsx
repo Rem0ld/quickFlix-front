@@ -34,19 +34,11 @@ const Navbar = () => {
           <img src={logo} width={70} />
         </Link>
         {location.pathname !== "/" && (
-          <div className="flex justify-around gap-x-3">
-            <Link to="/movies" className="text-white">
-              Movies
-            </Link>
-            <Link to="/tv-show" className="text-white">
-              Tv-show
-            </Link>
-            <Link to="/add" className="text-white">
-              Add
-            </Link>
-            <Link to="/discover" className="text-white">
-              Parameters
-            </Link>
+          <div className="flex justify-around gap-x-3 text-white">
+            <Link to="/movies">Movies</Link>
+            <Link to="/tv-show">Tv-shows</Link>
+            <Link to="/add">Add</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </div>
         )}
       </div>
