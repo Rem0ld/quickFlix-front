@@ -31,7 +31,7 @@ export default function Login(): JSX.Element {
       {
         y: 0,
         duration: 1,
-      }
+      },
     );
     t1.to(qRef.current, {
       delay: 0.5,

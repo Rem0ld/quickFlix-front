@@ -19,7 +19,9 @@ export const initialStateDetailsVideo: VideoState = {
     length: 0,
     finished: false,
     video: '',
-    user: ''
+    user: '',
+    createdAt: null,
+    updatedAt: null
   },
   season: '',
   subtitles: [],
@@ -43,15 +45,20 @@ export const videoSlice = createSlice({
     setUpdateTimeWatched: (state, action: PayloadAction<number>) => {
       // TODO: find a way to avoid doing this
       if (!state.watched) {
+        const date = new Date()
         state.watched = {
           _id: '',
           timeWatched: 0,
           length: 0,
           finished: false,
           video: '',
-          user: ''
+          user: '',
+          createdAt: date,
+          updatedAt: date
         }
       }
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       state.watched.timeWatched = action.payload
     }
   }

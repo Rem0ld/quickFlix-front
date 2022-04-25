@@ -1,9 +1,7 @@
 import React from "react";
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Details from "./components/Details/Details";
-import DetailsTvShow, {
-  EnhancedComp,
-} from "./components/DetailsTvShow/DetailsTvShow";
+import DetailsTvShow from "./components/DetailsTvShow/DetailsTvShow";
 import ModalWrapper from "./components/ModalWrapper/ModalWrapper";
 import Dashboard from "./routes/Dashboard/Dashboard";
 import Home from "./routes/Home/Home";
@@ -12,7 +10,6 @@ import Login from "./routes/Login/Login";
 import Player from "./routes/Player/Player";
 
 export default function App() {
-  const navigate = useNavigate();
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 

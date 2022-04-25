@@ -156,7 +156,7 @@ export default function PlayerControl({
                 `/browse${type === "tv" ? "/tv-show" : ""}?id=${idVideo}`,
                 {
                   state: { backgroundLocation: location },
-                }
+                },
               );
             } else {
               navigate("/browse");

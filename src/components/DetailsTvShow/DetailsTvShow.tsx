@@ -54,10 +54,10 @@ export default function DetailsTvShow() {
   const play = () => {
     let id = "";
     const firstSeason: Season[] = seasons.filter(
-      (season: Season) => season.number === "1"
+      (season: Season) => season.number === "1",
     );
     const firstEpisode: Episode[] = firstSeason[0].episodes.filter(
-      (episode: Episode) => episode.number === "1"
+      (episode: Episode) => episode.number === "1",
     );
 
     if (lastEpisodeWatched) {

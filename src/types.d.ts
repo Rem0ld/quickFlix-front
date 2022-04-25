@@ -1,5 +1,3 @@
-import { MutableRefObject } from "react";
-
 export type Pagination<T> = {
   total: number;
   skip: number;
@@ -27,7 +25,7 @@ export type Video = {
   score: number;
   year: string;
   length: number;
-  watched?: Watched;
+  watched?: Watched | Watched[];
 };
 
 export type Episode = { _id: string; number: string, ref: Partial<Video> }
@@ -45,8 +43,8 @@ export type Watched = {
   finished?: boolean;
   video: string;
   user: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 }
 
 export type TvShow = {

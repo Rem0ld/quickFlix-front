@@ -22,7 +22,7 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
         }
         return acc;
       }, {}),
-    [seasons]
+    [seasons],
   );
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
   useEffect(() => {
     if (parsedSeasons) {
       setSelectedSeason(
-        parsedSeasons[selected].slice().sort((a, b) => +a.number - +b.number)
+        parsedSeasons[selected].slice().sort((a, b) => +a.number - +b.number),
       );
     }
   }, [parsedSeasons, selected]);
@@ -59,7 +59,7 @@ function ListEpisodes({ season }: { season: Episode[] }) {
   const dispatch = useDispatch();
   const { averageLength, watched } = useSelector(
     // @ts-expect-error - false error with defaultRootState
-    (state) => state.detailsTvShow
+    (state) => state.detailsTvShow,
   );
 
   if (!season) return null;
@@ -74,7 +74,7 @@ function ListEpisodes({ season }: { season: Episode[] }) {
         if (filtered?.length && (episode.ref.length || averageLength)) {
           percentage = makePercentage(
             filtered[0].watchedId.timeWatched,
-            episode.ref.length || averageLength
+            episode.ref.length || averageLength,
           );
         }
 

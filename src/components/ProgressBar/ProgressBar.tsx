@@ -17,7 +17,7 @@ export default function ProgressBar({
           const { clientX } = event;
           progressBarRef.current.style.width = clientX - 24 + "px";
         },
-        { signal: abort.signal }
+        { signal: abort.signal },
       );
     });
 

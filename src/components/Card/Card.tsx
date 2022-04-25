@@ -55,6 +55,8 @@ const Card = ({
   };
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const time = watched?.timeWatched || 0;
     const leng = length || 0;
     if (time > 0 && leng > 0) {
