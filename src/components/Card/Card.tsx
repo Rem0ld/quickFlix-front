@@ -92,9 +92,9 @@ const Card = ({
           {posterPath?.length ? (
             <img
               className="w-full h-full aspect-square rounded-sm"
-              src={`http://${import.meta.env.VITE_BACK_IP}:3050/images${
-                posterPath[0]
-              }`}
+              src={`http://${
+                import.meta.env.DEV ? "localhost" : "192.168.0.11"
+              }:3050/images${posterPath[0]}`}
             />
           ) : (
             <h1 className="absolute bottom-0 pl-1 text-xl capitalize text-white">
