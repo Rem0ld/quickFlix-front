@@ -4,4 +4,4 @@ dist-ssr
 *.local
 .env
 .vscode
-dist
+dist/
