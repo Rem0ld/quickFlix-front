@@ -1,4 +1,12 @@
 
+:root {
+  color: white;
+}
+
+input {
+  color: black;
+}
+
 progress::-moz-progress-bar {
   background: lightcolor;
 }
@@ -46,4 +54,19 @@ not in use apparently
 
 body.modal-opened {
   overflow: hidden;
+}
+
+table {
+  border: 1px solid rgb(59, 59, 59);
+}
+
+th {
+  border-right: 1px solid rgb(59, 59, 59);
+}
+td {
+  border-top: 1px solid rgb(59, 59, 59);
+}
+
+.dashboard-table {
+  height: calc(100vh - 3.5rem);
 }
