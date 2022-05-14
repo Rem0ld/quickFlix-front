@@ -95,22 +95,19 @@ export default function Dashboard() {
               return (
                 // Apply the row props
                 // eslint-disable-next-line react/jsx-key
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  className="p-2 cursor-pointer"
+                  onClick={() => handleClickCell(row.original)}
+                >
                   {
                     // Loop over the rows cells
                     row.cells.map((cell) => {
                       // Apply the cell props
                       return (
                         // eslint-disable-next-line react/jsx-key
-                        <td
-                          {...cell.getCellProps()}
-                          className="p-2 cursor-pointer"
-                          onClick={() => handleClickCell(row.original)}
-                        >
-                          {
-                            // Render the cell contents
-                            cell.render("Cell")
-                          }
+                        <td {...cell.getCellProps()} className="px-1">
+                          {cell.render("Cell")}
                         </td>
                       );
                     })
@@ -121,7 +118,14 @@ export default function Dashboard() {
           }
         </tbody>
       </table>
-      {selected && <TableCard obj={selected} />}
+      {selected && (
+        <TableCard
+          obj={selected}
+          action={() => {
+            setSelected(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -1,18 +1,13 @@
 import { baseUrl, headers } from "../config";
 import { Video } from "../types";
 
-export async function updateVideo(id: string | undefined, data: any) {
+export async function updateVideo(id: string | undefined, data: any): Promise<Response | null> {
   if (!id) return null;
-  try {
-    return fetch(`${baseUrl}video/${id}`, {
-      method: "PATCH",
-      headers,
-      body: JSON.stringify(data)
-    })
-  } catch (error) {
-    console.error(error)
-    return error
-  }
+  return fetch(`${baseUrl}video/${id}`, {
+    method: "PATCH",
+    headers,
+    body: JSON.stringify(data)
+  })
 }
 
 export async function getVideoById(id: string): Promise<Video | null> {

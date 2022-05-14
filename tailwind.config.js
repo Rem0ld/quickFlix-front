@@ -16,7 +16,8 @@ module.exports = {
       purple: colors.violet,
       yellow: colors.amber,
       pink: colors.fuchsia,
-      red: colors.red
+      red: colors.red,
+      quickflix: "#E40915"
     },
     borderRadius: {
       'none': '0',

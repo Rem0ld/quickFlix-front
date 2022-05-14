@@ -19,6 +19,7 @@ import {
 } from "../../utils/numberManipulation";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import { useNavigate } from "react-router-dom";
+import Button from "../Button/Button";
 
 export default function Details() {
   //   {
@@ -107,13 +108,15 @@ export default function Details() {
             ""
           )}
         </div>
-        <button
-          className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
+        <Button
           onClick={() => play(_id)}
+          icon={<FaPlay size={16} color={"black"} />}
+          bgColor="bg-white"
+          color="text-black"
+          props="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4"
         >
-          <FaPlay size={16} color={"black"} />
           {percentage === 0 ? "Play" : "Resume"}
-        </button>
+        </Button>
       </div>
       <div className=" px-6 pt-3">
         <div className="flex">
