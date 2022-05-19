@@ -3,11 +3,42 @@ import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/quickflix-logo-02.svg";
 import avatar from "../../../assets/avatar-original.png";
+import refreshIcon from "../../../assets/refresh_icon.svg";
+import { checkAccessFolder } from "../../api/accessFolder";
+
+const stateAccessFolder = {
+  1: "bg-green-500",
+  0: "bg-red-500",
+  pending: "bg-gray-500",
+};
 
 const Navbar = () => {
+  const ref = useRef(null);
   const location = useLocation();
   const [opacity, setOpacity] = useState(0);
-  const ref = useRef(null);
+
+  const [refresh, setRefresh] = useState(false);
+  const [accessFolder, setAccessFolder] = useState(stateAccessFolder.pending);
+
+  const accessVideos = async () => {
+    setRefresh(true);
+    setAccessFolder(stateAccessFolder.pending);
+
+    setTimeout(async () => {
+      try {
+        const access = await checkAccessFolder();
+        console.log(
+          "🚀 ~ file: Navbar.tsx ~ line 28 ~ accessVideos ~ access",
+          access,
+        );
+        setAccessFolder(stateAccessFolder[access]);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setRefresh(false);
+      }
+    }, 300);
+  };
 
   useEffect(() => {
     const scroll = () => {
@@ -19,6 +50,10 @@ const Navbar = () => {
 
     return () => document.removeEventListener("scroll", scroll);
   });
+
+  useEffect(() => {
+    accessVideos();
+  }, []);
 
   return (
     <nav
@@ -43,7 +78,16 @@ const Navbar = () => {
         )}
       </div>
       {location.pathname !== "/" && (
-        <img className="rounded" src={avatar} width={32} height={40} />
+        <div className="flex gap-1 items-center">
+          <button
+            onClick={accessVideos}
+            className={`${refresh ? "animate-spin" : "animate-none"}`}
+          >
+            <img src={refreshIcon} />
+          </button>
+          <div className={`w-3 h-3 rounded-full ${accessFolder}`} />
+          <img className="rounded" src={avatar} width={32} height={40} />
+        </div>
       )}
     </nav>
   );

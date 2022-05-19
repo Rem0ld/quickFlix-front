@@ -16,7 +16,6 @@ import UseFetchTvShow from "../../hooks/UseFetchTvShow";
 import { Watched } from "../../types";
 
 const Home = () => {
-  console.log(`${import.meta.env.DEV}`);
   const dispatch = useDispatch();
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
   const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
