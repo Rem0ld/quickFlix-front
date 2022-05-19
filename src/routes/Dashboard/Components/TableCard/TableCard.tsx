@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, {
+  ChangeEvent,
   EventHandler,
   SetStateAction,
   useEffect,
@@ -21,7 +22,7 @@ export default function TableCard({
   action: any;
 }) {
   const [values, setValues] = useState<Partial<Video>>({});
-  const [pristine, setPristine] = useState<any>({});
+  const [pristine, setPristine] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     setValues((prev) => ({
@@ -35,9 +36,9 @@ export default function TableCard({
     }));
   }, [obj]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setPristine((prev: any) => ({
+    setPristine((prev) => ({
       ...prev,
       [name]: true,
     }));
@@ -48,10 +49,13 @@ export default function TableCard({
   };
 
   const handlePatch = async () => {
-    const data = Object.keys(pristine).reduce((acc: any, el: any) => {
-      acc[el] = values[el];
-      return acc;
-    }, {});
+    const data = Object.keys(pristine).reduce(
+      (acc: Record<string, unknown>, el: any) => {
+        acc[el] = values[el];
+        return acc;
+      },
+      {},
+    );
 
     try {
       const response = await updateVideo(obj._id, data);
@@ -69,28 +73,24 @@ export default function TableCard({
   };
 
   return (
-    <div className="relative w-2/4 p-4 border border-gray-600 rounded-md shadow-md">
+    <div className="relative w-2/4 p-4 border border-gray-600 rounded-md shadow-md animate-fade-in-fast">
       <div className="flex h-12 justify-between">
         <h1 className="text-white text-xl">Details</h1>
         <div className="flex gap-2">
           {!!Object.keys(pristine).length && (
             <Button
               onClick={handlePatch}
-              bgColor="bg-quickflix"
-              color="text-white"
-              icon={<BiSave size={22} />}
-              props="px-3"
-            >
-              Save modifications
-            </Button>
+              bgColor="bg-transparent"
+              icon={<BiSave size={22} color="#fff" />}
+              props="px-3 hover:bg-gray-600 hover:rounded-full transition-all duration-200"
+            />
           )}
           <Button
             onClick={handleDelete}
-            icon={<MdDelete color="#000" size={22} />}
-            props="mr-12 px-3"
-          >
-            Delete
-          </Button>
+            bgColor="bg-transparent"
+            icon={<MdDelete size={22} color="#fff" />}
+            props="mr-12 px-3 hover:bg-gray-600 hover:rounded-full transition-all duration-200"
+          />
         </div>
         <CloseBtn action={action} offset={{ top: "top-4", right: "right-4" }} />
       </div>

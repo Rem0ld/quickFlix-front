@@ -8,7 +8,7 @@ export default function Button({
   props,
   onClick,
 }: {
-  children: ReactElement | HTMLElement | string;
+  children?: ReactElement | HTMLElement | string;
   bgColor?: string;
   color?: string;
   icon?: ReactElement | null;
