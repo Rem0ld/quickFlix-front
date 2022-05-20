@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { GrClose } from "react-icons/gr";
 import { BiSave } from "react-icons/bi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdKeyboardArrowDown } from "react-icons/md";
 import Button from "../../../../components/Button/Button";
 import CloseBtn from "../../../../components/CloseBtn/CloseBtn";
 import { TvShow, Video } from "../../../../types";
@@ -21,8 +21,16 @@ export default function TableCard({
   obj: Video;
   action: any;
 }) {
+  console.log("🚀 ~ file: TableCard.tsx ~ line 24 ~ obj", obj);
   const [values, setValues] = useState<Partial<Video>>({});
   const [pristine, setPristine] = useState<Record<string, boolean>>({});
+  const [selectedPoster, setSelectedPoster] = useState("");
+
+  useEffect(() => {
+    if (obj?.posterPath?.length) {
+      setSelectedPoster(obj.posterPath[0]);
+    }
+  }, [obj]);
 
   useEffect(() => {
     setValues((prev) => ({
@@ -72,6 +80,11 @@ export default function TableCard({
     console.log("deleting");
   };
 
+  const handleChangePoster = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e);
+    setSelectedPoster(e.target.value);
+  };
+
   return (
     <div className="relative w-2/4 p-4 border border-gray-600 rounded-md shadow-md animate-fade-in-fast">
       <div className="flex h-12 justify-between">
@@ -95,13 +108,13 @@ export default function TableCard({
         <CloseBtn action={action} offset={{ top: "top-4", right: "right-4" }} />
       </div>
       <header className="flex gap-4 mt-2">
-        {/* TODO: make dropdown to select picture, TODO2: make carousel */}
+        {/* TODO: make carousel, TODO: remove poster, add poster from moviedb */}
         <div className="w-52 object-contain">
-          {values.posterPath?.length && (
+          {selectedPoster && (
             <img
               src={`http://${
                 import.meta.env.DEV ? "localhost" : "192.168.0.11"
-              }:3050/images${values.posterPath[0]}`}
+              }:3050/images${selectedPoster}`}
             />
           )}
         </div>
@@ -154,6 +167,23 @@ export default function TableCard({
         </div>
       </header>
       <main className="flex flex-wrap gap-4 pt-2">
+        <select
+          onChange={(e) => console.log(e)}
+          className="py-2 px-2 border border-gray-500 rounded-sm bg-gray-800"
+        >
+          {values?.posterPath?.map((pic, i) => {
+            return (
+              <option
+                selected={i === 0}
+                key={i}
+                value={i}
+                className="grid place-items-center w-full p-2 cursor-pointer hover:bg-gray-500"
+              >
+                Poster {i}
+              </option>
+            );
+          })}
+        </select>
         <div className="w-full">
           <h4>Filename:</h4>
           <input
