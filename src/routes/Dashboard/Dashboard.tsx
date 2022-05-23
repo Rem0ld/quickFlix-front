@@ -7,12 +7,14 @@ import TableCard from "./Components/TableCard/TableCard";
 import { MdDelete } from "react-icons/md";
 import Button from "../../components/Button/Button";
 import BtnWithConfirmation from "../../components/BtnWithConfirmation/BtnWithConfirmation";
+import { BsSearch } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 export default function Dashboard() {
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
-  useEffect(() => {
-    fetchMoreMovies();
-  }, []);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selected, setSelected] = useState<TvShow | Video | null>(null);
+  const [textFilter, setTextFilter] = useState("");
 
   const columns: any = useMemo(
     () => [
@@ -23,7 +25,7 @@ export default function Dashboard() {
   );
   const tableInstance = useTable({
     columns,
-    data: [...movies, ...movies, ...movies],
+    data: filteredData,
   });
 
   const {
@@ -35,8 +37,6 @@ export default function Dashboard() {
     allColumns,
     toggleHideColumn,
   } = tableInstance;
-
-  const [selected, setSelected] = useState<TvShow | Video | null>(null);
 
   const toggleHideColumns = (bool: boolean) => {
     allColumns.forEach((column) => {
@@ -57,10 +57,42 @@ export default function Dashboard() {
     toggleHideColumns(true);
   };
 
+  useEffect(() => {
+    setFilteredData(movies);
+  }, [movies]);
+
+  useEffect(() => {
+    const filtered = movies.filter((el: Video) => el.name.includes(textFilter));
+    setFilteredData(filtered);
+  }, [textFilter]);
+
   return (
-    <main className="flex flex-col h-[calc(100vh-theme(height.14))]  p-5 bg-gray-800">
+    <main className="h-[calc(100vh-theme(height.14))] flex flex-col gap-2 p-5 bg-gray-800">
       {/* <Sidebar /> */}
-      <div className="filters w-full h-32"></div>
+      <div className="filters w-full">
+        <form className="flex items-center bg-gray-50 w-min focus:border focus:outline-black rounded-sm">
+          <label className="pl-2" htmlFor="filter-text">
+            <BsSearch color="#000" />
+          </label>
+          <input
+            name="filter-text"
+            onChange={(e) => setTextFilter(e.target.value)}
+            className="py-2 px-2 rounded-sm focus:outline-none"
+            type={"text"}
+            placeholder="find videos"
+            value={textFilter}
+          />
+          <button
+            type="button"
+            onClick={() => setTextFilter("")}
+            className={`${
+              textFilter.length ? "visible animate-fade-in" : "invisible"
+            } w-6  cursor-pointer`}
+          >
+            <IoClose color="#000" size={22} />
+          </button>
+        </form>
+      </div>
       <div className="flex flex-grow min-h-0 gap-6">
         <div
           className={`${
@@ -118,7 +150,7 @@ export default function Dashboard() {
                             // eslint-disable-next-line react/jsx-key
                             <td
                               {...cell.getCellProps()}
-                              className="h-12 px-1 border-t border-gray-600 capitalize"
+                              className="h-12 px-1 border border-r-0 border-l-0 border-gray-600 capitalize"
                             >
                               {cell.render("Cell")}
                             </td>
@@ -130,8 +162,8 @@ export default function Dashboard() {
                           onClick={(e) => e.stopPropagation()}
                           className="h-12 w-24 px-1 border-t border-b border-gray-600 "
                         >
-                          <div className="h-full justify-center items-center hidden group-hover:flex">
-                            {/* TODO: make btn with confirmation */}
+                          <div className="h-full justify-end items-center hidden group-hover:flex">
+                            {/* TODO: finish integration */}
                             <BtnWithConfirmation />
                           </div>
                         </td>

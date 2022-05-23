@@ -1,8 +1,12 @@
-import { useReducer } from 'react'
+import { useEffect, useReducer } from 'react'
 import { baseUrl } from '../config';
 import { Pagination, Video } from '../types';
 import { initialStateVideo, reducerVideo } from './ReducerVideo';
 
+/**
+ * Call fetchMore to get the request to work
+ * @returns 
+ */
 export default function UseFetchMovies() {
   const [{ limit, skip, data, total }, dispatch] = useReducer(reducerVideo, initialStateVideo(50));
 
@@ -19,6 +23,10 @@ export default function UseFetchMovies() {
     dispatch({ type: "addSkip" });
     dispatch({ type: "setTotal", value: result.total });
   };
+
+  useEffect(() => {
+    fetchMore()
+  }, [])
 
   return {
     movies: data, hasMoreMovie: skip + limit < total,

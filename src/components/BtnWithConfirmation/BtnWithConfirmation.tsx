@@ -17,7 +17,7 @@ export default function BtnWithConfirmation({
     if (confirmState) {
       setTimeout(() => {
         setConfirmState(false);
-      }, 1000);
+      }, 1300);
     }
   }, [confirmState]);
 
@@ -25,10 +25,10 @@ export default function BtnWithConfirmation({
     setConfirmState(true);
   };
   return confirmState ? (
-    <>
+    <div className="flex items-center gap-1">
       <BsFillExclamationDiamondFill size={size - 4} color="#f00" />
       <span>confirm</span>
-    </>
+    </div>
   ) : (
     <MdDelete onClick={handleConfirmState} size={size} color={color} />
   );

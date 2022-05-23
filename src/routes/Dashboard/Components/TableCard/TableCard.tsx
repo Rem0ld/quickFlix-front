@@ -87,9 +87,9 @@ export default function TableCard({
 
   return (
     <div className="relative w-2/4 p-4 border border-gray-600 rounded-md shadow-md animate-fade-in-fast">
-      <div className="flex h-12 justify-between">
+      <div className="flex h-12 justify-between items-center">
         <h1 className="text-white text-xl">Details</h1>
-        <div className="flex gap-2">
+        <div className="flex">
           {!!Object.keys(pristine).length && (
             <Button
               onClick={handlePatch}
@@ -105,7 +105,7 @@ export default function TableCard({
             props="mr-12 px-3 hover:bg-gray-600 hover:rounded-full transition-all duration-200"
           />
         </div>
-        <CloseBtn action={action} offset={{ top: "top-4", right: "right-4" }} />
+        <CloseBtn action={action} offset={{ top: "top-5", right: "right-4" }} />
       </div>
       <header className="flex gap-4 mt-2">
         {/* TODO: make carousel, TODO: remove poster, add poster from moviedb */}
