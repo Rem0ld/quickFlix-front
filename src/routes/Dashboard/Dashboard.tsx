@@ -6,6 +6,7 @@ import { TvShow, Video } from "../../types";
 import TableCard from "./Components/TableCard/TableCard";
 import { MdDelete } from "react-icons/md";
 import Button from "../../components/Button/Button";
+import BtnWithConfirmation from "../../components/BtnWithConfirmation/BtnWithConfirmation";
 
 export default function Dashboard() {
   const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
@@ -124,12 +125,17 @@ export default function Dashboard() {
                           );
                         })
                       }
-                      <td className="h-12 w-12 px-1 border-t border-b border-gray-600 ">
-                        <div className="h-full justify-center items-center hidden group-hover:flex">
-                          {/* TODO: make btn with confirmation */}
-                          <MdDelete size={22} color="#fff" />
-                        </div>
-                      </td>
+                      {!selected && (
+                        <td
+                          onClick={(e) => e.stopPropagation()}
+                          className="h-12 w-24 px-1 border-t border-b border-gray-600 "
+                        >
+                          <div className="h-full justify-center items-center hidden group-hover:flex">
+                            {/* TODO: make btn with confirmation */}
+                            <BtnWithConfirmation />
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   );
                 })
