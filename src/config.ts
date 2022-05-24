@@ -6,4 +6,6 @@ export const headers = {
   "Content-Type": "application/json"
 };
 
-export const size = 30;
+export const baseVideoLimit = 50
+
+export const baseSizeIcon = 30;

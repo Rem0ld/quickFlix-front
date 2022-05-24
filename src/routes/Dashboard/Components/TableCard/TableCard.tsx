@@ -12,14 +12,17 @@ import { MdDelete, MdKeyboardArrowDown } from "react-icons/md";
 import Button from "../../../../components/Button/Button";
 import CloseBtn from "../../../../components/CloseBtn/CloseBtn";
 import { TvShow, Video } from "../../../../types";
-import { updateVideo } from "../../../../api/video";
+import { deleteVideoById, updateVideo } from "../../../../api/video";
+import BtnWithConfirmation from "../../../../components/BtnWithConfirmation/BtnWithConfirmation";
 
 export default function TableCard({
   obj,
-  action,
+  closeDrawer,
+  refetch,
 }: {
   obj: Video;
-  action: any;
+  closeDrawer: () => void;
+  refetch: () => void;
 }) {
   console.log("🚀 ~ file: TableCard.tsx ~ line 24 ~ obj", obj);
   const [values, setValues] = useState<Partial<Video>>({});
@@ -76,8 +79,15 @@ export default function TableCard({
     }
   };
 
-  const handleDelete = () => {
-    console.log("deleting");
+  const handleDelete = async () => {
+    try {
+      console.log("deleting");
+      await deleteVideoById(obj._id);
+      refetch();
+      closeDrawer();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleChangePoster = (e: ChangeEvent<HTMLInputElement>) => {
@@ -98,14 +108,18 @@ export default function TableCard({
               props="px-3 hover:bg-gray-600 hover:rounded-full transition-all duration-200"
             />
           )}
-          <Button
-            onClick={handleDelete}
-            bgColor="bg-transparent"
-            icon={<MdDelete size={22} color="#fff" />}
-            props="mr-12 px-3 hover:bg-gray-600 hover:rounded-full transition-all duration-200"
+          <BtnWithConfirmation
+            size={22}
+            color="#fff"
+            action={handleDelete}
+            propsIcon="p-3 hover:bg-gray-600 rounded-full transition-colors duration-200"
+            props="mr-12"
           />
         </div>
-        <CloseBtn action={action} offset={{ top: "top-5", right: "right-4" }} />
+        <CloseBtn
+          action={closeDrawer}
+          offset={{ top: "top-5", right: "right-4" }}
+        />
       </div>
       <header className="flex gap-4 mt-2">
         {/* TODO: make carousel, TODO: remove poster, add poster from moviedb */}
@@ -170,11 +184,12 @@ export default function TableCard({
         <select
           onChange={(e) => console.log(e)}
           className="py-2 px-2 border border-gray-500 rounded-sm bg-gray-800"
+          defaultValue={selectedPoster}
         >
           {values?.posterPath?.map((pic, i) => {
             return (
               <option
-                selected={i === 0}
+                // selected={i === 0}
                 key={i}
                 value={i}
                 className="grid place-items-center w-full p-2 cursor-pointer hover:bg-gray-500"

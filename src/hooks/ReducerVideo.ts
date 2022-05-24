@@ -1,3 +1,4 @@
+import { baseVideoLimit } from "../config";
 import { Pagination, ReducerVideo, TvShow, Video } from "../types";
 
 export const initialStateVideo = (limit: number): Pagination<Video | TvShow> => ({
@@ -15,6 +16,8 @@ export const reducerVideo: ReducerVideo = (state, action) => {
       return { ...state, total: action.value };
     case "setData":
       return { ...state, data: [...state.data, ...action.value] };
+    case "reset":
+      return initialStateVideo(baseVideoLimit)
     default:
       return state;
   }

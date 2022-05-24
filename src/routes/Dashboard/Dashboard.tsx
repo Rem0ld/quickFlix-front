@@ -11,7 +11,10 @@ import { BsSearch } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 
 export default function Dashboard() {
-  const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
+  const [onlyMovie, setOnlyMovie] = useState(true);
+  const { movies, refetch, hasMoreMovie, fetchMoreMovies } = UseFetchMovies({
+    onlyMovie,
+  });
   const [filteredData, setFilteredData] = useState([]);
   const [selected, setSelected] = useState<TvShow | Video | null>(null);
   const [textFilter, setTextFilter] = useState("");
@@ -57,6 +60,12 @@ export default function Dashboard() {
     toggleHideColumns(true);
   };
 
+  const closeDrawer = () => {
+    setSelected(null);
+    toggleHideColumns(false);
+    return;
+  };
+
   useEffect(() => {
     setFilteredData(movies);
   }, [movies]);
@@ -69,7 +78,8 @@ export default function Dashboard() {
   return (
     <main className="h-[calc(100vh-theme(height.14))] flex flex-col gap-2 p-5 bg-gray-800">
       {/* <Sidebar /> */}
-      <div className="filters w-full">
+      <div className="filters w-full flex gap-2">
+        {/* Search input */}
         <form className="flex items-center bg-gray-50 w-min focus:border focus:outline-black rounded-sm">
           <label className="pl-2" htmlFor="filter-text">
             <BsSearch color="#000" />
@@ -91,6 +101,17 @@ export default function Dashboard() {
           >
             <IoClose color="#000" size={22} />
           </button>
+        </form>
+        <form className="flex items-center gap-2">
+          <label htmlFor="filter-movie">Only movie</label>
+          <input
+            onChange={() => setOnlyMovie(!onlyMovie)}
+            className="w-4 h-4"
+            type="checkbox"
+            name="filter-movie"
+            value="movie"
+            checked={onlyMovie}
+          />
         </form>
       </div>
       <div className="flex flex-grow min-h-0 gap-6">
@@ -178,9 +199,8 @@ export default function Dashboard() {
         {selected && (
           <TableCard
             obj={selected}
-            action={() => {
-              setSelected(null);
-            }}
+            closeDrawer={closeDrawer}
+            refetch={refetch}
           />
         )}
       </div>

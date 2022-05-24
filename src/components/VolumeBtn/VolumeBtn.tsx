@@ -1,7 +1,7 @@
 import { Popover, Slider } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import { size } from "../../config";
+import { baseSizeIcon } from "../../config";
 
 export default function VolumeBtn({
   changeVolume,
@@ -36,11 +36,15 @@ export default function VolumeBtn({
         className="w-8 h-8 hover:scale-125 transition-all"
         onClick={volumeOff}
       >
-        {!muted && volume > 0.6 && <FaVolumeUp color="white" size={size} />}
-        {!muted && volume > 0.3 && volume < 0.6 && (
-          <FaVolumeDown color="white" size={size} />
+        {!muted && volume > 0.6 && (
+          <FaVolumeUp color="white" size={baseSizeIcon} />
         )}
-        {(volume === 0 || muted) && <FaVolumeMute color="white" size={size} />}
+        {!muted && volume > 0.3 && volume < 0.6 && (
+          <FaVolumeDown color="white" size={baseSizeIcon} />
+        )}
+        {(volume === 0 || muted) && (
+          <FaVolumeMute color="white" size={baseSizeIcon} />
+        )}
       </button>
     </div>
   );

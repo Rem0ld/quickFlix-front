@@ -27,10 +27,6 @@ const Navbar = () => {
     setTimeout(async () => {
       try {
         const access = await checkAccessFolder();
-        console.log(
-          "🚀 ~ file: Navbar.tsx ~ line 28 ~ accessVideos ~ access",
-          access,
-        );
         setAccessFolder(stateAccessFolder[access]);
       } catch (err) {
         console.error(err);

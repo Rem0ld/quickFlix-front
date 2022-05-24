@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import gsap from "gsap";
 import { useLocation, useNavigate } from "react-router-dom";
-import { size, baseUrl } from "../../config";
+import { baseSizeIcon, baseUrl } from "../../config";
 import UseControlPlayer from "../../hooks/UseControlPlayer";
 import BooleanBtn from "../BooleanBtn/BooleanBtn";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -163,7 +163,7 @@ export default function PlayerControl({
             }
           }}
           color="white"
-          size={size + 5}
+          size={baseSizeIcon + 5}
           className=""
         />
       </span>
@@ -192,8 +192,8 @@ export default function PlayerControl({
               isActive={isPlaying}
               action={playPause}
               placeholders={[
-                <FaPause key={0} color="white" size={size} />,
-                <FaPlay key={1} color="white" size={size} />,
+                <FaPause key={0} color="white" size={baseSizeIcon} />,
+                <FaPlay key={1} color="white" size={baseSizeIcon} />,
               ]}
             />
             <button
@@ -201,14 +201,14 @@ export default function PlayerControl({
               className="w-8 h-8 hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("rewind")}
             >
-              <FaBackward color="white" size={size} />
+              <FaBackward color="white" size={baseSizeIcon} />
             </button>
             <button
               id="forward-10"
               className="w-8 h-8 hover:scale-125 transition-all"
               onClick={() => handleForwardBackward("forward")}
             >
-              <FaForward color="white" size={size} />
+              <FaForward color="white" size={baseSizeIcon} />
             </button>
             <VolumeBtn
               changeVolume={changeVolume}
@@ -226,32 +226,36 @@ export default function PlayerControl({
               id="next"
               className={`${type === "tv" ? "visible" : "hidden"} w-8 h-8 `}
             >
-              <IoPlaySkipForward color="white" size={size} />
+              <IoPlaySkipForward color="white" size={baseSizeIcon} />
             </button>
             <button
               id="episodes"
               className="w-8 h-8 hover:scale-125 transition-all"
             >
-              <IoIosJournal color="white" size={size} />
+              <IoIosJournal color="white" size={baseSizeIcon} />
             </button>
             <button
               id="subtitles"
               className="w-8 h-8 hover:scale-125 transition-all"
             >
-              <FaCommentAlt color="white" size={size} />
+              <FaCommentAlt color="white" size={baseSizeIcon} />
             </button>
             <button
               id="speed"
               className="w-8 h-8 hover:scale-125 transition-all"
             >
-              <SiSpeedtest color="white" size={size} />
+              <SiSpeedtest color="white" size={baseSizeIcon} />
             </button>
             <BooleanBtn
               isActive={isFullScreen}
               action={handleFullScreen}
               placeholders={[
-                <RiFullscreenExitLine key={0} color="white" size={size} />,
-                <RiFullscreenLine key={1} color="white" size={size} />,
+                <RiFullscreenExitLine
+                  key={0}
+                  color="white"
+                  size={baseSizeIcon}
+                />,
+                <RiFullscreenLine key={1} color="white" size={baseSizeIcon} />,
               ]}
             />
           </div>

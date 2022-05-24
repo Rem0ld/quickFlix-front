@@ -25,3 +25,19 @@ export async function getVideoById(id: string): Promise<Video | null> {
     return null
   }
 }
+
+export async function deleteVideoById(id: string): Promise<Video | null | void> {
+  if (!id) return;
+
+  try {
+    const response = await fetch(`${baseUrl}video/${id}`, {
+      method: "DELETE",
+      headers
+    })
+    const result = await response.json()
+    console.log("🚀 ~ file: video.ts ~ line 40 ~ deleteVideoById ~ result", result)
+    return result
+  } catch (err) {
+    console.error(err)
+  }
+}

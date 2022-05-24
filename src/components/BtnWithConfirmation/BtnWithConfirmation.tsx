@@ -6,10 +6,14 @@ export default function BtnWithConfirmation({
   size = 22,
   color = "#fff",
   action,
+  props = "",
+  propsIcon = "",
 }: {
   size?: number;
   color?: string;
   action?: () => void;
+  props?: string;
+  propsIcon?: string;
 }) {
   const [confirmState, setConfirmState] = useState(false);
 
@@ -24,12 +28,22 @@ export default function BtnWithConfirmation({
   const handleConfirmState = () => {
     setConfirmState(true);
   };
-  return confirmState ? (
-    <div className="flex items-center gap-1">
-      <BsFillExclamationDiamondFill size={size - 4} color="#f00" />
-      <span>confirm</span>
+  return (
+    <div className={`grid place-items-center cursor-pointer ${props}`}>
+      {confirmState ? (
+        <button
+          type="button"
+          onClick={action}
+          className="flex items-center gap-1"
+        >
+          <BsFillExclamationDiamondFill size={size - 4} color="#f00" />
+          <span>confirm</span>
+        </button>
+      ) : (
+        <button type="button" className={`${propsIcon}`}>
+          <MdDelete onClick={handleConfirmState} size={size} color={color} />
+        </button>
+      )}
     </div>
-  ) : (
-    <MdDelete onClick={handleConfirmState} size={size} color={color} />
   );
 }
