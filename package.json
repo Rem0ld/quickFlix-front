@@ -9,7 +9,7 @@
         "pretty": "yarn prettier --write src/config src/components src/Layout src/redux src/routes src/services --tab-width 2"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "^1.6.1",
+        "@reduxjs/toolkit": "^1.8.2",
         "antd": "^4.18.4",
         "dotenv": "^16.0.0",
         "gsap": "^3.9.1",
