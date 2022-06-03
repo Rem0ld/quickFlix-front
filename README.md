@@ -13,6 +13,9 @@
 - [ ] see TODOS comments
 
 TODO: When going back to details if store is empty, we navigate back to browse
+make another hook to get videos and not only movies
+videos will be able to filter from movies and all
+see hook useFetchMovies and adapt from it
 
 ## Getting started
 
