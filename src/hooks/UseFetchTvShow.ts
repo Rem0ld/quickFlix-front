@@ -4,7 +4,7 @@ import { Pagination, ReducerVideo, TvShow } from '../types';
 import { initialStateVideo, reducerVideo } from './ReducerVideo';
 
 export default function UseFetchTvShow() {
-  const [{ limit, skip, data, total }, dispatch] = useReducer<ReducerVideo>(reducerVideo, initialStateVideo(50))
+  const [{ limit, skip, data, total }, dispatch] = useReducer(reducerVideo, initialStateVideo(50))
 
   const fetchTvShows = async (): Promise<Pagination<TvShow>> => {
     const response = await fetch(`${baseUrl}tv-show?limit=${limit}&skip=${skip}&populate=true`)

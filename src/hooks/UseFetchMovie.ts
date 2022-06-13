@@ -7,8 +7,7 @@ import { initialStateVideo, reducerVideo } from "./ReducerVideo";
  * Call fetchMore to get the request to work
  * @returns
  */
-export default function UseFetchMovies({ onlyMovie }: { onlyMovie: boolean }) {
-  const [filter, setFilter] = useState<boolean>();
+export default function UseFetchMovies() {
   const [{ limit, skip, data, total }, dispatch] = useReducer(
     reducerVideo,
     initialStateVideo(baseVideoLimit),
@@ -16,7 +15,7 @@ export default function UseFetchMovies({ onlyMovie }: { onlyMovie: boolean }) {
 
   const fetchMovies = async (): Promise<Pagination<Video>> => {
     const response = await fetch(
-      `${baseUrl}video?limit=${limit}&skip=${skip}&movie=${filter}`,
+      `${baseUrl}video?limit=${limit}&skip=${skip}&movie=true`,
     );
     const result = await response.json();
 
@@ -39,22 +38,6 @@ export default function UseFetchMovies({ onlyMovie }: { onlyMovie: boolean }) {
   useEffect(() => {
     fetchMore();
   }, []);
-
-  useEffect(() => {
-    if (filter === undefined) {
-      setFilter(onlyMovie);
-      return;
-    }
-
-    if (onlyMovie !== filter) {
-      setFilter(onlyMovie);
-      dispatch({ type: "reset" });
-    }
-  }, [onlyMovie]);
-
-  useEffect(() => {
-    fetchMore();
-  }, [filter])
 
   return {
     movies: data,
