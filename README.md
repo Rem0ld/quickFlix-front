@@ -11,56 +11,12 @@
 - [x] make player
 - [ ] add personal rating
 - [ ] see TODOS comments
+- [x] When going back to details if store is empty, we navigate back to browse
 
-TODO: When going back to details if store is empty, we navigate back to browse
+TODO:
 make another hook to get videos and not only movies
 videos will be able to filter from movies and all
 see hook useFetchMovies and adapt from it
-
-## Getting started
-
-1. Clone the repository.
-
-   ```bash
-   git clone https://github.com/IsaiaPhiliph/vite-reactts-tailwind-rtk-eslint.git
-   ```
-
-2. Access the project.
-
-   ```bash
-   cd vite-reactts-tailwind-rtk-eslint
-   ```
-
-3. Make it your own repository
-
-   ```bash
-   rm -rf .git
-   git init
-   ```
-
-4. Install dependencies.
-
-   ```bash
-   npm i
-   ```
-
-5. Start the development server.
-
-   ```bash
-   npm run dev
-   ```
-
-6. Build for production.
-
-   ```bash
-   npm run build
-   ```
-
-7. Test your production build.
-
-   ```bash
-   npm run serve
-   ```
 
 This is a [React](https://reactjs.org) + [TypeScript](https://www.typescriptlang.org/) + [Tailwind](https://tailwindcss.com/) + [RTK](https://redux-toolkit.js.org/) + [eslint](https://eslint.org/) boilerplate built with [Vite](https://vitejs.dev).
 
