@@ -7,7 +7,6 @@ export default function Layout() {
     <div className="relative min-h-screen w-screen bg-gray-900">
       <Navbar />
       <div className="h-14" />
-
       <Outlet />
     </div>
   );

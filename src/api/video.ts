@@ -1,43 +1,45 @@
-import { baseUrl, headers } from "../config";
+import path from "path";
 import { Video } from "../types";
+import BaseFetch from "./BaseFetch";
 
-export async function updateVideo(id: string | undefined, data: any): Promise<Response | null> {
-  if (!id) return null;
-  return fetch(`${baseUrl}video/${id}`, {
-    method: "PATCH",
-    headers,
-    body: JSON.stringify(data)
-  })
-}
-
-export async function getVideoById(id: string): Promise<Video | null> {
-  if (!id) return null;
-
-  try {
-    const response = await fetch(`${baseUrl}video/${id}`, {
-      method: "GET",
-      headers
-    })
-    const result = await response.json()
-    return result as Video
-  } catch (error) {
-    console.error(error)
-    return null
+export default class VideoApi extends BaseFetch {
+  private apiUrl: string;
+  constructor(name: string) {
+    super();
+    this.apiUrl = this.url + name + path.sep;
   }
-}
 
-export async function deleteVideoById(id: string): Promise<Video | null | void> {
-  if (!id) return;
+  async updateVideo(
+    id: string | undefined,
+    data: Record<string, unknown>,
+  ): Promise<Response | null> {
+    if (!id) return null;
+    return fetch(`${this.apiUrl}${id}`, {
+      method: this.requestType.PATCH,
+      headers: this.headers,
+      body: this.stringify(data),
+    });
+  }
 
-  try {
-    const response = await fetch(`${baseUrl}video/${id}`, {
-      method: "DELETE",
-      headers
-    })
-    const result = await response.json()
-    console.log("🚀 ~ file: video.ts ~ line 40 ~ deleteVideoById ~ result", result)
-    return result
-  } catch (err) {
-    console.error(err)
+  async getVideoById(id: string): Promise<Video | null> {
+    if (!id) return null;
+
+    const response = await fetch(`${this.apiUrl}${id}`, {
+      method: this.requestType.GET,
+      headers: this.headers,
+    });
+    const result = await response.json();
+    return result as Video;
+  }
+
+  async deleteVideoById(id: string): Promise<Video | null | void> {
+    if (!id) return;
+
+    const response = await fetch(`${this.apiUrl}${id}`, {
+      method: this.requestType.DELETE,
+      headers: this.headers,
+    });
+    const result = await response.json();
+    return result;
   }
 }

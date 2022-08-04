@@ -15,7 +15,14 @@ export default function UseFetchMovies() {
 
   const fetchMovies = async (): Promise<Pagination<Video>> => {
     const response = await fetch(
-      `${baseUrl}video?limit=${limit}&skip=${skip}&movie=true`,
+      `${baseUrl}video/by-fields?limit=${limit}&skip=${skip}`,
+      {
+        method: "POST",
+        body: JSON.stringify({ type: "movie" }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
     );
     const result = await response.json();
 
