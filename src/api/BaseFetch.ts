@@ -1,4 +1,3 @@
-
 type THeader = {
   [key: string]: string;
 };
@@ -14,7 +13,6 @@ enum ERequestType {
 export default class BaseFetch {
   private baseUrl = `http://${import.meta.env.DEV ? "localhost" : "192.168.0.11"
     }:3050/`;
-
   private headersObj: THeader = {
     "Content-Type": "application/json",
   };
@@ -33,12 +31,11 @@ export default class BaseFetch {
     this.headersObj = headers;
   }
 
-
   get headers() {
     return this.headersObj;
   }
 
   stringify(data: Record<string, unknown>) {
-    return JSON.stringify(data)
+    return JSON.stringify(data);
   }
 }
