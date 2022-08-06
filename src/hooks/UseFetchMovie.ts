@@ -1,55 +1,19 @@
-import { useEffect, useReducer, useState } from "react";
-import { baseUrl, baseVideoLimit } from "../config";
-import { Pagination, Video } from "../types";
-import { initialStateVideo, reducerVideo } from "./ReducerVideo";
+import UseFetchVideos from "./UseFetchVideos";
 
 /**
  * Call fetchMore to get the request to work
  * @returns
  */
 export default function UseFetchMovies() {
-  const [{ limit, skip, data, total }, dispatch] = useReducer(
-    reducerVideo,
-    initialStateVideo(baseVideoLimit),
-  );
-
-  const fetchMovies = async (): Promise<Pagination<Video>> => {
-    const response = await fetch(
-      `${baseUrl}video/by-fields?limit=${limit}&skip=${skip}`,
-      {
-        method: "POST",
-        body: JSON.stringify({ type: "movie" }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      },
-    );
-    const result = await response.json();
-
-    return result;
-  };
-
-  const fetchMore = async () => {
-    const result = await fetchMovies();
-    dispatch({ type: "setData", value: result.data });
-    dispatch({ type: "addSkip" });
-    dispatch({ type: "setTotal", value: result.total });
-  };
-
-  const refetch = async () => {
-    const result = await fetchMovies();
-    dispatch({ type: "setData", value: result.data });
-    dispatch({ type: "setTotal", value: result.total });
-  };
-
-  useEffect(() => {
-    fetchMore();
-  }, []);
+  const { videos, hasMore, fetchMore, errors, refetch } = UseFetchVideos({
+    type: "movie",
+  });
 
   return {
-    movies: data,
-    hasMoreMovie: skip + limit < total,
+    movies: videos,
+    hasMoreMovies: hasMore,
+    refetchMovies: refetch,
+    errorsMovies: errors,
     fetchMoreMovies: fetchMore,
-    refetch,
   };
 }

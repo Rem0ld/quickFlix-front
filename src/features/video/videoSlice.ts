@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Season, Video } from "../../types";
+import { Video } from "../../types";
 
 export type VideoState = Partial<Video> & { percentageSeen?: number }
 
 export const initialStateDetailsVideo: VideoState = {
-  _id: '',
+  id: 0,
   name: '',
   posterPath: [],
   trailerYtCode: [],
@@ -14,7 +14,7 @@ export const initialStateDetailsVideo: VideoState = {
   score: 0,
   length: 0,
   watched: {
-    _id: '',
+    id: 0,
     timeWatched: 0,
     length: 0,
     finished: false,

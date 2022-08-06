@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
-import { baseUrl } from "../../config";
 import PlayerControl from "../../components/PlayerControl/PlayerControl";
 
 const Player = () => {

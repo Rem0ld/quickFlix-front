@@ -1,3 +1,13 @@
+import { DeepPartial } from "redux";
+
+export interface IApiClass<T> {
+  get: (id: string) => Promise<T>;
+  find: (limit: number, skip: number) => Promise<Result<Pagination<T>, Error>>;
+  update: (id: string, data: DeepPartial<T>) => Promise<T>;
+  delete: (id: string) => Promise<boolean>;
+  create: (data: DeepPartial<T>) => Promise<Result<T, Error>>;
+}
+
 export type Pagination<T> = {
   total: number;
   skip: number;
@@ -18,8 +28,8 @@ export type Video = {
   season?: string;
   ext: string;
   subtitles?: string[];
-  type: "movie" | "tv"
-  posterPath?: string[]
+  type: "movie" | "tv";
+  posterPath?: string[];
   resume?: string;
   genres?: string[];
   trailerYtCode?: string[];
@@ -38,7 +48,7 @@ export type Watched = {
   user: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export type TvShow = {
   id: number;
@@ -64,30 +74,39 @@ export type ActionReducer = {
   value?: any;
 };
 
-export type ReducerVideo = (arg: Pagination<Video | TvShow>, arg1: ActionReducer) => Pagination<Video | TvShow>
+export type ReducerVideo<T> = (
+  arg: Pagination<T>,
+  arg1: ActionReducer,
+) => Pagination<T>;
 
 export type ParsedMovieTime = {
   h: number;
   min: number;
-}
+};
 
 export type ParsedWatchedTime = {
   mins: number;
   total: number;
-}
+};
+
+export type Result<T, E> = [T?, E?];
+export type TResultService<T> = {
+  total: number;
+  data: T[];
+};
 
 // export interface VideoState {
-  //   id: string;
-  //   name: string;
-  //   posterPath: string[];
-  //   ytKeys: string[];
-  //   genres: string[];
-  //   year: string;
-  //   resume: string;
-  //   score: number;
-  //   length: number;
-  //   watchTime: number;
-  //   seasons: Season[] | [];
-  //   subtitles: string[];
-  //   percentageSeen: number;
-  // }
+//   id: string;
+//   name: string;
+//   posterPath: string[];
+//   ytKeys: string[];
+//   genres: string[];
+//   year: string;
+//   resume: string;
+//   score: number;
+//   length: number;
+//   watchTime: number;
+//   seasons: Season[] | [];
+//   subtitles: string[];
+//   percentageSeen: number;
+// }

@@ -1,18 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, {
-  ChangeEvent,
-  EventHandler,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
-import { GrClose } from "react-icons/gr";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { BiSave } from "react-icons/bi";
-import { MdDelete, MdKeyboardArrowDown } from "react-icons/md";
 import Button from "../../../../components/Button/Button";
 import CloseBtn from "../../../../components/CloseBtn/CloseBtn";
 import { TvShow, Video } from "../../../../types";
-import { deleteVideoById, updateVideo } from "../../../../api/video";
 import BtnWithConfirmation from "../../../../components/BtnWithConfirmation/BtnWithConfirmation";
 
 export default function TableCard({
@@ -60,34 +51,32 @@ export default function TableCard({
   };
 
   const handlePatch = async () => {
-    const data = Object.keys(pristine).reduce(
-      (acc: Record<string, unknown>, el: any) => {
-        acc[el] = values[el];
-        return acc;
-      },
-      {},
-    );
-
-    try {
-      const response = await updateVideo(obj._id, data);
-      // @ts-ignore
-      const result = await response.json();
-
-      setPristine({});
-    } catch (error: unknown) {
-      console.error(error);
-    }
+    // const data = Object.keys(pristine).reduce(
+    //   (acc: Record<string, unknown>, el: any) => {
+    //     acc[el] = values[el];
+    //     return acc;
+    //   },
+    //   {},
+    // );
+    // try {
+    //   const response = await updateVideo(obj.id, data);
+    //   // @ts-ignore
+    //   const result = await response.json();
+    //   setPristine({});
+    // } catch (error: unknown) {
+    //   console.error(error);
+    // }
   };
 
   const handleDelete = async () => {
-    try {
-      console.log("deleting");
-      await deleteVideoById(obj._id);
-      refetch();
-      closeDrawer();
-    } catch (err) {
-      console.error(err);
-    }
+    // try {
+    //   console.log("deleting");
+    //   await deleteVideoById(obj.id);
+    //   refetch();
+    //   closeDrawer();
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
   const handleChangePoster = (e: ChangeEvent<HTMLInputElement>) => {

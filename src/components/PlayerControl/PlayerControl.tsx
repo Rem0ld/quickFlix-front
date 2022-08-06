@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import gsap from "gsap";
 import { useLocation, useNavigate } from "react-router-dom";
-import { baseSizeIcon, baseUrl } from "../../config";
+import { baseSizeIcon } from "../../config";
 import UseControlPlayer from "../../hooks/UseControlPlayer";
 import BooleanBtn from "../BooleanBtn/BooleanBtn";
 import ProgressBar from "../ProgressBar/ProgressBar";
@@ -24,11 +24,7 @@ import { IoPlaySkipForward } from "react-icons/io5";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
-import UseFetchMovieInfo from "../../hooks/UseFetchMovieInfo";
 import { useDispatch, useSelector } from "react-redux";
-import { createWatched } from "../../api/watched";
-import { getVideoById } from "../../api/video";
-import { setVideo } from "../../features/video/videoSlice";
 
 export default function PlayerControl({
   videoRef,
@@ -62,10 +58,10 @@ export default function PlayerControl({
     }
 
     if (!name) {
-      getVideoById(idVideo).then((result) => {
-        if (!result) return;
-        dispatch(setVideo(result));
-      });
+      // getVideoById(idVideo).then((result) => {
+      //   if (!result) return;
+      //   dispatch(setVideo(result));
+      // });
     }
   }, []);
 

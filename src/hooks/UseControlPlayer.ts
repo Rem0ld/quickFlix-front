@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { MutableRefObject, useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { updateTvShow } from "../api/tvshow";
-import { updateVideo } from "../api/video";
-import { updateWatched } from "../api/watched";
 import { setLength, setUpdateTimeWatched } from "../features/video/videoSlice";
 
 
@@ -103,7 +100,7 @@ export default function UseControlPlayer(
   useEffect(() => {
     const loadedMetadata = videoRef.current.addEventListener("loadedmetadata", async () => {
       if (!video.length) {
-        await updateVideo(id, { length: videoRef.current.duration })
+        // await updateVideo(id, { length: videoRef.current.duration })
         dispatch(setLength(videoRef.current.duration))
       }
       if (!averageLength) {

@@ -38,4 +38,11 @@ export default class BaseFetch {
   stringify(data: Record<string, unknown>) {
     return JSON.stringify(data);
   }
+
+  async fetch(url: string, options: Record<string, any>): Promise<any> {
+    const response = await fetch(url, options);
+    const result = await response.json();
+
+    return result;
+  }
 }

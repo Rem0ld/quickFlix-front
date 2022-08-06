@@ -13,29 +13,17 @@ import {
 } from "../../features/video/videoSlice";
 import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
-import { Watched } from "../../types";
+import { Video, Watched } from "../../types";
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { movies, hasMoreMovie, fetchMoreMovies } = UseFetchMovies();
-  const { tvShows, hasMoreTvShow, fetchMoreTvShows } = UseFetchTvShow();
+  const { movies, hasMoreMovies, fetchMoreMovies } = UseFetchMovies();
+  const { tvShows, hasMoreTvShows, fetchMoreTvShows } = UseFetchTvShow();
 
   useEffect(() => {
     dispatch(setVideo(initialStateDetailsVideo));
     dispatch(setTvShow(initialStateDetailsTvShow));
   }, []);
-
-  useEffect(() => {
-    if (tvShows.length === 0) {
-      fetchMoreTvShows();
-    }
-  }, [tvShows.length]);
-
-  useEffect(() => {
-    if (movies.length === 0) {
-      fetchMoreMovies();
-    }
-  }, [movies.length]);
 
   return (
     <>
@@ -45,11 +33,10 @@ const Home = () => {
         className="px-5 flex justify-evenly gap-6 flex-wrap mb-6"
         dataLength={movies.length} //This is important field to render the next data
         next={fetchMoreMovies}
-        hasMore={hasMoreMovie}
+        hasMore={hasMoreMovies}
         loader={<h4>Loading...</h4>}
       >
-        {movies.map((el, i) => {
-          el.watched as Watched;
+        {movies.map((el: Video, i) => {
           return <Card key={i} {...el} />;
         })}
       </InfiniteScroll>
@@ -57,7 +44,7 @@ const Home = () => {
         className="px-5 flex justify-evenly gap-6 flex-wrap"
         dataLength={tvShows.length} //This is important field to render the next data
         next={fetchMoreTvShows}
-        hasMore={hasMoreTvShow}
+        hasMore={hasMoreTvShows}
         loader={<h4>Loading...</h4>}
       >
         {tvShows.map((el, i) => (

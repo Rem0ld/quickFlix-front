@@ -1,15 +1,12 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { baseUrl, headers } from "../../config";
 import { setWatched } from "../../features/tvShow/tvShowSlice";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import Score from "../Score/Score";
-import { Episode, Season, Watched } from "../../types";
 
 export default function DetailsTvShow() {
   const dispatch = useDispatch();
@@ -36,38 +33,35 @@ export default function DetailsTvShow() {
   const [lastEpisodeWatched, setLastEpisodeWatched] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch(`${baseUrl}watched-tv-show/by-name`, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          tvShow: name,
-        }),
-      });
-      const result = await response.json();
-      dispatch(setWatched(result.videos));
-    };
-
-    fetchData();
+    // const fetchData = async () => {
+    //   const response = await fetch(`${baseUrl}watched-tv-show/by-name`, {
+    //     method: "POST",
+    //     headers,
+    //     body: JSON.stringify({
+    //       tvShow: name,
+    //     }),
+    //   });
+    //   const result = await response.json();
+    //   dispatch(setWatched(result.videos));
+    // };
+    // fetchData();
   }, []);
 
   const play = () => {
-    let id = "";
-    const firstSeason: Season[] = seasons.filter(
-      (season: Season) => season.number === "1",
-    );
-    const firstEpisode: Episode[] = firstSeason[0].episodes.filter(
-      (episode: Episode) => episode.number === "1",
-    );
-
-    if (lastEpisodeWatched) {
-      id = lastEpisodeWatched;
-    } else {
-      id = firstEpisode[0].ref._id!;
-    }
-
-    navigate(`/player/${id}`, { state: id });
-    return;
+    // let id = "";
+    // const firstSeason: Season[] = seasons.filter(
+    //   (season: Season) => season.number === "1",
+    // );
+    // const firstEpisode: Episode[] = firstSeason[0].episodes.filter(
+    //   (episode: Episode) => episode.number === "1",
+    // );
+    // if (lastEpisodeWatched) {
+    //   id = lastEpisodeWatched;
+    // } else {
+    //   id = firstEpisode[0].ref._id!;
+    // }
+    // navigate(`/player/${id}`, { state: id });
+    // return;
   };
 
   useEffect(() => {

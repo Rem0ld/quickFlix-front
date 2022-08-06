@@ -11,7 +11,7 @@ export const initialStateVideo = (limit: number): Pagination<Video | TvShow> => 
   })
 }
 
-export const reducerVideo: ReducerVideo = (state, action) => {
+export const reducerVideo: ReducerVideo<Video | TvShow> = (state, action) => {
   switch (action.type) {
     case "addSkip":
       console.log("addskip")
