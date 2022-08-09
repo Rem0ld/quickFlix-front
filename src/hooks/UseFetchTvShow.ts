@@ -1,9 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
 import { err, ok } from "../api/apiHelperFunctions";
 import TvShowApi from "../api/TvShowApi";
-import VideoApi from "../api/VideoApi";
 import { baseVideoLimit } from "../config";
-import { Pagination, ReducerVideo, Result, TvShow, Video } from "../types";
+import { Pagination, Result, TvShow } from "../types";
 import { initialStateVideo, reducerVideo } from "./ReducerVideo";
 
 export default function UseFetchTvShow(params = {}) {
@@ -58,7 +57,6 @@ export default function UseFetchTvShow(params = {}) {
     refetchTvShows: refetch,
     errorsTvShows: errors,
   };
-
 
   // // const fetchTvShows = async (): Promise<Pagination<TvShow>> => {
   // //   const response = await fetch(`${baseUrl}tv-show?limit=${limit}&skip=${skip}&populate=true`)

@@ -13,7 +13,7 @@ import {
 } from "../../features/video/videoSlice";
 import UseFetchMovies from "../../hooks/UseFetchMovie";
 import UseFetchTvShow from "../../hooks/UseFetchTvShow";
-import { Video, Watched } from "../../types";
+import { Video } from "../../types";
 
 const Home = () => {
   const dispatch = useDispatch();
