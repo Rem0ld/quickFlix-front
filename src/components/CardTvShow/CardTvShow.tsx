@@ -12,7 +12,7 @@ import {
 } from "../../utils/numberManipulation";
 
 export default function CardTvShow(props: TvShow) {
-  const { trailerYtCode, posterPath, name, seasons } = props;
+  const { trailerYtCode, posterPath, name, videos } = props;
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -22,13 +22,13 @@ export default function CardTvShow(props: TvShow) {
   const [id, setId] = useState("");
   const [randomNum, setRandomNum] = useState<number>(0);
 
-  useEffect(() => {
-    if (seasons?.length) {
-      const { _id } = seasons[0].episodes[0].ref;
+  // useEffect(() => {
+  //   if (seasons?.length) {
+  //     const { id } = seasons[0].episodes[0].ref;
 
-      if (_id) setId(_id);
-    }
-  }, [seasons]);
+  //     if (id) setId(id);
+  //   }
+  // }, [seasons]);
 
   useEffect(() => {
     setRandomNum(makeRandomNumber(0, trailerYtCode?.length || 0));
@@ -49,7 +49,7 @@ export default function CardTvShow(props: TvShow) {
           className="absolute w-52 h-96 rounded-md cursor-pointer bg-gray-200"
           onClick={() => {
             dispatch(setTvShow(props));
-            navigate(`/browse/tv-show?id=${props._id}`, {
+            navigate(`/browse/tv-show?id=${props.id}`, {
               state: { backgroundLocation: location },
             });
           }}

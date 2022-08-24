@@ -25,7 +25,7 @@ const Card = ({
   score,
   length,
   watched,
-  _id,
+  id,
 }: Partial<Video>): React.ReactElement => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,7 +40,7 @@ const Card = ({
       trailerYtCode,
       posterPath,
       name,
-      _id,
+      id,
       year,
       resume,
       genres,
@@ -84,7 +84,7 @@ const Card = ({
           className="absolute w-52 h-96 cursor-pointer bg-gray-200"
           onClick={() => {
             dispatchDetails();
-            navigate(`/browse?id=${_id}`, {
+            navigate(`/browse?id=${id}`, {
               state: { backgroundLocation: location },
             });
           }}

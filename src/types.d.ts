@@ -50,6 +50,12 @@ export type Watched = {
   updatedAt: Date;
 };
 
+export type TVideoSorted = {
+  [x: number | string]: {
+    [x: number | string]: Video;
+  };
+};
+
 export type TvShow = {
   id: number;
   idMovieDb?: string;
@@ -67,6 +73,7 @@ export type TvShow = {
   trailerYtCode?: string[];
   firstAirDate?: string;
   averageLength?: number;
+  videos?: Video[];
 };
 
 export type ActionReducer = {
