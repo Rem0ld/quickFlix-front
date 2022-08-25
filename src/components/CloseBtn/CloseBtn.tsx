@@ -6,7 +6,7 @@ export default function CloseBtn({
   offset = { top: "top-2", right: "right-4" },
 }: {
   action: MouseEventHandler<HTMLButtonElement>;
-  offset: { top: string; right: string };
+  offset?: { top: string; right: string };
 }) {
   return (
     <button

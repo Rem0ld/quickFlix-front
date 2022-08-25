@@ -8,6 +8,10 @@ export interface IApiClass<T> {
   create: (data: DeepPartial<T>) => Promise<Result<T, Error>>;
 }
 
+// export interface IStreamClass {
+
+// }
+
 export type Pagination<T> = {
   total: number;
   skip: number;
@@ -16,7 +20,7 @@ export type Pagination<T> = {
 };
 
 export type Video = {
-  id: number;
+  id: number | string;
   uuid: string;
   idMovieDb?: string;
   releaseDate?: string;
@@ -40,7 +44,7 @@ export type Video = {
 };
 
 export type Watched = {
-  id: number;
+  id: number | string;
   timeWatched?: number;
   length?: number;
   finished?: boolean;
@@ -57,7 +61,7 @@ export type TVideoSorted = {
 };
 
 export type TvShow = {
-  id: number;
+  id: number | string;
   idMovieDb?: string;
   name: string;
   location: string;
@@ -74,6 +78,7 @@ export type TvShow = {
   firstAirDate?: string;
   averageLength?: number;
   videos?: Video[];
+  watched?: Watched[];
 };
 
 export type ActionReducer = {

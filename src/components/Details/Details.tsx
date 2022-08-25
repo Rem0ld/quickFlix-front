@@ -1,15 +1,7 @@
-import React, {
-  Suspense,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
 import { nanoid } from "@reduxjs/toolkit";
 import Score from "../Score/Score";
-import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import { useSelector } from "react-redux";
 import { ParsedMovieTime, ParsedWatchedTime } from "../../types";
 import {
@@ -40,24 +32,22 @@ export default function Details() {
   }, [detailsVideo]);
 
   const {
-    _id,
+    uuid,
     name,
     trailerYtCode,
     genres,
     resume,
     score,
     year,
-    seasons,
     length,
     watched,
-    percentageSeen,
   } = detailsVideo;
 
   const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
   const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
   const [percentage, setPercentage] = useState(0);
 
-  const play = (id: any) => {
+  const play = (id: string) => {
     navigate(`/player/${id}`, { state: id });
     return;
   };
@@ -83,7 +73,7 @@ export default function Details() {
     <>
       <div className="relative">
         <Suspense fallback="Loading...">
-          <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
+          <IframeWrapper ytKeys={trailerYtCode} />
         </Suspense>
         <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
           {percentage ? (
@@ -109,7 +99,7 @@ export default function Details() {
           )}
         </div>
         <Button
-          onClick={() => play(_id)}
+          onClick={() => play(uuid)}
           icon={<FaPlay size={16} color={"black"} />}
           bgColor="bg-white"
           color="text-black"

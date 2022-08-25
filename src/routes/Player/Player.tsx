@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useRef } from "react";
 import { useParams } from "react-router-dom";
+import StreamApi from "../../api/StreamApi";
 import PlayerControl from "../../components/PlayerControl/PlayerControl";
 
 const Player = () => {
@@ -9,6 +10,7 @@ const Player = () => {
   const videoContainer = useRef<any>(null);
   const progressRef = useRef<any>();
   const progressBarRef = useRef<any>(null);
+  const baseUrl = StreamApi.Instance.apiUrl;
 
   return (
     <PlayerControl
@@ -19,12 +21,9 @@ const Player = () => {
       idVideo={id || ""}
     >
       <video ref={videoRef} className="h-screen absolute" preload="metadata">
-        <source src={`${baseUrl}stream/${id}`} type="video/webm" />
-        <source src={`${baseUrl}stream/${id}`} type="video/mp4" />
-        <source
-          src={`${baseUrl}stream/${id}`}
-          type='video/mp4; codecs="avc1"'
-        />
+        <source src={`${baseUrl}${id}`} type="video/webm" />
+        <source src={`${baseUrl}${id}`} type="video/mp4" />
+        <source src={`${baseUrl}${id}`} type='video/mp4; codecs="avc1"' />
       </video>
     </PlayerControl>
   );

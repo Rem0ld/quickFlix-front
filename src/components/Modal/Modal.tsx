@@ -1,6 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
-import { GrClose } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+import React, { ReactElement } from "react";
 import CloseBtn from "../CloseBtn/CloseBtn";
 
 export const Modal = ({
@@ -25,7 +23,8 @@ export const Modal = ({
       }}
     >
       <div className="absolute inset-0 z-50 opacity-90 bg-gray-800" />
-      <div
+      <dialog
+        open={visible}
         style={{ width, maxHeight: 785 }}
         onClick={(event) => {
           event.stopPropagation();
@@ -34,7 +33,7 @@ export const Modal = ({
       >
         <CloseBtn action={hide} />
         {children}
-      </div>
+      </dialog>
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Season, TvShow, Video, Watched } from "../../types";
+import { TvShow, Watched } from "../../types";
 
 export const initialStateDetailsTvShow: TvShow = {
-  _id: "",
+  id: "",
   idMovieDb: "",
   name: "",
   location: "",
@@ -15,8 +15,8 @@ export const initialStateDetailsTvShow: TvShow = {
   genres: [],
   resume: "",
   score: 0,
-  seasons: [],
-  watched: []
+  videos: [],
+  watched: [],
 };
 
 export const tvShowSlice = createSlice({
@@ -28,7 +28,7 @@ export const tvShowSlice = createSlice({
     },
     setWatched: (state, action: PayloadAction<Watched[]>) => {
       state.watched = action.payload;
-    }
+    },
   },
 });
 

@@ -1,69 +1,70 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Video } from "../../types";
 
-export type VideoState = Partial<Video> & { percentageSeen?: number }
+export type VideoState = Partial<Video> & { percentageSeen?: number };
 
 export const initialStateDetailsVideo: VideoState = {
-  id: 0,
-  name: '',
+  id: "",
+  uuid: "",
+  name: "",
   posterPath: [],
   trailerYtCode: [],
   genres: [],
-  year: '',
-  resume: '',
+  year: "",
+  resume: "",
   score: 0,
   length: 0,
   watched: {
-    id: 0,
+    id: "",
     timeWatched: 0,
     length: 0,
     finished: false,
-    video: '',
-    user: '',
+    video: "",
+    user: "",
     createdAt: null,
-    updatedAt: null
+    updatedAt: null,
   },
-  season: '',
+  season: "",
   subtitles: [],
-  percentageSeen: 0
-}
-
+  percentageSeen: 0,
+};
 
 export const videoSlice = createSlice({
-  name: 'details',
+  name: "details",
   initialState: initialStateDetailsVideo,
   reducers: {
     setVideo: (state, action: PayloadAction<VideoState>) => {
-      return action.payload
+      return action.payload;
     },
     setLength: (state, action: PayloadAction<number>) => {
-      state.length = action.payload
+      state.length = action.payload;
     },
     setPercentage: (state, action: PayloadAction<number>) => {
-      state.percentageSeen = action.payload
+      state.percentageSeen = action.payload;
     },
     setUpdateTimeWatched: (state, action: PayloadAction<number>) => {
       // TODO: find a way to avoid doing this
       if (!state.watched) {
-        const date = new Date()
+        const date = new Date();
         state.watched = {
-          _id: '',
+          id: "",
           timeWatched: 0,
           length: 0,
           finished: false,
-          video: '',
-          user: '',
+          video: "",
+          user: "",
           createdAt: date,
-          updatedAt: date
-        }
+          updatedAt: date,
+        };
       }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      state.watched.timeWatched = action.payload
-    }
-  }
-})
+      state.watched.timeWatched = action.payload;
+    },
+  },
+});
 
-export const { setVideo, setLength, setPercentage, setUpdateTimeWatched } = videoSlice.actions;
+export const { setVideo, setLength, setPercentage, setUpdateTimeWatched } =
+  videoSlice.actions;
 
 export default videoSlice.reducer;

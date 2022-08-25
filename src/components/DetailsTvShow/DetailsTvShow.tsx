@@ -14,7 +14,7 @@ export default function DetailsTvShow() {
   // @ts-expect-error - false error with defaultRootState
   const detailsTvShow = useSelector((state) => state.detailsTvShow);
   const {
-    _id,
+    id,
     idMovieDb,
     name,
     location,
@@ -84,7 +84,7 @@ export default function DetailsTvShow() {
     <div>
       <div className="relative">
         <Suspense fallback="Loading...">
-          <IframeWrapper ytKey={trailerYtCode.length ? trailerYtCode[0] : ""} />
+          <IframeWrapper ytKeys={trailerYtCode} />
         </Suspense>
         {/* <div className="absolute bottom-16 w-2/5 flex items-center rounded-sm bg-white pr-3">
         {percentage ? (
@@ -110,7 +110,8 @@ export default function DetailsTvShow() {
         )}
       </div> */}
         <button
-          className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
+          className="absolute bottom-1 left-2/4 transform-gpu -translate-x-2/4 
+          flex gap-x-2 items-center py-3 px-6 bg-white rounded-lg shadow-lg font-semibold tracking-wide"
           // TODO: should start last episode seen or start from the beginning
           onClick={play}
         >

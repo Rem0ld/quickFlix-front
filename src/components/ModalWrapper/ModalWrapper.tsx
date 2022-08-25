@@ -1,7 +1,6 @@
 import { Modal } from "../Modal/Modal";
 import React, { ReactElement, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import Details from "../Details/Details";
+import { useNavigate } from "react-router-dom";
 
 export default function ModalWrapper({ children }: { children: ReactElement }) {
   const navigate = useNavigate();

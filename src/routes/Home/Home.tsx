@@ -31,7 +31,7 @@ const Home = () => {
       <div className="h-32" />
       <InfiniteScroll
         className="px-5 flex justify-evenly gap-6 flex-wrap mb-6"
-        dataLength={movies.length} //This is important field to render the next data
+        dataLength={movies.length}
         next={fetchMoreMovies}
         hasMore={hasMoreMovies}
         loader={<h4>Loading...</h4>}
@@ -42,7 +42,7 @@ const Home = () => {
       </InfiniteScroll>
       <InfiniteScroll
         className="px-5 flex justify-evenly gap-6 flex-wrap"
-        dataLength={tvShows.length} //This is important field to render the next data
+        dataLength={tvShows.length}
         next={fetchMoreTvShows}
         hasMore={hasMoreTvShows}
         loader={<h4>Loading...</h4>}

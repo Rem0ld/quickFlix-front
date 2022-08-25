@@ -1,6 +1,3 @@
-
-
-
 progress::-moz-progress-bar {
   background: lightcolor;
 }
@@ -13,9 +10,13 @@ progress::-webkit-progress-bar {
   background: #6b7280;
 }
 
-video::-webkit-media-controls { display:none !important; }
+video::-webkit-media-controls {
+  display: none !important;
+}
 
-#controls { z-index:2147483647; }
+#controls {
+  z-index: 2147483647;
+}
 
 /* 
 not in use apparently 
