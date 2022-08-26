@@ -8,10 +8,6 @@ export interface IApiClass<T> {
   create: (data: DeepPartial<T>) => Promise<Result<T, Error>>;
 }
 
-// export interface IStreamClass {
-
-// }
-
 export type Pagination<T> = {
   total: number;
   skip: number;
