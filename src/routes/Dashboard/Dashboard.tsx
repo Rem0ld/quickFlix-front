@@ -7,15 +7,53 @@ import { BsSearch } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import UseFetchVideos from "../../hooks/UseFetchVideos";
 import Table from "./Components/Table/Table";
+import { baseVideoLimit } from "../../config";
+import VideoApi from "../../api/VideoApi";
 
 export default function Dashboard() {
   const [onlyMovie, setOnlyMovie] = useState(true);
-  const { videos, refetch, total, skip, limit, fetchMore } = UseFetchVideos({
-    onlyMovie,
-  });
+  // const { videos, refetch, fetchMore, hasMore, skip, isFetching } =
+  //   UseFetchVideos({
+  //     onlyMovie,
+  //   });
   const [filteredData, setFilteredData] = useState<Video[]>([]);
   const [selected, setSelected] = useState<Video | null>(null);
   const [textFilter, setTextFilter] = useState("");
+
+  const [limit, setLimit] = useState(baseVideoLimit);
+  const [videos, setVideos] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [hasMore, setHasMore] = useState(false);
+  const [errors, setErrors] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
+
+  const fetchVideos = async () => {
+    let skip = 0;
+    console.log(
+      "🚀 ~ file: Dashboard.tsx ~ line 49 ~ fetchVideos ~ skip",
+      skip,
+    );
+    setIsFetching(true);
+    const [result, error] = await VideoApi.Instance.findByFields(
+      limit,
+      skip,
+      {},
+    );
+    if (error) {
+      setIsFetching(false);
+      setErrors(error.message);
+      return;
+    }
+    skip = result.skip;
+    setHasMore(+skip + +result.limit >= result.total);
+    setIsFetching(false);
+    setTotal(result.total);
+    setVideos([...videos, ...result.data]);
+  };
+
+  useEffect(() => {
+    fetchVideos();
+  }, []);
 
   const closeDrawer = () => {
     setSelected(null);
@@ -23,12 +61,20 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
+    const event = (e) => {
+      if (e.key === "Escape" && selected) {
+        closeDrawer();
+      }
+    };
+    window.addEventListener("keydown", event);
+
+    () => document.removeEventListener("keydown", event);
+  }, [selected]);
+
+  useEffect(() => {
     setFilteredData(videos);
   }, [videos]);
 
-  useEffect(() => {
-    console.log("in dashboard", total, skip, limit);
-  }, [total, skip, limit]);
   useEffect(() => {
     const filtered = videos.filter((el: Video) => el.name.includes(textFilter));
     setFilteredData(filtered);
@@ -80,8 +126,9 @@ export default function Dashboard() {
           filteredData={filteredData}
           selected={selected}
           setSelected={setSelected}
-          hasMore={skip + limit < total}
-          fetchMore={fetchMore}
+          hasMore={hasMore}
+          fetchMore={fetchVideos}
+          isFetching={isFetching}
         />
         {selected && (
           <TableCard

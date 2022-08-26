@@ -1,8 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useTable } from "react-table";
 import BtnWithConfirmation from "../../../../components/BtnWithConfirmation/BtnWithConfirmation";
+import { baseVideoLimit } from "../../../../config";
 import { Video } from "../../../../types";
+import { scrollReachThreshold } from "../../../../utils/documentManipulation";
+import VideoApi from "../../../../api/VideoApi";
 
 export default function Table({
   selected,
@@ -11,6 +14,7 @@ export default function Table({
   threshold = 50,
   hasMore,
   fetchMore,
+  isFetching,
 }: {
   selected: Video | null;
   setSelected: (arg: Video | null) => void;
@@ -18,6 +22,7 @@ export default function Table({
   threshold?: number;
   hasMore: boolean;
   fetchMore: () => void;
+  isFetching: boolean;
 }) {
   const el = useRef<HTMLTableElement | undefined>();
   const columns: any = useMemo(
@@ -29,33 +34,22 @@ export default function Table({
   );
 
   useEffect(() => {
+    const event = (e) => {
+      if (scrollReachThreshold(e, threshold) && !isFetching) {
+        fetchMore();
+        return;
+      }
+    };
     if (el.current) {
-      el.current.parentElement?.addEventListener("scroll", (e: Event) => {
-        if (e.target) {
-          // @ts-ignore
-          const { scrollTop } = e.target;
-          // @ts-ignore
-          const viewportOffset = e.target.getBoundingClientRect();
-          const { height } = viewportOffset;
-          const totalHeightContainer =
-            // @ts-ignore
-            e?.target?.firstChild?.offsetHeight - height - threshold;
-          if (scrollTop >= totalHeightContainer) {
-            console.log("above threshold");
-            fetchMore();
-            if (hasMore) {
-              console.log("feching more");
-              fetchMore();
-            }
-          }
-        }
-      });
+      el.current.parentElement?.addEventListener("scroll", event);
     }
-  }, [el]);
 
-  useEffect(() => {
-    console.log("hasMore", hasMore);
-  }, [hasMore]);
+    () => {
+      if (el.current) {
+        return el.current.parentElement?.removeEventListener("scroll", event);
+      }
+    };
+  }, [el, threshold]);
 
   const tableInstance = useTable({
     columns,
@@ -81,7 +75,7 @@ export default function Table({
   };
 
   const handleClickCell = (obj: Video) => {
-    if (selected?._id === obj._id) {
+    if (selected?.id === obj.id) {
       setSelected(null);
       toggleHideColumns(false);
       return;

@@ -38,6 +38,7 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
     skip: number,
     params: any,
   ): Promise<Result<Pagination<Video>, Error>> {
+    console.log("🚀 ~ file: VideoApi.ts ~ line 41 ~ VideoApi ~ skip", skip);
     const route = "by-fields";
     const [result, error] = await promisifier(
       this.fetch(this.apiUrl + route + `?limit=${limit}&skip=${skip}`, {
