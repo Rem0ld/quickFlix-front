@@ -1,9 +1,7 @@
 import { baseVideoLimit } from "../config";
 import { Pagination, ReducerVideo, TvShow, Video } from "../types";
 
-export const initialStateVideo = (
-  limit: number,
-): Pagination<Video | TvShow> => {
+export const initialStateVideo = (limit: number): Pagination<any> => {
   return {
     limit: limit,
     skip: 0,
@@ -12,7 +10,7 @@ export const initialStateVideo = (
   };
 };
 
-export const reducerVideo: ReducerVideo<Video | TvShow> = (state, action) => {
+export const reducerVideo: ReducerVideo<any> = (state, action) => {
   switch (action.type) {
     case "addSkip":
       return { ...state, skip: state.skip + state.limit };

@@ -1,64 +1,39 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable } from "react-table";
+import React, { useEffect, useState } from "react";
 import { Video } from "../../types";
 import TableCard from "./Components/TableCard/TableCard";
-import BtnWithConfirmation from "../../components/BtnWithConfirmation/BtnWithConfirmation";
 import { BsSearch } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import UseFetchVideos from "../../hooks/UseFetchVideos";
 import Table from "./Components/Table/Table";
-import { baseVideoLimit } from "../../config";
-import VideoApi from "../../api/VideoApi";
 
 export default function Dashboard() {
-  const [onlyMovie, setOnlyMovie] = useState(true);
-  // const { videos, refetch, fetchMore, hasMore, skip, isFetching } =
-  //   UseFetchVideos({
-  //     onlyMovie,
-  //   });
+  const [params, setParams] = useState({ type: "movie" });
+  const { videos, refetch, fetchMore, isFetching } = UseFetchVideos({
+    params,
+  });
   const [filteredData, setFilteredData] = useState<Video[]>([]);
   const [selected, setSelected] = useState<Video | null>(null);
   const [textFilter, setTextFilter] = useState("");
-
-  const [limit, setLimit] = useState(baseVideoLimit);
-  const [videos, setVideos] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [hasMore, setHasMore] = useState(false);
-  const [errors, setErrors] = useState("");
-  const [isFetching, setIsFetching] = useState(false);
-
-  const fetchVideos = async () => {
-    let skip = 0;
-    console.log(
-      "🚀 ~ file: Dashboard.tsx ~ line 49 ~ fetchVideos ~ skip",
-      skip,
-    );
-    setIsFetching(true);
-    const [result, error] = await VideoApi.Instance.findByFields(
-      limit,
-      skip,
-      {},
-    );
-    if (error) {
-      setIsFetching(false);
-      setErrors(error.message);
-      return;
-    }
-    skip = result.skip;
-    setHasMore(+skip + +result.limit >= result.total);
-    setIsFetching(false);
-    setTotal(result.total);
-    setVideos([...videos, ...result.data]);
-  };
-
-  useEffect(() => {
-    fetchVideos();
-  }, []);
+  const [reachThreshold, setReachThreshold] = useState(false);
 
   const closeDrawer = () => {
     setSelected(null);
     return;
   };
+
+  const handleParams = (e) => {
+    if (e.target.checked) {
+      setParams({ type: "movie" });
+    } else {
+      setParams({ type: "tv" });
+    }
+  };
+
+  useEffect(() => {
+    if (reachThreshold && !isFetching) {
+      fetchMore();
+    }
+  }, [reachThreshold]);
 
   useEffect(() => {
     const event = (e) => {
@@ -110,14 +85,12 @@ export default function Dashboard() {
         <form className="flex items-center gap-2">
           <label htmlFor="filter-movie">Only movie</label>
           <input
-            onChange={() => {
-              setOnlyMovie(!onlyMovie);
-            }}
+            onChange={handleParams}
             className="w-4 h-4"
             type="checkbox"
             name="filter-movie"
             value="movie"
-            checked={onlyMovie}
+            checked={params.type === "movie"}
           />
         </form>
       </div>
@@ -126,9 +99,7 @@ export default function Dashboard() {
           filteredData={filteredData}
           selected={selected}
           setSelected={setSelected}
-          hasMore={hasMore}
-          fetchMore={fetchVideos}
-          isFetching={isFetching}
+          setReachThreshold={setReachThreshold}
         />
         {selected && (
           <TableCard

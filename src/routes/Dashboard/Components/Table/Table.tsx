@@ -1,30 +1,29 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useTable } from "react-table";
 import BtnWithConfirmation from "../../../../components/BtnWithConfirmation/BtnWithConfirmation";
-import { baseVideoLimit } from "../../../../config";
 import { Video } from "../../../../types";
 import { scrollReachThreshold } from "../../../../utils/documentManipulation";
-import VideoApi from "../../../../api/VideoApi";
 
+/**
+ * Careful with props, it render each time data passes
+ * @param param0
+ * @returns
+ */
 export default function Table({
   selected,
   setSelected,
   filteredData,
   threshold = 50,
-  hasMore,
-  fetchMore,
-  isFetching,
+  setReachThreshold,
 }: {
   selected: Video | null;
   setSelected: (arg: Video | null) => void;
   filteredData: Video[];
   threshold?: number;
-  hasMore: boolean;
-  fetchMore: () => void;
-  isFetching: boolean;
+  setReachThreshold: (arg: boolean) => void;
 }) {
-  const el = useRef<HTMLTableElement | undefined>();
+  const el = useRef<HTMLDivElement | undefined>();
   const columns: any = useMemo(
     () => [
       { Header: "Name", accessor: "name" },
@@ -35,18 +34,20 @@ export default function Table({
 
   useEffect(() => {
     const event = (e) => {
-      if (scrollReachThreshold(e, threshold) && !isFetching) {
-        fetchMore();
-        return;
+      if (scrollReachThreshold(e, threshold)) {
+        setReachThreshold(true);
+      } else {
+        setReachThreshold(false);
       }
+      return;
     };
     if (el.current) {
-      el.current.parentElement?.addEventListener("scroll", event);
+      el.current.addEventListener("scroll", event);
     }
 
     () => {
       if (el.current) {
-        return el.current.parentElement?.removeEventListener("scroll", event);
+        return el.current.removeEventListener("scroll", event);
       }
     };
   }, [el, threshold]);
@@ -93,11 +94,12 @@ export default function Table({
 
   return (
     <div
+      ref={el}
       className={`${
         selected ? "w-2/4" : "w-full"
       } flex flex-col flex-grow min-h-0 overflow-auto border border-gray-600 rounded-sm`}
     >
-      <table ref={el} {...getTableProps()} className="table-auto text-gray-300">
+      <table {...getTableProps()} className="table-auto text-gray-300">
         <thead>
           {
             // Loop over the header rows
