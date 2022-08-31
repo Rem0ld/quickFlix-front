@@ -11,11 +11,13 @@ enum ERequestType {
 }
 
 export default class BaseFetch {
-  private baseUrl = `http://${import.meta.env.DEV ? "localhost" : "192.168.0.11"
-    }:3050/`;
+  private baseUrl = `http://${
+    import.meta.env.DEV ? "localhost" : "192.168.0.11"
+  }:3050/`;
   private headersObj: THeader = {
     "Content-Type": "application/json",
   };
+  protected apiUrl: string;
 
   requestType = ERequestType;
 

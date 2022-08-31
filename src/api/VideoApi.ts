@@ -9,7 +9,6 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
   public static get Instance() {
     return this._instance || (this._instance = new this("video"));
   }
-  private apiUrl: string;
 
   constructor(name: string) {
     super();

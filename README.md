@@ -14,9 +14,6 @@
 - [x] When going back to details if store is empty, we navigate back to browse
 
 TODO:
-make another hook to get videos and not only movies
-videos will be able to filter from movies and all
-see hook useFetchMovies and adapt from it
 
 This is a [React](https://reactjs.org) + [TypeScript](https://www.typescriptlang.org/) + [Tailwind](https://tailwindcss.com/) + [RTK](https://redux-toolkit.js.org/) + [eslint](https://eslint.org/) boilerplate built with [Vite](https://vitejs.dev).
 
