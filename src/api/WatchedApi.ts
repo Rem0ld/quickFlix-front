@@ -37,13 +37,14 @@ export default class WatchedApi extends BaseFetch {
     return ok(result);
   }
 
-  async update(id: string | number, timeWatched: number) {
+  async update(id: string | number, timeWatched: number, finished: boolean) {
     if (!id) return null;
 
     const [result, error] = await promisifier(
-      this.fetch(this.apiUrl, {
+      this.fetch(this.apiUrl + `?id=${id}`, {
         method: this.requestType.PATCH,
         headers: this.headers,
+        body: this.stringify({ timeWatched, finished }),
       }),
     );
     if (error) {

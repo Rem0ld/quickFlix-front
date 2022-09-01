@@ -6,8 +6,9 @@ import ModalWrapper from "./components/ModalWrapper/ModalWrapper";
 import Dashboard from "./routes/Dashboard/Dashboard";
 import Home from "./routes/Home/Home";
 import Layout from "./routes/Layout/Layout";
-import Login from "./routes/Login/Login";
+import AnimationLogo from "./routes/AnimationLogo/AnimationLogo";
 import Player from "./routes/Player/Player";
+import Login from "./routes/Login/Login";
 
 export default function App() {
   const location = useLocation();
@@ -18,7 +19,8 @@ export default function App() {
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/">
           <Route element={<Layout />}>
-            <Route index element={<Login />} />
+            <Route index element={<AnimationLogo />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/browse" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>

@@ -25,6 +25,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
+import WatchedApi from "../../api/WatchedApi";
 
 export default function PlayerControl({
   videoRef,
@@ -54,7 +55,7 @@ export default function PlayerControl({
 
   useEffect(() => {
     if (!watched) {
-      createWatched(idVideo);
+      WatchedApi.Instance.create(idVideo);
     }
 
     if (!name) {
