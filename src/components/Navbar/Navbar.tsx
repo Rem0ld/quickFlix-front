@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../../assets/quickflix-logo-02.svg";
 import avatar from "../../../assets/avatar-original.png";
 import refreshIcon from "../../../assets/refresh_icon.svg";
-import { checkAccessFolder } from "../../api/accessFolder";
+import { AuthContext } from "../../contexts/auth/AuthContext";
+import DiscoverApi from "../../api/DiscoverApi";
 
 const stateAccessFolder = {
   1: "bg-green-500",
@@ -13,6 +14,7 @@ const stateAccessFolder = {
 };
 
 const Navbar = () => {
+  const user = useContext(AuthContext);
   const ref = useRef(null);
   const location = useLocation();
   const [opacity, setOpacity] = useState(0);
@@ -25,14 +27,14 @@ const Navbar = () => {
     setAccessFolder(stateAccessFolder.pending);
 
     setTimeout(async () => {
-      try {
-        const access = await checkAccessFolder();
-        setAccessFolder(stateAccessFolder[access]);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setRefresh(false);
+      const [access, error] = await DiscoverApi.Instance.checkAccessFolder();
+      if (error) {
+        //TODO: send error to global error object
+        console.error(error);
+        return;
       }
+      setAccessFolder(stateAccessFolder[access]);
+      setRefresh(false);
     }, 300);
   };
 
@@ -56,7 +58,6 @@ const Navbar = () => {
       ref={ref}
       style={{
         backgroundColor: `rgba(0,0,0, ${opacity})`,
-        // transition: "background-color 200ms 50ms ease-in-out",
       }}
       className={`w-full h-14 flex items-center justify-between fixed z-10 px-14 `}
     >
@@ -64,16 +65,20 @@ const Navbar = () => {
         <Link to="/browse" className="text-xl text-red-500">
           <img src={logo} width={70} />
         </Link>
-        {location.pathname !== "/" && (
+        {location.pathname !== "/" && !!user && (
           <div className="flex justify-around gap-x-3 text-white">
             <Link to="/movies">Movies</Link>
             <Link to="/tv-show">Tv-shows</Link>
-            <Link to="/add">Add</Link>
-            <Link to="/dashboard">Dashboard</Link>
+            {user?.isAdmin && (
+              <>
+                <Link to="/add">Add</Link>
+                <Link to="/dashboard">Dashboard</Link>
+              </>
+            )}
           </div>
         )}
       </div>
-      {location.pathname !== "/" && (
+      {location.pathname !== "/" && !!user && (
         <div className="flex gap-1 items-center">
           <button
             onClick={accessVideos}

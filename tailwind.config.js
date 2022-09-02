@@ -1,4 +1,4 @@
-const colors = require("tailwindcss/colors")
+const colors = require("tailwindcss/colors");
 
 module.exports = {
   mode: "jit",
@@ -6,8 +6,8 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      transparent: 'transparent',
-      current: 'currentColor',
+      transparent: "transparent",
+      current: "currentColor",
       gray: colors.gray,
       zinc: colors.zinc,
       black: colors.black,
@@ -17,39 +17,43 @@ module.exports = {
       yellow: colors.amber,
       pink: colors.fuchsia,
       red: colors.red,
-      quickflix: "#E40915"
+      quickflix: "#E40915",
     },
     borderRadius: {
-      'none': '0',
-      'sm': '0.250rem',
-      'md': '0.375rem',
-      'lg': '0.5rem',
-      'full': '9999px',
-      'large': '12px',
+      none: "0",
+      sm: "0.250rem",
+      md: "0.375rem",
+      lg: "0.5rem",
+      full: "9999px",
+      large: "12px",
     },
     extend: {
       animation: {
         "fade-in": "fadein 500ms ease-in-out",
         "fade-out": "fadeout 500ms ease-in-out",
-        "fade-in-fast": 'fadein 200ms ease-in-out'
+        "fade-in-fast": "fadein 200ms ease-in-out",
+        wiggle: "wiggle 200ms ease-in-out ",
       },
       keyframes: {
+        wiggle: {
+          "0%, 100%": { transform: "translateX(3px)" },
+          "50%": { transform: "translateX(-3px)" },
+        },
         fadein: {
-          "0%": {opacity: 0},
-          "100%": {opacity: 1}
+          "0%": { opacity: 0 },
+          "100%": { opacity: 1 },
         },
         fadeout: {
-          "0%": {opacity: 1},
-          "100%": {opacity: 0}
-
-        }
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
       },
       skew: {
-        '51': '-51deg'
+        51: "-51deg",
       },
       blur: {
-        '2': '2px'
-      }
+        2: "2px",
+      },
     },
   },
   variants: {

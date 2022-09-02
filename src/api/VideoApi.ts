@@ -18,9 +18,11 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
   async find(
     limit: number = baseVideoLimit,
     skip = 0,
+    rest: Record<string, any>,
   ): Promise<Result<Pagination<Video>, Error>> {
+    const params = new URLSearchParams(Object.entries(rest));
     const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + `?limit=${limit}&skip=${skip}`, {
+      this.fetch(this.apiUrl + `?limit=${limit}&skip=${skip}${params}`, {
         method: this.requestType.GET,
         headers: this.headers,
       }),

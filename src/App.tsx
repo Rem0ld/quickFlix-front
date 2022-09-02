@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Details from "./components/Details/Details";
 import DetailsTvShow from "./components/DetailsTvShow/DetailsTvShow";
@@ -9,18 +9,20 @@ import Layout from "./routes/Layout/Layout";
 import AnimationLogo from "./routes/AnimationLogo/AnimationLogo";
 import Player from "./routes/Player/Player";
 import Login from "./routes/Login/Login";
+import { AuthContext } from "./contexts/auth/AuthContext";
 
 export default function App() {
+  const user = useContext(AuthContext);
+  console.log("🚀 ~ file: App.tsx ~ line 16 ~ App ~ user", user);
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
-  return (
+  return user ? (
     <div>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/">
           <Route element={<Layout />}>
             <Route index element={<AnimationLogo />} />
-            <Route path="/login" element={<Login />} />
             <Route path="/browse" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
           </Route>
@@ -51,5 +53,13 @@ export default function App() {
         </Routes>
       )}
     </div>
+  ) : (
+    <Routes>
+      <Route path="/">
+        <Route element={<Layout />}>
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }

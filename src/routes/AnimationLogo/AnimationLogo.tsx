@@ -23,7 +23,13 @@ export default function AnimationLogo(): JSX.Element {
   const [endAnim, setEndAnim] = useState(false);
   const [isConnected, setIsConnected] = useState(null);
 
-  const checkCookie = () => {};
+  const checkUser = () => {
+    if (!localStorage.getItem("user")) {
+      navigate("/login");
+    } else {
+      navigate("/browse");
+    }
+  };
 
   useEffect(() => {
     t1.fromTo(
@@ -140,7 +146,7 @@ export default function AnimationLogo(): JSX.Element {
 
         <div
           onClick={() => {
-            navigate("/browse");
+            checkUser();
           }}
           className="card absolute w-40 h-40 opacity-0 "
         >
