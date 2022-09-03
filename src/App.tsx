@@ -12,19 +12,21 @@ import Login from "./routes/Login/Login";
 import { AuthContext } from "./contexts/auth/AuthContext";
 
 export default function App() {
-  const user = useContext(AuthContext);
-  console.log("🚀 ~ file: App.tsx ~ line 16 ~ App ~ user", user);
+  const { user } = useContext(AuthContext);
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
-  return user ? (
+  return (
     <div>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/">
           <Route element={<Layout />}>
+            user ? (
             <Route index element={<AnimationLogo />} />
             <Route path="/browse" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            ) : (
+            <Route path="/login" element={<Login />} />)
           </Route>
         </Route>
       </Routes>
@@ -53,13 +55,5 @@ export default function App() {
         </Routes>
       )}
     </div>
-  ) : (
-    <Routes>
-      <Route path="/">
-        <Route element={<Layout />}>
-          <Route path="/login" element={<Login />} />
-        </Route>
-      </Route>
-    </Routes>
   );
 }

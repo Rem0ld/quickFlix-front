@@ -1,7 +1,6 @@
 import { DeepPartial } from "redux";
 import { IApiClass, Pagination, Result, Video } from "../types";
 import BaseFetch from "./BaseFetch";
-import { err, ok, promisifier } from "./apiHelperFunctions";
 import { baseVideoLimit } from "../config";
 
 export default class VideoApi extends BaseFetch implements IApiClass<Video> {
@@ -16,22 +15,15 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
   }
 
   async find(
-    limit: number = baseVideoLimit,
+    limit = baseVideoLimit,
     skip = 0,
-    rest: Record<string, any>,
+    rest,
   ): Promise<Result<Pagination<Video>, Error>> {
-    const params = new URLSearchParams(Object.entries(rest));
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + `?limit=${limit}&skip=${skip}${params}`, {
-        method: this.requestType.GET,
-        headers: this.headers,
-      }),
-    );
-    if (error) {
-      return err(new Error(error));
-    }
-
-    return ok(result);
+    const params = new URLSearchParams(rest);
+    return this.fetch(this.apiUrl + `?limit=${limit}&skip=${skip}&${params}`, {
+      method: this.requestType.GET,
+      headers: this.headers,
+    });
   }
 
   async findByFields(
@@ -39,63 +31,44 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
     skip: number,
     params: any,
   ): Promise<Result<Pagination<Video>, Error>> {
-    console.log("🚀 ~ file: VideoApi.ts ~ line 41 ~ VideoApi ~ skip", skip);
     const route = "by-fields";
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + route + `?limit=${limit}&skip=${skip}`, {
-        method: this.requestType.POST,
-        headers: this.headers,
-        body: this.stringify(params),
-      }),
-    );
-    if (error) {
-      return err(new Error(error));
-    }
-
-    return ok(result);
+    return this.fetch(this.apiUrl + route + `?limit=${limit}&skip=${skip}`, {
+      method: this.requestType.POST,
+      headers: this.headers,
+      body: this.stringify(params),
+    });
   }
 
   async create(data: DeepPartial<Video>): Promise<Result<Video, Error>> {
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl, {
-        method: this.requestType.POST,
-        headers: this.headers,
-        body: this.stringify(data),
-      }),
-    );
-    if (error) {
-      return err(new Error(error));
-    }
-
-    return ok(result);
+    return this.fetch(this.apiUrl, {
+      method: this.requestType.POST,
+      headers: this.headers,
+      body: this.stringify(data),
+    });
   }
 
-  async update(id: string, data: DeepPartial<Video>): Promise<Video> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async update(
+    id: string,
+    data: DeepPartial<Video>,
+  ): Promise<Result<Video, Error>> {
+    return this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.PATCH,
       headers: this.headers,
       body: this.stringify(data),
     });
-
-    const result = await response.json();
-    return result as Video;
   }
 
-  async get(id: string): Promise<Video> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async get(id: string): Promise<Result<Video, Error>> {
+    return this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.GET,
       headers: this.headers,
     });
-    const result = await response.json();
-    return result as Video;
   }
 
-  async delete(id: string): Promise<boolean> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async delete(id: string): Promise<Result<boolean, Error>> {
+    return this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.DELETE,
       headers: this.headers,
     });
-    const result = await response.json();
-    return result;
   }
 }

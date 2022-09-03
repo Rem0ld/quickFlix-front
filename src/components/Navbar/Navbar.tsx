@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/quickflix-logo-02.svg";
 import avatar from "../../../assets/avatar-original.png";
 import refreshIcon from "../../../assets/refresh_icon.svg";
 import { AuthContext } from "../../contexts/auth/AuthContext";
 import DiscoverApi from "../../api/DiscoverApi";
+import AuthenticateApi from "../../api/AuthenticateApi";
 
 const stateAccessFolder = {
   1: "bg-green-500",
@@ -14,7 +15,8 @@ const stateAccessFolder = {
 };
 
 const Navbar = () => {
-  const user = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(AuthContext);
   const ref = useRef(null);
   const location = useLocation();
   const [opacity, setOpacity] = useState(0);
@@ -38,6 +40,12 @@ const Navbar = () => {
     }, 300);
   };
 
+  const logout = () => {
+    AuthenticateApi.Instance.logout();
+    setUser(null);
+    navigate("/login");
+  };
+
   useEffect(() => {
     const scroll = () => {
       const { scrollY } = window;
@@ -50,8 +58,10 @@ const Navbar = () => {
   });
 
   useEffect(() => {
-    accessVideos();
-  }, []);
+    if (user) {
+      accessVideos();
+    }
+  }, [user]);
 
   return (
     <nav
@@ -87,7 +97,13 @@ const Navbar = () => {
             <img src={refreshIcon} />
           </button>
           <div className={`w-3 h-3 rounded-full ${accessFolder}`} />
-          <img className="rounded" src={avatar} width={32} height={40} />
+          <img
+            onClick={logout}
+            className="rounded"
+            src={avatar}
+            width={32}
+            height={40}
+          />
         </div>
       )}
     </nav>

@@ -9,7 +9,6 @@ export default class TvShowApi extends BaseFetch implements IApiClass<TvShow> {
   public static get Instance() {
     return this._instance || (this._instance = new this("tv-show"));
   }
-  private apiUrl: string;
 
   constructor(name: string) {
     super();
@@ -20,60 +19,67 @@ export default class TvShowApi extends BaseFetch implements IApiClass<TvShow> {
     limit: number = baseVideoLimit,
     skip = 0,
   ): Promise<Result<Pagination<TvShow>, Error>> {
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + `?limit=${limit}&skip=${skip}`, {
+    const [result, error] = await this.fetch(
+      this.apiUrl + `?limit=${limit}&skip=${skip}`,
+      {
         method: this.requestType.GET,
         headers: this.headers,
-      }),
+      },
     );
     if (error) {
-      return err(new Error(error));
+      return err(error);
     }
 
     return ok(result);
   }
 
   async create(data: DeepPartial<TvShow>): Promise<Result<TvShow, Error>> {
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl, {
-        method: this.requestType.POST,
-        headers: this.headers,
-        body: this.stringify(data),
-      }),
-    );
+    const [result, error] = await this.fetch(this.apiUrl, {
+      method: this.requestType.POST,
+      headers: this.headers,
+      body: this.stringify(data),
+    });
     if (error) {
-      return err(new Error(error));
+      return err(error);
     }
 
     return ok(result);
   }
 
-  async update(id: string, data: DeepPartial<TvShow>): Promise<TvShow> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async update(
+    id: string,
+    data: DeepPartial<TvShow>,
+  ): Promise<Result<TvShow, Error>> {
+    const [result, error] = await this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.PATCH,
       headers: this.headers,
       body: this.stringify(data),
     });
-
-    const result = await response.json();
-    return result as TvShow;
+    if (error) {
+      return err(error);
+    }
+    return ok(result);
   }
 
-  async get(id: string): Promise<TvShow> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async get(id: string): Promise<Result<TvShow, Error>> {
+    const [result, error] = await this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.GET,
       headers: this.headers,
     });
-    const result = await response.json();
-    return result as TvShow;
+    if (error) {
+      return err(error);
+    }
+    return ok(result);
   }
 
-  async delete(id: string): Promise<boolean> {
-    const response = await fetch(`${this.apiUrl}${id}`, {
+  async delete(id: string): Promise<Result<boolean, Error>> {
+    const [result, error] = await this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.DELETE,
       headers: this.headers,
     });
-    const result = await response.json();
-    return result;
+    if (error) {
+      return err(error);
+    }
+    return ok(result);
   }
 }

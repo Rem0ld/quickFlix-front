@@ -6,7 +6,6 @@ export default class StreamApi extends BaseFetch {
   public static get Instance() {
     return this._instance || (this._instance = new this("stream"));
   }
-  public apiUrl: string;
 
   constructor(name: string) {
     super();
@@ -14,15 +13,13 @@ export default class StreamApi extends BaseFetch {
   }
 
   async stream(id: string | number) {
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + id, {
-        method: this.requestType.GET,
-        headers: this.headers,
-      }),
-    );
+    const [result, error] = await this.fetch(this.apiUrl + id, {
+      method: this.requestType.GET,
+      headers: this.headers,
+    });
 
     if (error) {
-      return err(new Error(error));
+      return err(error);
     }
 
     return ok(result);

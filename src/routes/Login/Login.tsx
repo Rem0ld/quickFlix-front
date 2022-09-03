@@ -1,39 +1,57 @@
-import React, { useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthenticateApi from "../../api/AuthenticateApi";
+import { AuthContext } from "../../contexts/auth/AuthContext";
 
 const errors = {
   empty: "should not be empty",
 };
 
 export default function Login() {
+  const { setUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [pseudo, setPseudo] = useState("");
   const [password, setPassword] = useState("");
   const [pseudoError, setPseudoError] = useState("");
   const [passError, setPassError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!pseudo.length) {
       setPseudoError(errors.empty);
       setTimeout(() => {
         setPseudoError("");
       }, 600);
+      return;
     }
     if (!password.length) {
       setPassError(errors.empty);
       setTimeout(() => {
         setPassError("");
       }, 600);
+      return;
     }
+
+    const [result, error] = await AuthenticateApi.Instance.authenticate({
+      pseudo,
+      password,
+    });
+    if (error) {
+      console.log("error result authentication", error);
+    }
+    AuthenticateApi.Instance.setUser(result);
+    setUser(result);
+    navigate("/");
   };
 
   return (
-    <div className="h-screen grid place-items-center">
+    <div className="max-w-2xl m-auto mt-36 grid place-items-center">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-10 w-2/4 m-auto"
+        className="flex flex-col gap-3 w-2/4 m-auto"
       >
-        <h2 className="text-xl font-medium">Login</h2>
-        <div className="flex flex-col ">
+        <h2 className="text-xl font-medium">Welcome</h2>
+        <div className="flex flex-col relative h-20">
           <input
             value={pseudo}
             onChange={(e) => setPseudo(e.target.value)}
@@ -42,10 +60,12 @@ export default function Login() {
             placeholder="pseudo"
           />
           {pseudoError.length > 0 && (
-            <span className="animate-wiggle text-red-600">{pseudoError}</span>
+            <span className="absolute bottom-0 animate-wiggle text-red-600">
+              {pseudoError}
+            </span>
           )}
         </div>
-        <div className="flex flex-col relative pb-10">
+        <div className="flex flex-col relative h-20">
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}

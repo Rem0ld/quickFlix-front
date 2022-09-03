@@ -15,15 +15,17 @@ export default class DiscoverApi extends BaseFetch {
 
   async checkAccessFolder(): Promise<Result<0 | 1, Error>> {
     const path = import.meta.env.DEV ? "videos" : "Videos";
-    const [result, error] = await promisifier(
-      this.fetch(`${this.apiUrl}discover/drive?folderPath=public/${path}`, {
+    const [result, error] = await this.fetch(
+      `${this.apiUrl}/drive?folderPath=public/${path}`,
+      {
         method: this.requestType.GET,
         headers: this.headers,
-      }),
+      },
     );
     if (error) {
-      return err(new Error(error));
+      return err(error);
     }
+
     return ok(result ? 1 : 0);
   }
 }

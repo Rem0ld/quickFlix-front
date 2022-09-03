@@ -1,5 +1,6 @@
 import React, { createContext, ReactElement, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TUser } from "../../types";
 
 export const AuthContext = createContext(null);
 
@@ -9,7 +10,7 @@ export default function AuthContextProvider({
   children: ReactElement;
 }) {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<TUser | null>(null);
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -19,8 +20,12 @@ export default function AuthContextProvider({
       return;
     }
 
-    setUser(savedUser);
+    setUser(JSON.parse(savedUser));
   }, []);
 
-  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

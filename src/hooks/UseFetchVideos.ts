@@ -14,20 +14,12 @@ export default function UseFetchVideos(params = {}) {
     reducerVideo,
     initialStateVideo(baseVideoLimit),
   );
-  // const [limit] = useState(baseVideoLimit);
-  // const [skip, setSkip] = useState(0);
-  // const [data, setData] = useState([]);
-  // const [total, setTotal] = useState(0);
   const [errors, setErrors] = useState("");
   const [isFetching, setIsFetching] = useState(false);
 
   const fetchVideos = async (): Promise<Result<Pagination<Video>, Error>> => {
     setIsFetching(true);
-    const [result, error] = await VideoApi.Instance.findByFields(
-      limit,
-      skip,
-      params,
-    );
+    const [result, error] = await VideoApi.Instance.find(limit, skip, params);
     if (error) {
       setIsFetching(false);
       console.error(error);

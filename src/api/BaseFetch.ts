@@ -1,3 +1,6 @@
+import { Result } from "../types";
+import { err, ok } from "./apiHelperFunctions";
+
 type THeader = {
   [key: string]: string;
 };
@@ -41,10 +44,19 @@ export default class BaseFetch {
     return JSON.stringify(data);
   }
 
-  async fetch(url: string, options: Record<string, any>): Promise<any> {
-    const response = await fetch(url, options);
+  async fetch(
+    url: string,
+    options: Record<string, any>,
+  ): Promise<Result<any, Error>> {
+    const response = await fetch(url, {
+      ...options,
+      credentials: "include",
+      mode: "cors",
+    });
+    if (response.status >= 400 && response.status <= 500) {
+      return err(await response.json());
+    }
     const result = await response.json();
-
-    return result;
+    return ok(result);
   }
 }
