@@ -32,7 +32,7 @@ module.exports = {
         "fade-in": "fadein 500ms ease-in-out",
         "fade-out": "fadeout 500ms ease-in-out",
         "fade-in-fast": "fadein 200ms ease-in-out",
-        wiggle: "wiggle 200ms ease-in-out ",
+        wiggle: "wiggle 200ms ease-in-out",
       },
       keyframes: {
         wiggle: {

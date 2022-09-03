@@ -1,10 +1,14 @@
 import { DeepPartial } from "redux";
 
 export interface IApiClass<T> {
-  get: (id: string) => Promise<T>;
-  find: (limit: number, skip: number) => Promise<Result<Pagination<T>, Error>>;
-  update: (id: string, data: DeepPartial<T>) => Promise<T>;
-  delete: (id: string) => Promise<boolean>;
+  get: (id: string) => Promise<Result<T, Error>>;
+  find: (
+    limit: number,
+    skip: number,
+    rest: Record<string, any>,
+  ) => Promise<Result<Pagination<T>, Error>>;
+  update: (id: string, data: DeepPartial<T>) => Promise<Result<T, Error>>;
+  delete: (id: string) => Promise<Result<boolean, Error>>;
   create: (data: DeepPartial<T>) => Promise<Result<T, Error>>;
 }
 
@@ -13,6 +17,12 @@ export type Pagination<T> = {
   skip: number;
   limit: number;
   data: T[];
+};
+
+export type TUser = {
+  pseudo: string;
+  email: string;
+  isAdmin: boolean;
 };
 
 export type Video = {
