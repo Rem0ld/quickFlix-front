@@ -1,6 +1,7 @@
 import React, {
   MutableRefObject,
   ReactElement,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -26,6 +27,7 @@ import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 import WatchedApi from "../../api/WatchedApi";
+import { AuthContext } from "../../contexts/auth/AuthContext";
 
 export default function PlayerControl({
   videoRef,
@@ -44,7 +46,7 @@ export default function PlayerControl({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
+  const { user } = useContext(AuthContext);
   // @ts-expect-error - false error defaultRootState
   const { name, type, watched } = useSelector((state) => state.details);
 
@@ -55,7 +57,7 @@ export default function PlayerControl({
 
   useEffect(() => {
     if (!watched) {
-      WatchedApi.Instance.create(idVideo);
+      WatchedApi.Instance.create(idVideo, user.id);
     }
 
     if (!name) {

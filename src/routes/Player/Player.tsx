@@ -10,7 +10,7 @@ const Player = () => {
   const videoContainer = useRef<any>(null);
   const progressRef = useRef<any>();
   const progressBarRef = useRef<any>(null);
-  const baseUrl = StreamApi.Instance.apiUrl;
+  const baseUrl = StreamApi.Instance.url;
 
   return (
     <PlayerControl

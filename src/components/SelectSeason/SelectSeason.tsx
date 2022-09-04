@@ -1,11 +1,10 @@
 import { nanoid } from "@reduxjs/toolkit";
 import React, { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import { Episode } from "../../types";
 
 type PropTypes = {
   selected: number;
-  list: [string, Episode[]][];
+  list: [string, any[]][];
   setSelected: (arg: number) => void;
 };
 
@@ -33,7 +32,7 @@ export default function SelectSeason({
           isOpen ? "block opacity-100" : "none opacity-0"
         } absolute top-full w-full flex flex-col justify-center delay-75 transition-opacity items-center mt-1 z-50 rounded-sm bg-gray-800`}
       >
-        {list.map((el: [string, Episode[]]) => (
+        {list.map((el: [string, any[]]) => (
           <li
             key={nanoid()}
             onClick={(e) => {

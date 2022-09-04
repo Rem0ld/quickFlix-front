@@ -12,6 +12,10 @@ export default class StreamApi extends BaseFetch {
     this.apiUrl = this.url + name + "/";
   }
 
+  get url() {
+    return this.apiUrl;
+  }
+
   async stream(id: string | number) {
     const [result, error] = await this.fetch(this.apiUrl + id, {
       method: this.requestType.GET,

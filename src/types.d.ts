@@ -20,6 +20,7 @@ export type Pagination<T> = {
 };
 
 export type TUser = {
+  id: string | number;
   pseudo: string;
   email: string;
   isAdmin: boolean;
@@ -112,19 +113,3 @@ export type TResultService<T> = {
   total: number;
   data: T[];
 };
-
-// export interface VideoState {
-//   id: string;
-//   name: string;
-//   posterPath: string[];
-//   ytKeys: string[];
-//   genres: string[];
-//   year: string;
-//   resume: string;
-//   score: number;
-//   length: number;
-//   watchTime: number;
-//   seasons: Season[] | [];
-//   subtitles: string[];
-//   percentageSeen: number;
-// }

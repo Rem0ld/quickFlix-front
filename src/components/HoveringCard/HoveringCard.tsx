@@ -1,6 +1,8 @@
 import React from "react";
 import { FaPlay } from "react-icons/fa";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import ImageCard from "../ImageCard/ImageCard";
 
@@ -12,9 +14,18 @@ type props = {
   posterPath: string[];
   trailerYtCode: string[];
   name: string;
+  uuid: string;
 };
 
-const HoveringCard = ({ name, visible, posterPath, trailerYtCode }: props) => {
+const HoveringCard = ({
+  uuid,
+  name,
+  visible,
+  posterPath,
+  trailerYtCode,
+}: props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   return (
     <div
       className={`${
@@ -32,7 +43,7 @@ const HoveringCard = ({ name, visible, posterPath, trailerYtCode }: props) => {
             <button
               className={btnStyle}
               onClick={() => {
-                navigate(`/player/${id}`);
+                navigate(`/player/${uuid}`);
               }}
             >
               <FaPlay size={16} color={"white"} />
@@ -40,8 +51,8 @@ const HoveringCard = ({ name, visible, posterPath, trailerYtCode }: props) => {
             <button
               className={btnStyle}
               onClick={() => {
-                dispatchDetails();
-                navigate(`/browse?id=${id}`, {
+                // dispatchDetails();
+                navigate(`/browse?id=${uuid}`, {
                   state: { backgroundLocation: location },
                 });
               }}
@@ -49,7 +60,7 @@ const HoveringCard = ({ name, visible, posterPath, trailerYtCode }: props) => {
               <MdKeyboardArrowDown size={20} color={"white"} />
             </button>
           </div>
-          {percentageSeen > 0 && (
+          {/* {percentageSeen > 0 && (
             <div className="flex items-center justify-center p-1">
               <div className="progress w-11/12 h-1 bg-gray-400 cursor-pointer">
                 <div
@@ -60,7 +71,7 @@ const HoveringCard = ({ name, visible, posterPath, trailerYtCode }: props) => {
                 ></div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       )}
     </div>

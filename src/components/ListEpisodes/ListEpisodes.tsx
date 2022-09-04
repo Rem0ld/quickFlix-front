@@ -3,20 +3,20 @@ import React, { RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setVideo } from "../../features/video/videoSlice";
-import { Episode, Season, TvShow } from "../../types";
+import { TvShow } from "../../types";
 import { makePercentage } from "../../utils/numberManipulation";
 import SelectSeason from "../SelectSeason/SelectSeason";
 
-export type ParsedSeason = { [key: number | string]: Episode[] };
+export type ParsedSeason = { [key: number | string]: any[] };
 
-export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
+export default function WrapperEpisodes({ seasons }: { seasons: any[] }) {
   const [parsedSeasons, setParsedSeasons] = useState<ParsedSeason | null>(null);
   const [selected, setSelected] = useState(1);
-  const [selectedSeason, setSelectedSeason] = useState<Episode[]>();
+  const [selectedSeason, setSelectedSeason] = useState<any[]>();
 
   const reduceSeasons = useMemo(
     () =>
-      seasons.reduce((acc: ParsedSeason, el: Season) => {
+      seasons.reduce((acc: ParsedSeason, el: any) => {
         if (!acc[el.number]) {
           acc[el.number] = el.episodes;
         }
@@ -54,7 +54,7 @@ export default function WrapperEpisodes({ seasons }: { seasons: Season[] }) {
   );
 }
 
-function ListEpisodes({ season }: { season: Episode[] }) {
+function ListEpisodes({ season }: { season: any[] }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { averageLength, watched } = useSelector(
