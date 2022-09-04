@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import logoLetter from "../../../assets/logo-letter-no-bg.svg";
@@ -11,20 +11,18 @@ import l from "../../../assets/individual-letters/Frame 24.svg";
 import i2 from "../../../assets/individual-letters/Frame 25.svg";
 import x from "../../../assets/individual-letters/Frame 26.svg";
 import avatar from "../../../assets/avatar-original.png";
-import Navbar from "../../components/Navbar/Navbar";
-import Cookie from "js-cookie";
+import { AuthContext } from "../../contexts/auth/AuthContext";
 
 export default function AnimationLogo(): JSX.Element {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const t1 = gsap.timeline();
   const t2 = gsap.timeline();
   const qRef = useRef(null);
   const ref = useRef<any>([]);
-  const [endAnim, setEndAnim] = useState(false);
-  const [isConnected, setIsConnected] = useState(null);
 
   const checkUser = () => {
-    if (!localStorage.getItem("user")) {
+    if (!user) {
       navigate("/login");
     } else {
       navigate("/browse");
@@ -154,7 +152,7 @@ export default function AnimationLogo(): JSX.Element {
           <div className="w-40 h-40 grid place-items-center bg-blue-300 rounded-lg cursor-pointer shadow-md shadow-white ">
             <img src={avatar} className="rounded-lg" />
           </div>
-          <div className="text-white text-center text-lg">Pierrot</div>
+          <div className="text-white text-center text-lg">{user?.pseudo}</div>
         </div>
       </div>
     </>

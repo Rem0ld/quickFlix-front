@@ -15,7 +15,6 @@ export default function TableCard({
   closeDrawer: () => void;
   refetch: () => void;
 }) {
-  console.log("🚀 ~ file: TableCard.tsx ~ line 24 ~ obj", obj);
   const [values, setValues] = useState<Partial<Video>>({});
   const [pristine, setPristine] = useState<Record<string, boolean>>({});
   const [selectedPoster, setSelectedPoster] = useState("");

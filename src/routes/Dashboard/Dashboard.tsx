@@ -8,9 +8,7 @@ import Table from "./Components/Table/Table";
 
 export default function Dashboard() {
   const [params, setParams] = useState({ type: "movie" });
-  const { videos, refetch, fetchMore, isFetching } = UseFetchVideos({
-    params,
-  });
+  const { videos, refetch, fetchMore, isFetching } = UseFetchVideos(params);
   const [filteredData, setFilteredData] = useState<Video[]>([]);
   const [selected, setSelected] = useState<Video | null>(null);
   const [textFilter, setTextFilter] = useState("");

@@ -1,8 +1,19 @@
-import React, { createContext, ReactElement, useEffect, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { TUser } from "../../types";
 
-export const AuthContext = createContext(null);
+type TAuthContext = {
+  user: TUser;
+  setUser: Dispatch<SetStateAction<TUser | null>>;
+};
+export const AuthContext = createContext<TAuthContext | null>(null);
 
 export default function AuthContextProvider({
   children,
