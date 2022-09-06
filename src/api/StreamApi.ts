@@ -9,7 +9,7 @@ export default class StreamApi extends BaseFetch {
 
   constructor(name: string) {
     super();
-    this.apiUrl = this.url + name + "/";
+    this.apiUrl = super.url + name + "/";
   }
 
   get url() {

@@ -61,7 +61,7 @@ export default class TvShowApi extends BaseFetch implements IApiClass<TvShow> {
     return ok(result);
   }
 
-  async get(id: string): Promise<Result<TvShow, Error>> {
+  async getById(id: string): Promise<Result<TvShow, Error>> {
     const [result, error] = await this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.GET,
       headers: this.headers,

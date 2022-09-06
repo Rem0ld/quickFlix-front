@@ -19,39 +19,29 @@ export default class WatchedApi extends BaseFetch {
   ): Promise<Result<Watched, Error>> {
     if (!videoId) return null;
 
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl, {
-        method: this.requestType.POST,
-        headers: this.headers,
-        body: this.stringify({
-          video: videoId,
-          user: userId,
-        }),
+    return this.fetch(this.apiUrl, {
+      method: this.requestType.POST,
+      headers: this.headers,
+      body: this.stringify({
+        video: videoId,
+        user: userId,
       }),
-    );
-
-    if (error) {
-      return err(new Error(error));
-    }
-
-    return ok(result);
+    });
   }
 
-  async update(id: string | number, timeWatched: number, finished: boolean) {
+  async update(
+    id: string | number,
+    timeWatched: number,
+    finished: boolean,
+  ): Promise<Result<any, Error>> {
+    console.log("🚀 ~ file: WatchedApi.ts ~ line 37 ~ WatchedApi ~ id", id);
     if (!id) return null;
 
-    const [result, error] = await promisifier(
-      this.fetch(this.apiUrl + `?id=${id}`, {
-        method: this.requestType.PATCH,
-        headers: this.headers,
-        body: this.stringify({ timeWatched, finished }),
-      }),
-    );
-    if (error) {
-      return err(new Error(error));
-    }
-
-    return ok(result);
+    return this.fetch(this.apiUrl + `?id=${id}`, {
+      method: this.requestType.PATCH,
+      headers: this.headers,
+      body: this.stringify({ timeWatched, finished }),
+    });
   }
 }
 // export async function createWatched(id: string) {

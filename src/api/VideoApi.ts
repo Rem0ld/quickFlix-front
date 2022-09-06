@@ -2,6 +2,7 @@ import { DeepPartial } from "redux";
 import { IApiClass, Pagination, Result, Video } from "../types";
 import BaseFetch from "./BaseFetch";
 import { baseVideoLimit } from "../config";
+import { err } from "./apiHelperFunctions";
 
 export default class VideoApi extends BaseFetch implements IApiClass<Video> {
   private static _instance: VideoApi;
@@ -26,19 +27,6 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
     });
   }
 
-  async findByFields(
-    limit: number,
-    skip: number,
-    params: any,
-  ): Promise<Result<Pagination<Video>, Error>> {
-    const route = "by-fields";
-    return this.fetch(this.apiUrl + route + `?limit=${limit}&skip=${skip}`, {
-      method: this.requestType.POST,
-      headers: this.headers,
-      body: this.stringify(params),
-    });
-  }
-
   async create(data: DeepPartial<Video>): Promise<Result<Video, Error>> {
     return this.fetch(this.apiUrl, {
       method: this.requestType.POST,
@@ -58,8 +46,21 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
     });
   }
 
-  async get(id: string): Promise<Result<Video, Error>> {
+  async getById(id: string): Promise<Result<Video, Error>> {
+    if (!id || !id.length) {
+      return err(new Error("missing parameter"));
+    }
     return this.fetch(`${this.apiUrl}${id}`, {
+      method: this.requestType.GET,
+      headers: this.headers,
+    });
+  }
+
+  async getByUuid(uuid: string): Promise<Result<Video, Error>> {
+    if (!uuid || !uuid.length) {
+      return err(new Error("missing parameter"));
+    }
+    return this.fetch(`${this.apiUrl}/uuid/${uuid}`, {
       method: this.requestType.GET,
       headers: this.headers,
     });
