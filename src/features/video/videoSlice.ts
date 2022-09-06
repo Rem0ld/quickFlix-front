@@ -14,13 +14,12 @@ export const initialStateDetailsVideo: VideoState = {
   resume: "",
   score: 0,
   length: 0,
+  userWatchedVideo: [],
   watched: {
     id: "",
     timeWatched: 0,
     length: 0,
     finished: false,
-    video: "",
-    user: "",
     createdAt: null,
     updatedAt: null,
   },
@@ -42,29 +41,35 @@ export const videoSlice = createSlice({
     setPercentage: (state, action: PayloadAction<number>) => {
       state.percentageSeen = action.payload;
     },
+    setWatched: (state, action) => {
+      state.watched = action.payload;
+    },
     setUpdateTimeWatched: (state, action: PayloadAction<number>) => {
       // TODO: find a way to avoid doing this
-      if (!state.watched) {
-        const date = new Date();
-        state.watched = {
-          id: "",
-          timeWatched: 0,
-          length: 0,
-          finished: false,
-          video: "",
-          user: "",
-          createdAt: date,
-          updatedAt: date,
-        };
-      }
+      // if (!state.watched) {
+      //   const date = new Date();
+      //   state.watched = {
+      //     id: "",
+      //     timeWatched: 0,
+      //     length: 0,
+      //     finished: false,
+      //     createdAt: date,
+      //     updatedAt: date,
+      //   };
+      // }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      state.watched.timeWatched = action.payload;
+      state.userWatchedVideo[0].timeWatched = action.payload;
     },
   },
 });
 
-export const { setVideo, setLength, setPercentage, setUpdateTimeWatched } =
-  videoSlice.actions;
+export const {
+  setVideo,
+  setLength,
+  setPercentage,
+  setUpdateTimeWatched,
+  setWatched,
+} = videoSlice.actions;
 
 export default videoSlice.reducer;

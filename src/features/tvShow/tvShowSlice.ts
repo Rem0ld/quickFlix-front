@@ -26,12 +26,9 @@ export const tvShowSlice = createSlice({
     setTvShow: (state, action: PayloadAction<TvShow>) => {
       return action.payload;
     },
-    setWatched: (state, action: PayloadAction<Watched[]>) => {
-      state.watched = action.payload;
-    },
   },
 });
 
-export const { setTvShow, setWatched } = tvShowSlice.actions;
+export const { setTvShow } = tvShowSlice.actions;
 
 export default tvShowSlice.reducer;

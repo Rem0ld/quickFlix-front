@@ -18,7 +18,7 @@ const Player = () => {
       videoContainer={videoContainer}
       progressBarRef={progressBarRef}
       progressRef={progressRef}
-      idVideo={id || ""}
+      uuid={id || ""}
     >
       <video ref={videoRef} className="h-screen absolute" preload="metadata">
         <source src={`${baseUrl}${id}`} type="video/webm" />

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { setVideo } from "../../features/video/videoSlice";
+import { setVideo, setWatched } from "../../features/video/videoSlice";
 import { Video } from "../../types";
 import { makePercentage } from "../../utils/numberManipulation";
 import ImageCard from "../ImageCard/ImageCard";
@@ -10,7 +10,7 @@ import.meta.env.REACT_APP_BACK_IP;
 import.meta.env.BASE_URL;
 
 const Card = (video: Partial<Video>): React.ReactElement => {
-  const { posterPath, name, length, watched, uuid } = video;
+  const { posterPath, name, length, userWatchedVideo, watched, uuid } = video;
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -21,6 +21,12 @@ const Card = (video: Partial<Video>): React.ReactElement => {
   const dispatchDetails = () => {
     dispatch(setVideo(video));
   };
+
+  useEffect(() => {
+    if (userWatchedVideo.length) {
+      dispatch(setWatched(userWatchedVideo[0]));
+    }
+  }, [userWatchedVideo]);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment

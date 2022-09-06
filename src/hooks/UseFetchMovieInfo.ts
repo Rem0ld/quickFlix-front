@@ -10,7 +10,7 @@ export default function UseFetchMovieInfo(id: string) {
   const [infoMovie, setInfoMovie] = useState<Video>({} as Video);
 
   const fetchMovie = async (): Promise<Result<Video, Error>> => {
-    const [result, error] = await VideoApi.Instance.get(id);
+    const [result, error] = await VideoApi.Instance.getById(id);
     if (error) {
       console.log(error);
       return err(error);

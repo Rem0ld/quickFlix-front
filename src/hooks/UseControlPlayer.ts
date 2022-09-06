@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import WatchedApi from "../api/WatchedApi";
 import { setLength, setUpdateTimeWatched } from "../features/video/videoSlice";
+import { Video } from "../types";
 
 export default function UseControlPlayer(
   videoRef: MutableRefObject<HTMLVideoElement>,
@@ -13,13 +14,7 @@ export default function UseControlPlayer(
 ) {
   const { id } = useParams();
   // @ts-expect-error
-  const video = useSelector((state) => state.details);
-  const {
-    _id: idTvShow,
-    name,
-    averageLength,
-    // @ts-expect-error
-  } = useSelector((state) => state.detailsTvShow);
+  const video: Video = useSelector((state) => state.details);
   const dispatch = useDispatch();
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -86,11 +81,16 @@ export default function UseControlPlayer(
     }
   };
 
-  const handleUpdateTimeWatched = () => {
+  async function handleUpdateTimeWatched() {
     dispatch(setUpdateTimeWatched(videoRef.current.currentTime));
     // TODO: make function to calculate if < 5% finished is true
-    WatchedApi.Instance.update(id, videoRef.current.currentTime, false);
-  };
+    console.log(video);
+    const [result, error] = await WatchedApi.Instance.update(
+      video.userWatchedVideo[0].id,
+      videoRef.current.currentTime,
+      false,
+    );
+  }
 
   const handleForwardBackward = (type: "rewind" | "forward") => {
     if (type === "forward") {
@@ -110,7 +110,6 @@ export default function UseControlPlayer(
       "loadedmetadata",
       async () => {
         if (!video.length) {
-          // await updateVideo(id, { length: videoRef.current.duration })
           dispatch(setLength(videoRef.current.duration));
         }
 

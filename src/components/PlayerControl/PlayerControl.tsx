@@ -28,6 +28,8 @@ import { SiSpeedtest } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
 import WatchedApi from "../../api/WatchedApi";
 import { AuthContext } from "../../contexts/auth/AuthContext";
+import VideoApi from "../../api/VideoApi";
+import { setVideo } from "../../features/video/videoSlice";
 
 export default function PlayerControl({
   videoRef,
@@ -35,20 +37,21 @@ export default function PlayerControl({
   progressRef,
   progressBarRef,
   children,
-  idVideo,
+  uuid,
 }: {
   videoRef: MutableRefObject<HTMLVideoElement>;
   videoContainer: MutableRefObject<HTMLDivElement>;
   progressRef: MutableRefObject<HTMLDivElement>;
   progressBarRef: MutableRefObject<HTMLDivElement>;
   children: ReactElement;
-  idVideo: string;
+  uuid: string;
 }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
+  const dispatch = useDispatch();
   // @ts-expect-error - false error defaultRootState
-  const { name, type, watched } = useSelector((state) => state.details);
+  const { id, name, type, watched } = useSelector((state) => state.details);
 
   const controlRef = useRef<any>(null);
   const goBackRef = useRef<any>(null);
@@ -57,14 +60,17 @@ export default function PlayerControl({
 
   useEffect(() => {
     if (!watched) {
-      WatchedApi.Instance.create(idVideo, user.id);
+      WatchedApi.Instance.create(id, user.id);
     }
 
     if (!name) {
-      // getVideoById(idVideo).then((result) => {
-      //   if (!result) return;
-      //   dispatch(setVideo(result));
-      // });
+      VideoApi.Instance.getByUuid(uuid).then(([video, error]) => {
+        if (error) {
+          // TODO: make context global error
+          console.error(error);
+        }
+        dispatch(setVideo(video));
+      });
     }
   }, []);
 
@@ -151,12 +157,9 @@ export default function PlayerControl({
         <MdKeyboardBackspace
           onClick={() => {
             if (location.state) {
-              navigate(
-                `/browse${type === "tv" ? "/tv-show" : ""}?id=${idVideo}`,
-                {
-                  state: { backgroundLocation: location },
-                },
-              );
+              navigate(`/browse${type === "tv" ? "/tv-show" : ""}?id=${uuid}`, {
+                state: { backgroundLocation: location },
+              });
             } else {
               navigate("/browse");
             }
