@@ -1,7 +1,7 @@
 import { DeepPartial } from "redux";
 
 export interface IApiClass<T> {
-  get: (id: string) => Promise<Result<T, Error>>;
+  getById: (id: string) => Promise<Result<T, Error>>;
   find: (
     limit: number,
     skip: number,
@@ -48,6 +48,7 @@ export type Video = {
   year?: string;
   length?: number;
   watched?: Watched | Watched[];
+  userWatchedVideo?: Watched[];
 };
 
 export type Watched = {
@@ -55,8 +56,6 @@ export type Watched = {
   timeWatched?: number;
   length?: number;
   finished?: boolean;
-  video: string;
-  user: string;
   createdAt: Date;
   updatedAt: Date;
 };

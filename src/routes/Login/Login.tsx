@@ -37,7 +37,7 @@ export default function Login() {
       password,
     });
     if (error) {
-      console.log("error result authentication", error);
+      console.error("error result authentication", error);
     }
     AuthenticateApi.Instance.setUser(result);
     setUser(result);
