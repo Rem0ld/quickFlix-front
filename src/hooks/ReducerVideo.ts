@@ -17,6 +17,8 @@ export const reducerVideo: ReducerVideo<any> = (state, action) => {
     case "setTotal":
       return { ...state, total: action.value };
     case "setData":
+      return { ...state, data: action.value };
+    case "appendData":
       return { ...state, data: [...state.data, ...action.value] };
     case "reset":
       return initialStateVideo(baseVideoLimit);

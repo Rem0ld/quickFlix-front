@@ -36,7 +36,7 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
   }
 
   async update(
-    id: string,
+    id: string | number,
     data: DeepPartial<Video>,
   ): Promise<Result<Video, Error>> {
     return this.fetch(`${this.apiUrl}${id}`, {

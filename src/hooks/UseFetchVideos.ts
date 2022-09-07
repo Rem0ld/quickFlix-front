@@ -38,13 +38,17 @@ export default function UseFetchVideos(params = {}) {
       return;
     }
 
-    dispatch({ type: "setData", value: result.data });
+    dispatch({ type: "appendData", value: result.data });
     dispatch({ type: "addSkip" });
     dispatch({ type: "setTotal", value: result.total });
   };
 
   const refetch = async () => {
-    const [result, error] = await fetchVideos();
+    const [result, error] = await VideoApi.Instance.find(
+      skip + limit,
+      0,
+      params,
+    );
     if (error) {
       setErrors(error.message);
       return;

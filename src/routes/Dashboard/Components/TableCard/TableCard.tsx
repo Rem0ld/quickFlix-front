@@ -5,6 +5,7 @@ import Button from "../../../../components/Button/Button";
 import CloseBtn from "../../../../components/CloseBtn/CloseBtn";
 import { TvShow, Video } from "../../../../types";
 import BtnWithConfirmation from "../../../../components/BtnWithConfirmation/BtnWithConfirmation";
+import VideoApi from "../../../../api/VideoApi";
 
 export default function TableCard({
   obj,
@@ -50,21 +51,19 @@ export default function TableCard({
   };
 
   const handlePatch = async () => {
-    // const data = Object.keys(pristine).reduce(
-    //   (acc: Record<string, unknown>, el: any) => {
-    //     acc[el] = values[el];
-    //     return acc;
-    //   },
-    //   {},
-    // );
-    // try {
-    //   const response = await updateVideo(obj.id, data);
-    //   // @ts-ignore
-    //   const result = await response.json();
-    //   setPristine({});
-    // } catch (error: unknown) {
-    //   console.error(error);
-    // }
+    const data = Object.keys(pristine).reduce(
+      (acc: Record<string, unknown>, el: any) => {
+        acc[el] = values[el];
+        return acc;
+      },
+      {},
+    );
+    const [error] = await VideoApi.Instance.update(obj.id, data);
+    if (error) {
+      console.error(error);
+    }
+    refetch();
+    setPristine({});
   };
 
   const handleDelete = async () => {
@@ -79,7 +78,6 @@ export default function TableCard({
   };
 
   const handleChangePoster = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
     setSelectedPoster(e.target.value);
   };
 
