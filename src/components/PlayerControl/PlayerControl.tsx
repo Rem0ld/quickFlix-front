@@ -59,10 +59,6 @@ export default function PlayerControl({
   // TODO: make a useEffect with timeInterval of 1sec for updating time
 
   useEffect(() => {
-    if (!watched) {
-      WatchedApi.Instance.create(id, user.id);
-    }
-
     if (!name) {
       VideoApi.Instance.getByUuid(uuid).then(([video, error]) => {
         if (error) {

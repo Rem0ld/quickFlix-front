@@ -22,7 +22,6 @@ export default function UseControlPlayer(
   const [duration, setDuration] = useState(0);
   const [leftTime, setLeftTime] = useState(0);
   const [isMuted, setIsMuted] = useState(false);
-  const [idTimeOutUpdateTime, setIdTimeOutUpdateTime] = useState<any>(null);
 
   const playPause = () => {
     if (isPlaying) {
@@ -84,12 +83,11 @@ export default function UseControlPlayer(
   async function handleUpdateTimeWatched() {
     dispatch(setUpdateTimeWatched(videoRef.current.currentTime));
     // TODO: make function to calculate if < 5% finished is true
-    console.log(video);
-    const [result, error] = await WatchedApi.Instance.update(
-      video.userWatchedVideo[0].id,
-      videoRef.current.currentTime,
-      false,
-    );
+    // const [result, error] = await WatchedApi.Instance.update(
+    //   video.userWatchedVideo[0].id,
+    //   videoRef.current.currentTime,
+    //   false,
+    // );
   }
 
   const handleForwardBackward = (type: "rewind" | "forward") => {
@@ -188,29 +186,17 @@ export default function UseControlPlayer(
   }, []);
 
   useEffect(() => {
-    if (video?.watched?.timeWatched > 0) {
-      videoRef.current.currentTime = video.watched.timeWatched;
-      progressBarRef.current.style.width =
-        Math.floor(
-          (video.watched.timeWatched / videoRef.current.duration) * 100,
-        ) + "%";
-    }
-  }, [video.watched]);
-
-  useEffect(() => {
+    let idTimeout: NodeJS.Timeout;
     if (isPlaying) {
-      const idTimeOut = setTimeout(() => {
+      idTimeout = setTimeout(() => {
         handleUpdateTimeWatched();
       }, 10000);
-
-      setIdTimeOutUpdateTime(idTimeOut);
     } else {
-      clearTimeout(idTimeOutUpdateTime);
-      setIdTimeOutUpdateTime(null);
+      clearTimeout(idTimeout);
     }
 
     return () => {
-      clearTimeout(idTimeOutUpdateTime);
+      clearTimeout(idTimeout);
     };
   }, [isPlaying]);
 

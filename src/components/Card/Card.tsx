@@ -3,41 +3,21 @@ import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setVideo, setWatched } from "../../features/video/videoSlice";
 import { Video } from "../../types";
-import { makePercentage } from "../../utils/numberManipulation";
 import ImageCard from "../ImageCard/ImageCard";
 import PercentageSeen from "../PercentageSeen/PercentageSeen";
 import.meta.env.REACT_APP_BACK_IP;
 import.meta.env.BASE_URL;
 
 const Card = (video: Partial<Video>): React.ReactElement => {
-  const { posterPath, name, length, userWatchedVideo, watched, uuid } = video;
+  const { posterPath, name, uuid } = video;
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-
-  const [visible, setVisible] = useState(false);
-  const [percentageSeen, setPercentageSeen] = useState(0);
+  const [percentageSeen] = useState(0);
 
   const dispatchDetails = () => {
     dispatch(setVideo(video));
   };
-
-  useEffect(() => {
-    if (userWatchedVideo.length) {
-      dispatch(setWatched(userWatchedVideo[0]));
-    }
-  }, [userWatchedVideo]);
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const time = watched?.timeWatched || 0;
-    const leng = length || 0;
-    if (time > 0 && leng > 0) {
-      const percentage = makePercentage(time, leng);
-      setPercentageSeen(percentage);
-    }
-  }, [watched, length]);
 
   return (
     <>
