@@ -20,7 +20,11 @@ const Player = () => {
       progressRef={progressRef}
       uuid={id || ""}
     >
-      <video ref={videoRef} className="h-screen absolute" preload="metadata">
+      <video
+        ref={videoRef}
+        className="h-screen w-screen absolute grid place-items-center"
+        preload="metadata"
+      >
         <source src={`${baseUrl}${id}`} type="video/webm" />
         <source src={`${baseUrl}${id}`} type="video/mp4" />
         <source src={`${baseUrl}${id}`} type='video/mp4; codecs="avc1"' />

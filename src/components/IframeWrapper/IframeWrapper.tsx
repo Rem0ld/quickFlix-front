@@ -12,7 +12,7 @@ export default function IframeWrapper({ ytKeys }: props) {
     setRandomNum(makeRandomNumber(0, ytKeys?.length || 0));
   }, []);
 
-  if (!ytKeys.length) return <div className="h-32" />;
+  if (!ytKeys?.length) return <div className="h-32" />;
 
   return (
     <iframe
