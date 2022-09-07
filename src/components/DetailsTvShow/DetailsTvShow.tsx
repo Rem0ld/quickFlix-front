@@ -3,7 +3,6 @@ import React, { Suspense, useEffect, useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setWatched } from "../../features/tvShow/tvShowSlice";
 import IframeWrapper from "../IframeWrapper/IframeWrapper";
 import WrapperEpisodes from "../ListEpisodes/ListEpisodes";
 import Score from "../Score/Score";
