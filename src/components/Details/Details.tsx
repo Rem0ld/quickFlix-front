@@ -14,13 +14,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
 
 export default function Details() {
-  //   {
-  //   hide,
-  //   play,
-  // }: {
-  //   hide: () => void;
-  //   play: (state: string) => void;
-  // }
   const navigate = useNavigate();
   // @ts-expect-error - false error with defaultRootState
   const detailsVideo = useSelector((state) => state.details);
@@ -31,17 +24,8 @@ export default function Details() {
     }
   }, [detailsVideo]);
 
-  const {
-    uuid,
-    name,
-    trailerYtCode,
-    genres,
-    resume,
-    score,
-    year,
-    length,
-    watched,
-  } = detailsVideo;
+  const { uuid, name, trailerYtCode, genres, resume, score, year, length } =
+    detailsVideo;
 
   const [parsedMovieLength, setParsedMovieLength] = useState<ParsedMovieTime>();
   const [parsedWatchTime, setParsedWatchTime] = useState<ParsedWatchedTime>();
@@ -58,16 +42,6 @@ export default function Details() {
       min: secondToMinutes(length),
     });
   }, [length]);
-
-  useEffect(() => {
-    if (length && watched) {
-      setParsedWatchTime({
-        mins: Math.floor(+watched.timeWatched / 60),
-        total: Math.floor(+length / 60),
-      });
-      setPercentage(makePercentage(watched.timeWatched, length));
-    }
-  }, [length, watched]);
 
   return (
     <>
@@ -128,10 +102,11 @@ export default function Details() {
           <div className="categories flex gap-x-1 text-gray-300 font-light text-sm">
             <span className="text-gray-500">Genres:</span>{" "}
             <span>
-              {genres.length
+              {genres?.length
                 ? genres.map((genre: string, i: number, arr: []) => {
-                    if (i === arr.length - 1)
+                    if (i === arr.length - 1) {
                       return <span key={nanoid()}>{genre}</span>;
+                    }
                     return <span key={nanoid()}>{genre}, </span>;
                   })
                 : ""}
