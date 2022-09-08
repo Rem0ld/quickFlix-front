@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import AuthenticateApi from "../../api/AuthenticateApi";
 import { AuthContext } from "../../contexts/auth/AuthContext";
 
-const errors = {
-  empty: "should not be empty",
-};
+enum EnumErrors {
+  empty = "should not be empty",
+  invalidPseudo = "invalid pseudo",
+}
 
 export default function Login() {
   const { setUser } = useContext(AuthContext);
@@ -15,20 +16,28 @@ export default function Login() {
   const [pseudoError, setPseudoError] = useState("");
   const [passError, setPassError] = useState("");
 
+  const handlePseudoError = (type: EnumErrors) => {
+    setPseudoError(type);
+    setTimeout(() => {
+      setPseudoError("");
+    }, 600);
+  };
+
+  const handlePassError = (type: EnumErrors) => {
+    setPassError(type);
+    setTimeout(() => {
+      setPassError("");
+    }, 600);
+  };
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!pseudo.length) {
-      setPseudoError(errors.empty);
-      setTimeout(() => {
-        setPseudoError("");
-      }, 600);
+      handlePseudoError(EnumErrors.empty);
       return;
     }
     if (!password.length) {
-      setPassError(errors.empty);
-      setTimeout(() => {
-        setPassError("");
-      }, 600);
+      handlePassError(EnumErrors.empty);
       return;
     }
 
@@ -37,7 +46,10 @@ export default function Login() {
       password,
     });
     if (error) {
-      console.error("error result authentication", error);
+      if (error.message.includes("no user")) {
+        handlePseudoError(EnumErrors.invalidPseudo);
+      }
+      return;
     }
     AuthenticateApi.Instance.setUser(result);
     setUser(result);

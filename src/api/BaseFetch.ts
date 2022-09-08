@@ -54,7 +54,7 @@ export default class BaseFetch {
       mode: "cors",
     });
     if (response.status >= 400 && response.status <= 500) {
-      return err(await response.json());
+      return err(new Error(await response.json()));
     }
     const result = await response.json();
     return ok(result);

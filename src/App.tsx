@@ -10,9 +10,10 @@ import AnimationLogo from "./routes/AnimationLogo/AnimationLogo";
 import Player from "./routes/Player/Player";
 import Login from "./routes/Login/Login";
 import { AuthContext } from "./contexts/auth/AuthContext";
+import { TUser } from "./types";
 
 export default function App() {
-  const { user } = useContext(AuthContext);
+  const { user }: { user: TUser } = useContext(AuthContext);
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 

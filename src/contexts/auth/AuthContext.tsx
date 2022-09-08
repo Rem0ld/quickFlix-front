@@ -25,9 +25,11 @@ export default function AuthContextProvider({
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
-    if (!savedUser) {
+    const parsedUser = JSON.parse(savedUser);
+    if (!parsedUser) {
       setUser(null);
       navigate("/login");
+      localStorage.removeItem("user");
       return;
     }
 
