@@ -28,7 +28,11 @@ const Home = () => {
 
   return (
     <>
-      <div className="h-32" />
+      <div className="h-32">
+        <span className="text-transparent">
+          bèbè - dedicace a ma copine !!!
+        </span>
+      </div>
       <InfiniteScroll
         className="px-5 flex justify-evenly gap-6 flex-wrap mb-6"
         dataLength={movies.length}
