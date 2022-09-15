@@ -57,13 +57,13 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-2xl m-auto mt-36 grid place-items-center">
+    <div className="md:max-w-lg m-auto mt-36 grid place-items-center">
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-3 w-2/4 m-auto"
+        className="flex flex-col gap-3 px-10 w-full"
       >
         <h2 className="text-xl font-medium">Welcome</h2>
-        <div className="flex flex-col relative h-20">
+        <div className="flex flex-col relative h-20 w-full">
           <input
             value={pseudo}
             onChange={(e) => setPseudo(e.target.value)}

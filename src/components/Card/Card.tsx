@@ -22,7 +22,7 @@ const Card = (video: Partial<Video>): React.ReactElement => {
   return (
     <>
       <div
-        className="card relative w-52 h-96"
+        className="card relative w-32 md:w-40 lg:w-52 h-52 md:h-60 lg:h-96"
         // onMouseEnter={() => {
         //   setVisible(true);
         // }}
@@ -31,7 +31,7 @@ const Card = (video: Partial<Video>): React.ReactElement => {
         // }}
       >
         <div
-          className="absolute w-52 h-96 cursor-pointer bg-gray-600"
+          className="absolute w-32 md:w-40 lg:w-52 h-52 md:h-60 lg:h-96 cursor-pointer bg-gray-600"
           onClick={() => {
             dispatchDetails();
             navigate(`/browse?id=${uuid}`, {

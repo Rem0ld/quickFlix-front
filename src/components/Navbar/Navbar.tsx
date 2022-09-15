@@ -20,6 +20,7 @@ const Navbar = () => {
   const ref = useRef(null);
   const location = useLocation();
   const [opacity, setOpacity] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
 
   const [refresh, setRefresh] = useState(false);
   const [accessFolder, setAccessFolder] = useState(stateAccessFolder.pending);
@@ -46,7 +47,16 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  const handleMenuVisible = () => {
+    setIsVisible(!isVisible);
+  };
+
   useEffect(() => {
+    if (window.innerWidth >= 768) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
     const scroll = () => {
       const { scrollY } = window;
       setOpacity(1 * (scrollY / 100));
@@ -55,7 +65,7 @@ const Navbar = () => {
     document.addEventListener("scroll", scroll);
 
     return () => document.removeEventListener("scroll", scroll);
-  });
+  }, []);
 
   useEffect(() => {
     if (user) {
@@ -63,26 +73,37 @@ const Navbar = () => {
     }
   }, [user]);
 
-  return (
-    <nav
-      ref={ref}
-      style={{
-        backgroundColor: `rgba(0,0,0, ${opacity})`,
-      }}
-      className={`w-full h-14 flex items-center justify-between fixed z-10 px-14 `}
-    >
-      <div className="flex gap-x-10">
-        <Link to="/browse" className="text-xl text-red-500">
+  const menuDesktop = (
+    <>
+      <button
+        onClick={handleMenuVisible}
+        className="temp-menu-burger block md:hidden"
+      />
+      <div
+        onClick={() => setIsVisible(false)}
+        className={`${
+          isVisible ? "visible" : "hidden"
+        } flex gap-x-10 absolute initial-pos md:flex-initial left-4 top-12 bg-gray-700 md:bg-transparent rounded-sm py-5 px-4 md:p-0`}
+      >
+        <Link to="/browse" className="hidden md:block text-xl text-red-500">
           <img src={logo} width={70} />
         </Link>
         {location.pathname !== "/" && !!user && (
-          <div className="flex justify-around gap-x-3 text-white">
-            <Link to="/movies">Movies</Link>
-            <Link to="/tv-show">Tv-shows</Link>
+          <div className="flex flex-col md:flex-row justify-center items-center md:justify-around gap-3 text-white">
+            <Link to="/movies" className="text-xl">
+              Movies
+            </Link>
+            <Link to="/tv-show" className="text-xl">
+              Tv-shows
+            </Link>
             {user?.isAdmin && (
               <>
-                <Link to="/add">Add</Link>
-                <Link to="/dashboard">Dashboard</Link>
+                <Link to="/add" className="text-xl">
+                  Add
+                </Link>
+                <Link to="/dashboard" className="text-xl">
+                  Dashboard
+                </Link>
               </>
             )}
           </div>
@@ -106,6 +127,18 @@ const Navbar = () => {
           />
         </div>
       )}
+    </>
+  );
+
+  return (
+    <nav
+      ref={ref}
+      style={{
+        backgroundColor: `rgba(0,0,0, ${opacity})`,
+      }}
+      className={`w-full h-14 flex items-center justify-between fixed z-10 px-4 lg:px-14 `}
+    >
+      {menuDesktop}
     </nav>
   );
 };

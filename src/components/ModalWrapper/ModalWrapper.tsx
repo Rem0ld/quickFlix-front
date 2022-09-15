@@ -20,7 +20,7 @@ export default function ModalWrapper({ children }: { children: ReactElement }) {
       hide={() => {
         navigate("/browse");
       }}
-      width={"60%"}
+      width={window.innerWidth < 768 ? "90%" : "60%"}
     >
       {children}
     </Modal>

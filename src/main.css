@@ -50,3 +50,30 @@ not in use apparently
 body.modal-opened {
   overflow: hidden;
 }
+
+.temp-menu-burger,
+.temp-menu-burger::before,
+.temp-menu-burger::after {
+  display: block;
+  width: 30px;
+  background-color: white;
+  height: 3px;
+}
+
+.temp-menu-burger::before {
+  content: "";
+  transform: translateY(-10px);
+}
+.temp-menu-burger::after {
+  content: "";
+  transform: translateY(7px);
+}
+
+@media (min-width: 768px) {
+  .temp-menu-burger {
+    display: none;
+  }
+  .initial-pos {
+    position: initial;
+  }
+}

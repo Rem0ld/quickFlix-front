@@ -11,7 +11,7 @@ const ImageCard = ({
     return (
       <>
         <span className="text-white">No image yet</span>
-        <h1 className="absolute bottom-0 pl-1 text-xl capitalize text-white">
+        <h1 className="w-full absolute bottom-0 pl-1 text-xl capitalize text-white overflow-ellipsis overflow-hidden">
           {name}
         </h1>
       </>
