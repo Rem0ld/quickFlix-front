@@ -216,7 +216,7 @@ export default function PlayerControl({
             />
           </div>
           {/* takes 35-40% of the place and do an excerpt if needed */}
-          <div className="video-name w-2/5 text-white text-center font-semibold capitalize">
+          <div className="video-name w-2/5 text-white text-center font-semibold capitalize overflow-ellipsis overflow-hidden">
             {name}
           </div>
           <div className="flex gap-x-4">

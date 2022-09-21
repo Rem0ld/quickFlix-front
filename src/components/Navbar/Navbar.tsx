@@ -85,7 +85,11 @@ const Navbar = () => {
           isVisible ? "visible" : "hidden"
         } flex gap-x-10 absolute initial-pos md:flex-initial left-4 top-12 bg-gray-700 md:bg-transparent rounded-sm py-5 px-4 md:p-0`}
       >
-        <Link to="/browse" className="hidden md:block text-xl text-red-500">
+        <Link
+          to="/browse"
+          onClick={(e) => e.stopPropagation()}
+          className="hidden md:block text-xl text-red-500"
+        >
           <img src={logo} width={70} />
         </Link>
         {location.pathname !== "/" && !!user && (
