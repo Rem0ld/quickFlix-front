@@ -2,14 +2,14 @@ import { useEffect, useReducer, useState } from "react";
 import { err, ok } from "../api/apiHelperFunctions";
 import VideoApi from "../api/VideoApi";
 import { baseVideoLimit } from "../config";
-import { Pagination, ReducerVideo, Result, Video } from "../types";
+import { Pagination, Result, Video } from "../types";
 import { reducerVideo, initialStateVideo } from "./ReducerVideo";
 
 /**
  * Call fetchMore to get the request to work
  * @returns
  */
-export default function UseFetchVideos(params = {}) {
+export default function UseFetchVideos() {
   const [{ limit, skip, data, total }, dispatch] = useReducer(
     reducerVideo,
     initialStateVideo(baseVideoLimit),
@@ -19,7 +19,7 @@ export default function UseFetchVideos(params = {}) {
 
   const fetchVideos = async (): Promise<Result<Pagination<Video>, Error>> => {
     setIsFetching(true);
-    const [result, error] = await VideoApi.Instance.find(limit, skip, params);
+    const [result, error] = await VideoApi.Instance.find(limit, skip);
     if (error) {
       setIsFetching(false);
       console.error(error);
@@ -44,11 +44,7 @@ export default function UseFetchVideos(params = {}) {
   };
 
   const refetch = async () => {
-    const [result, error] = await VideoApi.Instance.find(
-      skip + limit,
-      0,
-      params,
-    );
+    const [result, error] = await VideoApi.Instance.find(skip + limit, 0);
     if (error) {
       setErrors(error.message);
       return;

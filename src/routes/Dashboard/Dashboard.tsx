@@ -8,8 +8,7 @@ import Table from "./Components/Table/Table";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const [params, setParams] = useState({ type: "movie" });
-  const { videos, refetch, fetchMore, isFetching } = UseFetchVideos(params);
+  const { videos, refetch, fetchMore, isFetching } = UseFetchVideos();
   const [filteredData, setFilteredData] = useState<Video[]>([]);
   const [selected, setSelected] = useState<Video | null>(null);
   const [textFilter, setTextFilter] = useState("");
@@ -18,14 +17,6 @@ export default function Dashboard() {
   const closeDrawer = () => {
     setSelected(null);
     return;
-  };
-
-  const handleParams = (e) => {
-    if (e.target.checked) {
-      setParams({ type: "movie" });
-    } else {
-      setParams({ type: "tv" });
-    }
   };
 
   useEffect(() => {
@@ -52,7 +43,7 @@ export default function Dashboard() {
   useEffect(() => {
     const filtered = videos.filter((el: Video) => el.name.includes(textFilter));
     setFilteredData(filtered);
-  }, [textFilter]);
+  }, [textFilter, videos]);
 
   return (
     <main className="h-[calc(100vh-theme(height.14))] flex flex-col gap-2 p-5 bg-gray-800">
@@ -80,17 +71,6 @@ export default function Dashboard() {
           >
             <IoClose color="#000" size={22} />
           </button>
-        </form>
-        <form className="flex items-center gap-2">
-          <label htmlFor="filter-movie">Only movie</label>
-          <input
-            onChange={handleParams}
-            className="w-4 h-4"
-            type="checkbox"
-            name="filter-movie"
-            value="movie"
-            checked={params.type === "movie"}
-          />
         </form>
       </div>
       <div className="flex flex-grow min-h-0 gap-6">
