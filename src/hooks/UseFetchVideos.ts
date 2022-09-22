@@ -9,7 +9,7 @@ import { reducerVideo, initialStateVideo } from "./ReducerVideo";
  * Call fetchMore to get the request to work
  * @returns
  */
-export default function UseFetchVideos() {
+export default function UseFetchVideos(params = {}) {
   const [{ limit, skip, data, total }, dispatch] = useReducer(
     reducerVideo,
     initialStateVideo(baseVideoLimit),
@@ -19,7 +19,7 @@ export default function UseFetchVideos() {
 
   const fetchVideos = async (): Promise<Result<Pagination<Video>, Error>> => {
     setIsFetching(true);
-    const [result, error] = await VideoApi.Instance.find(limit, skip);
+    const [result, error] = await VideoApi.Instance.find(limit, skip, params);
     if (error) {
       setIsFetching(false);
       console.error(error);
@@ -44,7 +44,11 @@ export default function UseFetchVideos() {
   };
 
   const refetch = async () => {
-    const [result, error] = await VideoApi.Instance.find(skip + limit, 0);
+    const [result, error] = await VideoApi.Instance.find(
+      skip + limit,
+      0,
+      params,
+    );
     if (error) {
       setErrors(error.message);
       return;
