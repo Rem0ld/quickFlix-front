@@ -5,12 +5,9 @@ import { BsSearch } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import UseFetchVideos from "../../hooks/UseFetchVideos";
 import Table from "./Components/Table/Table";
-import { AuthContext } from "../../contexts/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [params, setParams] = useState({ type: "movie" });
   const { videos, refetch, fetchMore, isFetching } = UseFetchVideos(params);
   const [filteredData, setFilteredData] = useState<Video[]>([]);
@@ -30,12 +27,6 @@ export default function Dashboard() {
       setParams({ type: "tv" });
     }
   };
-
-  useEffect(() => {
-    if (!user?.isAdmin) {
-      navigate("/browse");
-    }
-  }, []);
 
   useEffect(() => {
     if (reachThreshold && !isFetching) {

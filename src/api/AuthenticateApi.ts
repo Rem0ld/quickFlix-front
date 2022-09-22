@@ -1,5 +1,4 @@
 import { Result, TUser } from "../types";
-import { err, ok } from "./apiHelperFunctions";
 import BaseFetch from "./BaseFetch";
 
 export default class AuthenticateApi extends BaseFetch {
@@ -34,6 +33,10 @@ export default class AuthenticateApi extends BaseFetch {
   }
 
   getUser() {
-    return localStorage.getItem(this.storageKey);
+    return this.parse(localStorage.getItem(this.storageKey));
+  }
+
+  removeUser() {
+    localStorage.removeItem(this.storageKey);
   }
 }

@@ -26,10 +26,9 @@ import { MdKeyboardBackspace } from "react-icons/md";
 import { RiFullscreenExitLine, RiFullscreenLine } from "react-icons/ri";
 import { SiSpeedtest } from "react-icons/si";
 import { useDispatch, useSelector } from "react-redux";
-import WatchedApi from "../../api/WatchedApi";
-import { AuthContext } from "../../contexts/auth/AuthContext";
 import VideoApi from "../../api/VideoApi";
 import { setVideo } from "../../features/video/videoSlice";
+import { AuthConsumer } from "../../contexts/auth/AuthContext";
 
 export default function PlayerControl({
   videoRef,
@@ -48,7 +47,7 @@ export default function PlayerControl({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useContext(AuthContext);
+  const { user } = AuthConsumer();
   const dispatch = useDispatch();
   // @ts-expect-error - false error defaultRootState
   const { id, name, type, watched } = useSelector((state) => state.details);

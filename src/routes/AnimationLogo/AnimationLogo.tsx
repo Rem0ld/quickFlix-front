@@ -11,11 +11,11 @@ import l from "../../../assets/individual-letters/Frame 24.svg";
 import i2 from "../../../assets/individual-letters/Frame 25.svg";
 import x from "../../../assets/individual-letters/Frame 26.svg";
 import avatar from "../../../assets/avatar-original.png";
-import { AuthContext } from "../../contexts/auth/AuthContext";
+import { AuthConsumer } from "../../contexts/auth/AuthContext";
 
 export default function AnimationLogo(): JSX.Element {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user } = AuthConsumer();
   const t1 = gsap.timeline();
   const t2 = gsap.timeline();
   const qRef = useRef(null);

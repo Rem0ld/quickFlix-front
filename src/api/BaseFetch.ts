@@ -44,6 +44,10 @@ export default class BaseFetch {
     return JSON.stringify(data);
   }
 
+  parse(data: string) {
+    return JSON.parse(data);
+  }
+
   async fetch(
     url: string,
     options: Record<string, any>,

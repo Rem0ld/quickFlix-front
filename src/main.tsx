@@ -6,15 +6,15 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import AuthContextProvider from "./contexts/auth/AuthContext";
+import AuthProvider from "./contexts/auth/AuthContext";
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AuthContextProvider>
+        <AuthProvider>
           <App />
-        </AuthContextProvider>
+        </AuthProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

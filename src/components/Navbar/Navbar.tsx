@@ -4,9 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../assets/quickflix-logo-02.svg";
 import avatar from "../../../assets/avatar-original.png";
 import refreshIcon from "../../../assets/refresh_icon.svg";
-import { AuthContext } from "../../contexts/auth/AuthContext";
+import { AuthConsumer } from "../../contexts/auth/AuthContext";
 import DiscoverApi from "../../api/DiscoverApi";
-import AuthenticateApi from "../../api/AuthenticateApi";
 
 const stateAccessFolder = {
   1: "bg-green-500",
@@ -16,7 +15,7 @@ const stateAccessFolder = {
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user, setUser } = useContext(AuthContext);
+  const { user, logout } = AuthConsumer();
   const ref = useRef(null);
   const location = useLocation();
   const [opacity, setOpacity] = useState(0);
@@ -39,12 +38,6 @@ const Navbar = () => {
       setAccessFolder(stateAccessFolder[access]);
       setRefresh(false);
     }, 300);
-  };
-
-  const logout = () => {
-    AuthenticateApi.Instance.logout();
-    setUser(null);
-    navigate("/login");
   };
 
   const handleMenuVisible = () => {
@@ -80,16 +73,11 @@ const Navbar = () => {
         className="temp-menu-burger block md:hidden"
       />
       <div
-        onClick={() => setIsVisible(false)}
         className={`${
           isVisible ? "visible" : "hidden"
         } flex gap-x-10 absolute initial-pos md:flex-initial left-4 top-12 bg-gray-700 md:bg-transparent rounded-sm py-5 px-4 md:p-0`}
       >
-        <Link
-          to="/browse"
-          onClick={(e) => e.stopPropagation()}
-          className="hidden md:block text-xl text-red-500"
-        >
+        <Link to="/browse" className="hidden md:block text-xl text-red-500">
           <img src={logo} width={70} />
         </Link>
         {location.pathname !== "/" && !!user && (

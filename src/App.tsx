@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Details from "./components/Details/Details";
 import DetailsTvShow from "./components/DetailsTvShow/DetailsTvShow";
@@ -9,11 +9,9 @@ import Layout from "./routes/Layout/Layout";
 import AnimationLogo from "./routes/AnimationLogo/AnimationLogo";
 import Player from "./routes/Player/Player";
 import Login from "./routes/Login/Login";
-import { AuthContext } from "./contexts/auth/AuthContext";
-import { TUser } from "./types";
+import { RequireAdmin, RequireAuth } from "./contexts/auth/AuthContext";
 
 export default function App() {
-  const { user }: { user: TUser } = useContext(AuthContext);
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
@@ -21,14 +19,25 @@ export default function App() {
     <div>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/">
-          <Route element={<Layout />}>
-            user ? (
+          <Route
+            element={
+              <RequireAuth>
+                <Layout />
+              </RequireAuth>
+            }
+          >
             <Route index element={<AnimationLogo />} />
             <Route path="/browse" element={<Home />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            ) : (
-            <Route path="/login" element={<Login />} />)
+            <Route
+              path="/dashboard"
+              element={
+                <RequireAdmin>
+                  <Dashboard />
+                </RequireAdmin>
+              }
+            />
           </Route>
+          <Route path="/login" element={<Login />} />)
         </Route>
       </Routes>
       <Routes>
