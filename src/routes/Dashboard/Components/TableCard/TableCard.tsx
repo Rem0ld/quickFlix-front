@@ -58,7 +58,7 @@ export default function TableCard({
       },
       {},
     );
-    const [error] = await VideoApi.Instance.update(obj.id, data);
+    const [_, error] = await VideoApi.Instance.update(obj.id, data);
     if (error) {
       console.error(error);
     }
@@ -67,14 +67,13 @@ export default function TableCard({
   };
 
   const handleDelete = async () => {
-    // try {
-    //   console.log("deleting");
-    //   await deleteVideoById(obj.id);
-    //   refetch();
-    //   closeDrawer();
-    // } catch (err) {
-    //   console.error(err);
-    // }
+    const [result, error] = await VideoApi.Instance.delete(obj.id);
+    if (error) {
+      console.error(error);
+      return;
+    }
+    refetch();
+    closeDrawer();
   };
 
   const handleChangePoster = (e: ChangeEvent<HTMLInputElement>) => {

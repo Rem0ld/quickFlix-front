@@ -8,7 +8,7 @@ export interface IApiClass<T> {
     rest: Record<string, any>,
   ) => Promise<Result<Pagination<T>, Error>>;
   update: (id: string, data: DeepPartial<T>) => Promise<Result<T, Error>>;
-  delete: (id: string) => Promise<Result<boolean, Error>>;
+  delete: (id: string | number) => Promise<Result<boolean, Error>>;
   create: (data: DeepPartial<T>) => Promise<Result<T, Error>>;
 }
 

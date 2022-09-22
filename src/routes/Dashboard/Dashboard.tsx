@@ -5,7 +5,6 @@ import { BsSearch } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import UseFetchVideos from "../../hooks/UseFetchVideos";
 import Table from "./Components/Table/Table";
-import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { videos, refetch, fetchMore, isFetching } = UseFetchVideos();

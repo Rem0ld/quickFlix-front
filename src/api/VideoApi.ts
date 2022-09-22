@@ -66,7 +66,7 @@ export default class VideoApi extends BaseFetch implements IApiClass<Video> {
     });
   }
 
-  async delete(id: string): Promise<Result<boolean, Error>> {
+  async delete(id: string | number): Promise<Result<boolean, Error>> {
     return this.fetch(`${this.apiUrl}${id}`, {
       method: this.requestType.DELETE,
       headers: this.headers,
