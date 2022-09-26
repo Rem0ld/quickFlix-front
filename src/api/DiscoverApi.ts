@@ -1,4 +1,4 @@
-import { Result } from "../types";
+import { Pagination, Result } from "../types";
 import { err, ok, promisifier } from "./apiHelperFunctions";
 import BaseFetch from "./BaseFetch";
 
@@ -10,7 +10,7 @@ export default class DiscoverApi extends BaseFetch {
 
   constructor(name: string) {
     super();
-    this.apiUrl = this.url + name + "/";
+    this.apiUrl = this.url + name;
   }
 
   async checkAccessFolder(): Promise<Result<0 | 1, Error>> {
@@ -27,5 +27,37 @@ export default class DiscoverApi extends BaseFetch {
     }
 
     return ok(result ? 1 : 0);
+  }
+
+  async getDir(): Promise<any> {
+    const publicDir = "public";
+    const [result, error] = await this.fetch(
+      `${this.apiUrl}/dir?folder=${publicDir}`,
+      {
+        method: this.requestType.GET,
+        headers: this.headers,
+      },
+    );
+    if (error) {
+      return err(error);
+    }
+    if (!result.length) {
+      return err(new Error("No directory in root"));
+    }
+
+    return ok(result);
+  }
+
+  async discover(dir: string): Promise<Result<Pagination<string>, Error>> {
+    const [result, error] = await this.fetch(`${this.apiUrl}?dir=${dir}`, {
+      method: this.requestType.GET,
+      headers: this.headers,
+    });
+
+    if (error) {
+      return err(error);
+    }
+
+    return ok(result);
   }
 }

@@ -10,6 +10,7 @@ import AnimationLogo from "./routes/AnimationLogo/AnimationLogo";
 import Player from "./routes/Player/Player";
 import Login from "./routes/Login/Login";
 import { RequireAdmin, RequireAuth } from "./contexts/auth/AuthContext";
+import AddFile from "./routes/Add/Add";
 
 export default function App() {
   const location = useLocation();
@@ -28,6 +29,14 @@ export default function App() {
           >
             <Route index element={<AnimationLogo />} />
             <Route path="/browse" element={<Home />} />
+            <Route
+              path="/add"
+              element={
+                <RequireAdmin>
+                  <AddFile />
+                </RequireAdmin>
+              }
+            />
             <Route
               path="/dashboard"
               element={
