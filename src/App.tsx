@@ -50,7 +50,14 @@ export default function App() {
         </Route>
       </Routes>
       <Routes>
-        <Route path="/player/:id" element={<Player />} />
+        <Route
+          path="/player/:id"
+          element={
+            <RequireAuth>
+              <Player />
+            </RequireAuth>
+          }
+        />
       </Routes>
 
       {state?.backgroundLocation && (
@@ -58,17 +65,21 @@ export default function App() {
           <Route
             path="/browse"
             element={
-              <ModalWrapper>
-                <Details />
-              </ModalWrapper>
+              <RequireAuth>
+                <ModalWrapper>
+                  <Details />
+                </ModalWrapper>
+              </RequireAuth>
             }
           />
           <Route
             path="/browse/tv-show"
             element={
-              <ModalWrapper>
-                <DetailsTvShow />
-              </ModalWrapper>
+              <RequireAuth>
+                <ModalWrapper>
+                  <DetailsTvShow />
+                </ModalWrapper>
+              </RequireAuth>
             }
           />
         </Routes>
