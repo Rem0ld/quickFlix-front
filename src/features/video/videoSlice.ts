@@ -45,20 +45,6 @@ export const videoSlice = createSlice({
       state.watched = action.payload;
     },
     setUpdateTimeWatched: (state, action: PayloadAction<number>) => {
-      // TODO: find a way to avoid doing this
-      // if (!state.watched) {
-      //   const date = new Date();
-      //   state.watched = {
-      //     id: "",
-      //     timeWatched: 0,
-      //     length: 0,
-      //     finished: false,
-      //     createdAt: date,
-      //     updatedAt: date,
-      //   };
-      // }
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       state.userWatchedVideo[0].timeWatched = action.payload;
     },
   },

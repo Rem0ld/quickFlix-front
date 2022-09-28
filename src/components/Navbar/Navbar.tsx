@@ -14,7 +14,6 @@ const stateAccessFolder = {
 };
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const { user, logout } = AuthConsumer();
   const ref = useRef(null);
   const location = useLocation();
@@ -66,7 +65,7 @@ const Navbar = () => {
     }
   }, [user]);
 
-  const menuDesktop = (
+  const menu = (
     <>
       <button
         onClick={handleMenuVisible}
@@ -130,7 +129,7 @@ const Navbar = () => {
       }}
       className={`w-full h-14 flex items-center justify-between fixed z-10 px-4 lg:px-14 `}
     >
-      {menuDesktop}
+      {menu}
     </nav>
   );
 };

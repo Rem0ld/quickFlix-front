@@ -21,7 +21,6 @@ export default class BaseFetch {
     "Content-Type": "application/json",
   };
   protected apiUrl: string;
-
   requestType = ERequestType;
 
   set url(url: string) {
@@ -30,10 +29,6 @@ export default class BaseFetch {
 
   get url() {
     return this.baseUrl;
-  }
-
-  set setHeaders(headers: THeader) {
-    this.headersObj = headers;
   }
 
   get headers() {

@@ -187,7 +187,7 @@ export default function PlayerControl({
           <div className="flex gap-x-4 items-center">
             <BooleanBtn
               isActive={isPlaying}
-              action={playPause}
+              onClick={playPause}
               placeholders={[
                 <FaPause key={0} color="white" size={baseSizeIcon} />,
                 <FaPlay key={1} color="white" size={baseSizeIcon} />,
@@ -245,7 +245,7 @@ export default function PlayerControl({
             </button>
             <BooleanBtn
               isActive={isFullScreen}
-              action={handleFullScreen}
+              onClick={handleFullScreen}
               placeholders={[
                 <RiFullscreenExitLine
                   key={0}
